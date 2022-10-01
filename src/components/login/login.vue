@@ -9,22 +9,22 @@
                         class="loginForm"
                 >
                     <el-form-item label="邮箱：">
-                        <el-input v-model="username" />
+                        <el-input v-model="form.username" />
                     </el-form-item>
                     <el-form-item label="密码：">
-                        <el-input type="password" v-model="password" />
+                        <el-input type="password" v-model="form.password" />
                     </el-form-item>
 
                     <el-row>
                         <el-checkbox
                                 class="checkBox"
-                                v-model="isAgree"
+                                v-model="form.isAgree"
                                 label="同意用户使用准则"
                                 name="type"
                         />
                     </el-row>
                     <el-button
-                            v-if="isAgree"
+                            v-if="form.isAgree"
                             type="primary"
                             class="loginBtn"
                             @click="login"
@@ -42,15 +42,15 @@
                         class="loginForm"
                 >
                     <el-form-item label="邮箱：">
-                        <el-input v-model="rUsername" />
+                        <el-input v-model="registerForm.rUsername" />
                     </el-form-item>
                     <el-form-item label="密码：">
-                        <el-input type="password" v-model="rPassword" />
+                        <el-input type="password" v-model="registerForm.rPassword" />
                     </el-form-item>
                     <el-form-item label="确认密码：">
                         <el-input
                                 type="password"
-                                v-model="confirmPassword"
+                                v-model="registerForm.confirmPassword"
                                 @blur="confirmFunc"
                         />
                     </el-form-item>
@@ -58,7 +58,7 @@
                         <el-row>
                             <el-input
                                     type="password"
-                                    v-model="identifyCode"
+                                    v-model="registerForm.identifyCode"
                                     class="inpWidth"
                             />
                             <el-button type="primary" @click="getIdentifyCode" plain>
@@ -70,7 +70,7 @@
                     <el-row>
                         <el-checkbox
                                 class="checkBox"
-                                v-model="rAgree"
+                                v-model="registerForm.rAgree"
                                 label="同意用户使用准则"
                                 name="type"
                         />
@@ -89,7 +89,7 @@
     </div>
 </template>
 <script>
-    import { reactive, toRefs } from 'vue'
+    import { reactive } from 'vue'
     import { ElMessage } from "element-plus";
     import router from "@/router";
     import API from "@/axios.js"
@@ -113,7 +113,9 @@
             // 登录
             function login() {
                 console.log(form.valueOf())
-                API.get('/user?ID=12345')
+                API.post('/login',{
+                    form
+                })
                     .then(function (response) {
                         console.log(response);
                     })
@@ -147,8 +149,8 @@
                     ElMessage.error("密码与确认密码不一致.");
             };
             return {
-                ...toRefs(form),
-                ...toRefs(registerForm),
+                form,
+                registerForm,
                 login,
                 register,
                 getIdentifyCode,

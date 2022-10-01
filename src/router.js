@@ -9,6 +9,7 @@ import c4 from './components/c4.vue'
 // 暂时保持简单
 const routes = [
     {path: '/', component: () => import('@/components/login/login.vue')},
+    // {path: '/', component: () => import('@/components/learn')},
     {path: '/home', component: () => import('@/components/Home.vue'),
         children: [
             {
