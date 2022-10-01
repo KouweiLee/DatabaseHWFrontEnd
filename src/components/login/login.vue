@@ -113,7 +113,9 @@
             // 登录
             function login() {
                 console.log(form.valueOf())
-                API.get('/user?ID=12345')
+                API.post('/login',{
+                    form
+                })
                     .then(function (response) {
                         console.log(response);
                     })
