@@ -1,13 +1,14 @@
 import {createRouter, createWebHashHistory} from "vue-router"
 
 import c1 from './components/c1.vue'
-import c2 from './components/c2.vue'
+import c2 from './components/DiscussionView.vue'
 import c3 from './components/c3.vue'
 import c4 from './components/c4.vue'
 // 3. 创建路由实例并传递 `routes` 配置
 // 你可以在这里输入更多的配置，但我们在这里
 // 暂时保持简单
 const routes = [
+    // {path: '/', component: () => import('@/components/DiscussionSection/ShowView')},
     {path: '/', component: () => import('@/components/login/login.vue')},
     // {path: '/', component: () => import('@/components/learn')},
     {path: '/home', component: () => import('@/components/Home.vue'),
@@ -18,7 +19,7 @@ const routes = [
             },
             {
                 path: '/home/c2',
-                component: () => import('@/components/c2.vue')
+                component: () => import('@/components/DiscussionView.vue')
             },
             {
                 path: '/home/c3',

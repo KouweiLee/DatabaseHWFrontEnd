@@ -9,10 +9,10 @@
                         class="loginForm"
                 >
                     <el-form-item label="邮箱：">
-                        <el-input v-model="form.username" />
+                        <el-input v-model="form.username"/>
                     </el-form-item>
                     <el-form-item label="密码：">
-                        <el-input type="password" v-model="form.password" />
+                        <el-input type="password" v-model="form.password"/>
                     </el-form-item>
 
                     <el-row>
@@ -42,10 +42,10 @@
                         class="loginForm"
                 >
                     <el-form-item label="邮箱：">
-                        <el-input v-model="registerForm.rUsername" />
+                        <el-input v-model="registerForm.username"/>
                     </el-form-item>
                     <el-form-item label="密码：">
-                        <el-input type="password" v-model="registerForm.rPassword" />
+                        <el-input type="password" v-model="registerForm.password"/>
                     </el-form-item>
                     <el-form-item label="确认密码：">
                         <el-input
@@ -89,10 +89,11 @@
     </div>
 </template>
 <script>
-    import { reactive } from 'vue'
-    import { ElMessage } from "element-plus";
+    import {reactive} from 'vue'
+    import {ElMessage} from "element-plus";
     import router from "@/router";
-    import API from "@/axios.js"
+    import API from "../../axios.js"
+
     export default {
         name: "LoginView",
         setup() {
@@ -102,8 +103,8 @@
                 isAgree: 0,
             });
             const registerForm = reactive({
-                rUsername: "",
-                rPassword: "",
+                username: "",
+                password: "",
                 confirmPassword: "",
                 identifyCode: "",
                 rAgree: 0,
@@ -112,9 +113,24 @@
             // 方法
             // 登录
             function login() {
-                console.log(form.valueOf())
-                API.post('/login',{
+                API.post(API.defaults.baseUrl + '/login', {
                     form
+                })
+                    .then(function (response) {
+                        console.log(response);
+                        if (response.status === 200) {
+                            router.push('/home')
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+
+            // 注册
+            function register() {
+                API.post(API.defaults.baseUrl + '/register', {
+                    registerForm
                 })
                     .then(function (response) {
                         console.log(response);
@@ -122,30 +138,30 @@
                     .catch(function (error) {
                         console.log(error);
                     });
-                API({
-                    url:'/test',
-                    method:'post',
-                    data:{
-                        form
-                    }
-                })
-                router.push('/home')
-            }
-            // 注册
-            function register() {
                 console.log("注册", registerForm);
             }
+
             // 获取验证码
             function getIdentifyCode() {
+                API.get(API.defaults.baseUrl + '/register', {
+                    registerForm
+                })
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
                 console.log("获取验证码");
             }
+
             // 确认密码
             // function confirmFunc() {
-            //   if (registerForm.confirmPassword !== registerForm.rPassword)
+            //   if (registerForm.confirmPassword !== registerForm.password)
             //     alert("密码与确认密码不一致");
             // }
             const confirmFunc = () => {
-                if (registerForm.confirmPassword !== registerForm.rPassword)
+                if (registerForm.confirmPassword !== registerForm.password)
                     ElMessage.error("密码与确认密码不一致.");
             };
             return {
@@ -167,15 +183,19 @@
         top: 20%;
         width: 400px;
     }
+
     .loginBtn {
         width: 100px;
     }
+
     .loginForm {
         text-align: center;
     }
+
     .checkBox {
         margin-left: 7px;
     }
+
     .inpWidth {
         width: 165px;
     }
