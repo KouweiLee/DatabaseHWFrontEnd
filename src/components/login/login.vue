@@ -113,6 +113,7 @@
             // 方法
             // 登录
             function login() {
+                console.log(form)
                 API.post(API.defaults.baseUrl + '/login/login/', {
                     form
                 })

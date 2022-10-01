@@ -21,6 +21,7 @@
         name: "DiscussionThread",
         setup(props){
             const myTitle = ref(props.title)
+
             return{
                myTitle
             }
