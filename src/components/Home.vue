@@ -1,9 +1,8 @@
 <template>
     <el-container>
         <el-cow>
-            <el-button @click="expandView" style="margin-bottom: 40px">
-                扩展形式
-            </el-button>
+            <el-icon @click="expandView" style="margin-bottom: 40px" v-if="isCollapse"><ArrowRightBold /></el-icon>
+            <el-icon @click="expandView" style="margin-bottom: 40px" v-if="isCollapse === false"><ArrowLeftBold /></el-icon>
             <el-menu
                     default-active="2"
                     class="el-menu-vertical-demo"
@@ -32,17 +31,13 @@
                 <!--            </el-sub-menu>-->
                 <el-menu-item index="/home/c2">
                     <el-icon>
-                        <el-icon>
                             <ChatDotSquare/>
-                        </el-icon>
                     </el-icon>
                     <template #title>Navigator Two</template>
                 </el-menu-item>
                 <el-menu-item index="/home/c4">
                     <el-icon>
-                        <el-icon>
                             <User/>
-                        </el-icon>
                     </el-icon>
                     <template #title>Navigator Four</template>
                 </el-menu-item>
