@@ -93,6 +93,7 @@
     import {ElMessage} from "element-plus";
     import router from "@/router";
     import API from "../../axios.js"
+    import {toRefs} from "@vue/reactivity";
 
     export default {
         name: "LoginView",
@@ -113,7 +114,6 @@
             // 方法
             // 登录
             function login() {
-                console.log(form)
                 API.post(API.defaults.baseUrl + '/login/login/', {
                     form
                 })
