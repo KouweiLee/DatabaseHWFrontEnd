@@ -110,13 +110,13 @@
                 rAgree: 0,
             });
 
+            // const reqData = ref(JSON.stringify(form));
+
             // 方法
             // 登录
             function login() {
-                console.log(form)
-                API.post(API.defaults.baseUrl + '/login/login/', {
-                    form
-                })
+                console.log(JSON.stringify(form))
+                API.post(API.defaults.baseUrl + '/login/login/', JSON.stringify(form))
                     .then(function (response) {
                         console.log(response);
                         if (response.status === 200) {

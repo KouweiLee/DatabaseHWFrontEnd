@@ -36,19 +36,21 @@
         </el-row>
     </div>
     <div>
-        <discussion-thread v-for="discussionThread in discussionThreads" :key="discussionThread.id"
-                           :title="discussionThread.title"></discussion-thread>
+        <blog-component v-for="blogInfo in blogInfos" :key="blogInfo.id" :blogInfo="blogInfo"></blog-component>
+<!--        <discussion-thread v-for="discussionThread in discussionThreads" :key="discussionThread.id"-->
+<!--                           :title="discussionThread.title"></discussion-thread>-->
     </div>
 </template>
 
 <script>
-    import DiscussionThread from "@/components/DiscussionThread";
+    // import DiscussionThread from "@/components/DiscussionThread";
     import {reactive, ref} from "@vue/reactivity";
     import API from "@/axios";
+    import BlogComponent from "@/components/blogComponent";
 
     export default {
         name: "ComponentTwo",
-        components: {DiscussionThread},
+        components: {BlogComponent, /*DiscussionThread*/},
         setup() {
             const searchValue = ref();
             let discussionThreads = reactive([
@@ -65,6 +67,45 @@
                     title: "3"
                 },
             ]);
+
+            const blogInfos = [
+                {
+                    id:1,
+                    isTop:true,
+                    isOver:true,
+                    submitNumber: 100,
+                    replyNumber: 25,
+                    title: "Nan",
+                    url:"404",
+                    content: "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+                        "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+                        "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+                        "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+                        "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja",
+                    tags: ['P7', 'P8'],
+                    name: "Zhang_kg",
+                    time: "2022-10-1",
+                    isLike:  false
+                },
+                {
+                    id:2,
+                    isTop:false,
+                    isOver:true,
+                    submitNumber: 100,
+                    replyNumber: 25,
+                    title: "Nan",
+                    url:"404",
+                    content: "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+                        "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+                        "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+                        "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+                        "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja",
+                    tags: ['P7', 'P8'],
+                    name: "Zhang_kg",
+                    time: "2022-10-1",
+                    isLike:  false
+                },
+            ]
 
             const dialogTableVisible = ref(false)
             const dialogFormVisible = ref(false)
@@ -143,7 +184,8 @@
                 dialogTableVisible,
                 formLabelWidth,
                 form,
-                gridData
+                gridData,
+                blogInfos
             }
         }
     }
