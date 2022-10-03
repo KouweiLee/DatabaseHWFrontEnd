@@ -114,9 +114,7 @@
             // 方法
             // 登录
             function login() {
-                API.post(API.defaults.baseUrl + '/login/login/', {
-                    form
-                })
+                API.post(API.defaults.baseUrl + '/login/login/', dataToString(form))
                     .then(function (response) {
                         console.log(response);
                         if (response.status === 200) {
