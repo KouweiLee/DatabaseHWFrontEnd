@@ -93,7 +93,6 @@
     import {ElMessage} from "element-plus";
     import router from "@/router";
     import API from "../../axios.js"
-    import {toRefs} from "@vue/reactivity";
 
     export default {
         name: "LoginView",
@@ -111,10 +110,13 @@
                 rAgree: 0,
             });
 
+            // const reqData = ref(JSON.stringify(form));
+
             // 方法
             // 登录
             function login() {
-                API.post(API.defaults.baseUrl + '/login/login/', dataToString(form))
+                console.log(JSON.stringify(form))
+                API.post(API.defaults.baseUrl + '/login/login/', JSON.stringify(form))
                     .then(function (response) {
                         console.log(response);
                         if (response.status === 200) {
