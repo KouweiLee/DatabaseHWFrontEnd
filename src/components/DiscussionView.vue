@@ -36,7 +36,7 @@
         </el-row>
     </div>
     <div>
-        <blog-component v-for="blogInfo in blogInfos" :key="blogInfo.id" :blogInfo="blogInfo"></blog-component>
+        <blog-component v-for="blogInfo in blogInfos" :key="blogInfo.id" :blogInfo="blogInfo" @click="gotoDetail"></blog-component>
 <!--        <discussion-thread v-for="discussionThread in discussionThreads" :key="discussionThread.id"-->
 <!--                           :title="discussionThread.title"></discussion-thread>-->
     </div>
@@ -46,12 +46,15 @@
     // import DiscussionThread from "@/components/DiscussionThread";
     import {reactive, ref} from "@vue/reactivity";
     import API from "@/axios";
+    import router from "@/router";
     import BlogComponent from "@/components/blogComponent";
+    // import {getCurrentInstance} from "@vue/runtime-core";
 
     export default {
         name: "ComponentTwo",
         components: {BlogComponent, /*DiscussionThread*/},
         setup() {
+            // const currentInstance = getCurrentInstance()
             const searchValue = ref();
             let discussionThreads = reactive([
                 {
@@ -174,6 +177,10 @@
                 console.log(content)
             }
 
+            function gotoDetail(){
+                router.push('/home/c21')
+            }
+
             getNowDiscussions("")
             return {
                 searchClick,
@@ -185,6 +192,7 @@
                 formLabelWidth,
                 form,
                 gridData,
+                gotoDetail,
                 blogInfos
             }
         }

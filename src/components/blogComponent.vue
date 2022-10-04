@@ -1,5 +1,5 @@
 <template>
-    <el-card class="wholeClass">
+    <el-card class="wholeClass" shadow="hover">
         <div class="overallInfo">
             <!--这个是帖子组件的顶栏信息，包括是否置顶、是否关闭、如果没有关闭则显示关注和回复次数-->
             <el-row :gutter="10">
@@ -151,6 +151,7 @@
         box-sizing: inherit;
     }
     .wholeClass{
+        cursor: pointer;
         width: 30%;
         float: left;
         margin-bottom: 2%;
