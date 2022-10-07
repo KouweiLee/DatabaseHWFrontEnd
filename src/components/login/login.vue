@@ -116,7 +116,7 @@
             // 登录
             function login() {
                 console.log(JSON.stringify(form))
-                API.post(API.defaults.baseUrl + '/login/login/', JSON.stringify(form))
+                API.post(API.defaults.baseURL + '/login/login/', JSON.stringify(form))
                     .then(function (response) {
                         console.log(response);
                         if (response.status === 200) {
@@ -130,7 +130,7 @@
 
             // 注册
             function register() {
-                API.post(API.defaults.baseUrl + '/register', {
+                API.post(API.defaults.baseURL + '/register', {
                     registerForm
                 })
                     .then(function (response) {
@@ -144,7 +144,7 @@
 
             // 获取验证码
             function getIdentifyCode() {
-                API.get(API.defaults.baseUrl + '/register', {
+                API.get(API.defaults.baseURL + '/register', {
                     registerForm
                 })
                     .then(function (response) {
