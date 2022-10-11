@@ -89,6 +89,7 @@
 
 <script>
     import {ref} from "@vue/reactivity";
+    // import useGetGlobalProperties from '@/useGlobal'
 
     export default {
         name: "HomeView",
