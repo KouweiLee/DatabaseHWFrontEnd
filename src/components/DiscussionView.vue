@@ -1,4 +1,5 @@
 <template>
+    <router-view ></router-view>
     <div class="search">
         <el-row>
             <el-input
@@ -36,7 +37,7 @@
         </el-row>
     </div>
     <div>
-        <blog-component v-for="blogInfo in blogInfos" :key="blogInfo.id" :blogInfo="blogInfo"></blog-component>
+        <blog-component v-for="blogInfo in blogInfos" :key="blogInfo.id" :blogInfo="blogInfo" @click="gotoDetail(blogInfo.id)"></blog-component>
 <!--        <discussion-thread v-for="discussionThread in discussionThreads" :key="discussionThread.id"-->
 <!--                           :title="discussionThread.title"></discussion-thread>-->
     </div>
@@ -45,13 +46,16 @@
 <script>
     // import DiscussionThread from "@/components/DiscussionThread";
     import {reactive, ref} from "@vue/reactivity";
-    import API from "@/axios";
+    import router from "@/router";
     import BlogComponent from "@/components/blogComponent";
+    import API from "../axios.js"
+    // import {getCurrentInstance} from "@vue/runtime-core";
 
     export default {
         name: "ComponentTwo",
         components: {BlogComponent, /*DiscussionThread*/},
         setup() {
+            // const currentInstance = getCurrentInstance()
             const searchValue = ref();
             let discussionThreads = reactive([
                 {
@@ -152,7 +156,7 @@
 
             function getNowDiscussions(content) {
                 console.log(discussionThreads)
-                API.get(API.defaults.baseUrl + '/discuss', {
+                API.post(API.defaults.baseURL + '/discuss/deletecomment/queryTitle', {
                     content
                 }).then(function (response) {
                     while (!discussionThreads.length == 0) {
@@ -174,6 +178,14 @@
                 console.log(content)
             }
 
+            function gotoDetail(id){
+                console.log(router)
+                router.push({
+                    path: '/home/c21',
+                    query:{id}
+                })
+            }
+
             getNowDiscussions("")
             return {
                 searchClick,
@@ -185,6 +197,7 @@
                 formLabelWidth,
                 form,
                 gridData,
+                gotoDetail,
                 blogInfos
             }
         }

@@ -9,7 +9,8 @@ import c4 from './components/c4.vue'
 // 暂时保持简单
 const routes = [
     // {path: '/', component: () => import('@/components/Home')},
-    {path: '/', component: () => import('@/components/login/login.vue')},
+    {path: '/', component: () => import('@/components/blogDetailComponent1')},
+    // {path: '/', component: () => import('@/components/login/login.vue')},
     // {path: '/', component: () => import('@/components/learn')},
     {path: '/home', component: () => import('@/components/Home.vue'),
         children: [
@@ -18,8 +19,12 @@ const routes = [
                 component: () => import('@/components/c1.vue')
             },
             {
+                path: '/home/c21',
+                component: () => import('@/components/blogDetailComponent.vue')
+            },
+            {
                 path: '/home/c2',
-                component: () => import('@/components/DiscussionView.vue')
+                component: () => import('@/components/DiscussionView.vue'),
             },
             {
                 path: '/home/c3',
