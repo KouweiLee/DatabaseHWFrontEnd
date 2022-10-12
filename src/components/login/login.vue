@@ -158,7 +158,9 @@
             // 登录
             function login() {
                 console.log(JSON.stringify(form))
-                API.post(API.defaults.baseURL + '/login/login/', JSON.stringify(form))
+                console.log(API.defaults.baseUrl)
+                console.log(API.defaults.baseUrl+'/login/login/')
+                API.post(API.defaults.baseUrl+'/login/login/', JSON.stringify(form))
                     .then(function (response) {
                         console.log(response);
                         if (response.status === 200) {
@@ -172,7 +174,7 @@
 
             // 注册
             function register() {
-                API.post(API.defaults.baseURL + '/login/register/', JSON.stringify(registerForm))
+                API.post(API.defaults.baseUrl + '/login/register/', JSON.stringify(registerForm))
                     .then(function (response) {
                         console.log(response);
                     })
@@ -184,7 +186,7 @@
 
             // 获取验证码
             function getIdentifyCode() {
-                // API.get(API.defaults.baseURL + '/login/changepw/', JSON.stringify(modifierForm))
+                // API.get(API.defaults.baseUrl + '/login/changepw/', JSON.stringify(modifierForm))
                 //     .then(function (response) {
                 //         console.log(response);
                 //     })
@@ -195,7 +197,7 @@
             }
 
             function modify() {
-                API.post(API.defaults.baseURL + '/login/changepw/', JSON.stringify(modifierForm))
+                API.post(API.defaults.baseUrl + '/login/changepw/', JSON.stringify(modifierForm))
                     .then(function (response) {
                         console.log(response);
                     })
