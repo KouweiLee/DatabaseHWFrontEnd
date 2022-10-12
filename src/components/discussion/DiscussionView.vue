@@ -128,7 +128,7 @@
                 isLike: false
             })
 
-            let blogInfos = [
+            let blogInfos = reactive([
                 {
                     id: 1,
                     isTop: true,
@@ -165,7 +165,7 @@
                     time: "2022-10-1",
                     isLike: false
                 },
-            ]
+            ])
 
             const dialogTableVisible = ref(false)
             const dialogFormVisible = ref(false)
@@ -180,9 +180,9 @@
             function getNowDiscussions(content) {
                 console.log(blogInfos)
                 API.post(API.defaults.baseUrl + '/discuss/deletecomment/queryTitle',
-                    JSON.stringify({content: content})
+                    JSON.stringify(content)
                 ).then(function (response) {
-                    while (!blogInfos.length == 0) {
+                    while (!(blogInfos.length === 1)) {
                         blogInfos.pop();
                     }
                     let i;
