@@ -1,8 +1,9 @@
 <template>
     <el-card class="wholeClass" shadow="hover">
-        <div class="overallInfo">
-            <!--这个是帖子组件的顶栏信息，包括是否置顶、是否关闭、如果没有关闭则显示关注和回复次数-->
-            <el-row :gutter="10">
+        <!-- <div class="overallInfo"> -->
+        <!--这个是帖子组件的顶栏信息，包括是否置顶、是否关闭、如果没有关闭则显示关注和回复次数-->
+        <el-row>
+            <el-col :span="3.5" style="justify-content: space-between;">
                 <el-tag v-if="myBlogInfo.isTop" shadow="never" class="top-card">
                     <span class="status-card-font">置顶</span></el-tag>
                 <el-tag v-if="!myBlogInfo.isTop" shadow="never" class="normal-card">
@@ -11,8 +12,13 @@
                     <span class="status-card-font">已关闭</span></el-tag>
                 <el-tag v-if="!myBlogInfo.isOver" shadow="never" class="status-card" >
                     <span class="status-card-font" >{{myBlogInfo.submitNumber}}关注|{{myBlogInfo.replyNumber}}回复</span></el-tag>
-            </el-row>
-        </div>
+            </el-col>
+            <el-col :span="4">
+                <el-button type="primary" :icon="Delete" v-on:click="deleteBlog" style="background-color: red;border: 0;height: 25px;float: right;"/>
+            </el-col>
+
+        </el-row>
+        <!-- </div> -->
         <div>
             <!--帖子的标题信息-->
             <h2 style="text-align: left"><a href="https://developer.mozilla.org/zh-CN/">P8答疑帖</a></h2>
@@ -29,16 +35,16 @@
         <div style="float: left">
             <!--帖子的标签们-->
             <el-tag v-for="(item, i) in myBlogInfo.tags" :key="i"
-            effect="dark"
-            round
-            style="min-width: 40px; max-width: 70px; margin: 3px; ">{{item}}</el-tag>
+                    effect="dark"
+                    round
+                    style="min-width: 40px; max-width: 70px; margin: 3px; ">{{item}}</el-tag>
         </div>
         <div style="clear:both"></div>
         <div>
             <!--帖子发布人+点赞-->
             <span style="text-align: left; float:left;">{{myBlogInfo.name}} {{myBlogInfo.time}}</span>
-            <el-check-tag :checked="checked" @change="onChange" style="float: right;
-            height: 20px; width: 50px;">Like</el-check-tag>
+            <el-check-tag :checked="checked" @change="onChange" style="float: right;height: 20px; width: 50px;">
+                Like</el-check-tag>
         </div>
         <div style="clear:both"></div>
     </el-card>
@@ -50,7 +56,8 @@
     // import {assertBoolean} from "@babel/core/lib/config/validation/option-assertions";
     import {ref} from "vue";
     import {reactive} from "@vue/reactivity";
-
+    import { Delete } from "@element-plus/icons-vue";
+    import API from "@/axios";
     export default {
         name: "blogComponent",
         // props: ['isTop', 'isOver', 'submitNumber', 'replyNumber',
@@ -79,49 +86,49 @@
                     }
                 }
             },
-                // id: Number,
-                // isTop: assertBoolean,
-                // isOver: assertBoolean,
-                // submitNumber: {
-                //     type: Number,
-                //     default: 100
-                // },
-                // replyNumber: {
-                //     type: Number,
-                //     default: 25
-                // },
-                // title: {
-                //     type: String,
-                //     default: "Nan"
-                // },
-                // url: {
-                //     type: String,
-                //     default: "404"
-                // },
-                // content: {
-                //     type: String,
-                //     default: "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                //         "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                //         "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                //         "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                //         "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja"
-                // },
-                // tags: {
-                //     type: Array,
-                //     default: () => ['P7', 'P8']
-                // },
-                // name: {
-                //     type: String,
-                //     default: "Zhang_kg"
-                // },
-                // time: {
-                //     type: String,
-                //     default: "2022-10-1"
-                // },
-                // isLike: {
-                //     type: assertBoolean,
-                //     default: false
-                // }
+            // id: Number,
+            // isTop: assertBoolean,
+            // isOver: assertBoolean,
+            // submitNumber: {
+            //     type: Number,
+            //     default: 100
+            // },
+            // replyNumber: {
+            //     type: Number,
+            //     default: 25
+            // },
+            // title: {
+            //     type: String,
+            //     default: "Nan"
+            // },
+            // url: {
+            //     type: String,
+            //     default: "404"
+            // },
+            // content: {
+            //     type: String,
+            //     default: "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+            //         "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+            //         "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+            //         "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
+            //         "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja"
+            // },
+            // tags: {
+            //     type: Array,
+            //     default: () => ['P7', 'P8']
+            // },
+            // name: {
+            //     type: String,
+            //     default: "Zhang_kg"
+            // },
+            // time: {
+            //     type: String,
+            //     default: "2022-10-1"
+            // },
+            // isLike: {
+            //     type: assertBoolean,
+            //     default: false
+            // }
             // }
         },
         setup(props) {
@@ -132,10 +139,23 @@
             const onChange = (status) => {
                 checked.value = status
             }
+
+            function deleteBlog() {
+                API.post(API.defaults.baseUrl + '/discuss/deletetitle/', JSON.stringify( {title_id:myBlogInfo.id}))
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+
             return {
+                deleteBlog,
                 checked,
                 onChange,
-                myBlogInfo
+                myBlogInfo,
+                Delete
             }
         }
     }
@@ -164,19 +184,19 @@
 
     }
     .top-card {
-        height: 20px;
+        height: 25px;
         background: #db4a3d;
     }
     .normal-card {
-        height: 20px;
+        height: 25px;
         background: #6aae56;
     }
     .status-card {
-        height: 20px;
+        height: 25px;
         background: #e0e0e0;
     }
     .close-card {
-        height: 20px;
+        height: 25px;
         background: #46269d;
     }
     .status-card-font {
