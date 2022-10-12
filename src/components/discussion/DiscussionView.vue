@@ -180,7 +180,7 @@
             function getNowDiscussions(content) {
                 console.log(blogInfos)
                 API.post(API.defaults.baseUrl + '/discuss/deletecomment/queryTitle',
-                    JSON.stringify(content)
+                    JSON.stringify({content: content})
                 ).then(function (response) {
                     while (!blogInfos.length == 0) {
                         blogInfos.pop();
