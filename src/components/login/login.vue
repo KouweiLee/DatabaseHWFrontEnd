@@ -158,7 +158,9 @@
             // 登录
             function login() {
                 console.log(JSON.stringify(form))
-                API.post(API.defaults.baseURL + '/login/login/', JSON.stringify(form))
+                console.log(API.defaults.baseUrl)
+                console.log(API.defaults.baseUrl+'/login/login/')
+                API.post(API.defaults.baseUrl+'/login/login/', JSON.stringify(form))
                     .then(function (response) {
                         console.log(response);
                         if (response.status === 200) {
