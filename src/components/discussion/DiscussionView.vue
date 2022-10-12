@@ -68,7 +68,7 @@
     import router from "@/router";
     import BlogComponent from "@/components/discussion/blogComponent";
     import API from "../../axios.js"
-    // import {getCurrentInstance} from "@vue/runtime-core";
+    import {getCurrentInstance} from "@vue/runtime-core";
 
     export default {
         name: "ComponentTwo",
@@ -128,7 +128,7 @@
                 isLike: false
             })
 
-            let blogInfos = [
+            let blogInfos = reactive([
                 {
                     id: 1,
                     isTop: true,
@@ -165,7 +165,7 @@
                     time: "2022-10-1",
                     isLike: false
                 },
-            ]
+            ])
 
             const dialogTableVisible = ref(false)
             const dialogFormVisible = ref(false)
@@ -182,15 +182,20 @@
                 API.post(API.defaults.baseUrl + '/discuss/queryTitle/',
                     JSON.stringify(content)
                 ).then(function (response) {
-                    while (!blogInfos.length == 0) {
+                  console.log(blogInfos.length)
+                    while (!(blogInfos.length === 0)) {
                         blogInfos.pop();
                     }
+                    console.log(blogInfos.length)
                     let i;
-                    for (i = 0; i < response.data.blogInfos.length; i++) {
-                        blogInfos.push(response.data.blogInfos[i])
+                    console.log(response.data.data.length)
+                    for (i = 0; i < response.data.data.length; i++) {
+                        blogInfos.push(response.data.data[i])
+                        console.log(i)
                     }
-                    blogInfos = response.data.blogInfos
+                    // blogInfos = response.data.blogInfos
                     console.log(blogInfos)
+                  $forceUpdate()
                 })
                     .catch(function (error) {
                         console.log(error);
