@@ -179,7 +179,7 @@
 
             function getNowDiscussions(content) {
                 console.log(blogInfos)
-                API.post(API.defaults.baseUrl + '/discuss/deletecomment/queryTitle',
+                API.post(API.defaults.baseUrl + '/discuss/queryTitle/',
                     JSON.stringify(content)
                 ).then(function (response) {
                     while (!blogInfos.length == 0) {
