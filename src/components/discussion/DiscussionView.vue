@@ -68,7 +68,6 @@
     import router from "@/router";
     import BlogComponent from "@/components/discussion/blogComponent";
     import API from "../../axios.js"
-    import {getCurrentInstance} from "@vue/runtime-core";
 
     export default {
         name: "ComponentTwo",
@@ -130,7 +129,7 @@
 
             let blogInfos = reactive([
                 {
-                    id: 1,
+                    id: -1,
                     isTop: true,
                     isOver: true,
                     submitNumber: 100,
@@ -148,7 +147,7 @@
                     isLike: false
                 },
                 {
-                    id: 2,
+                    id: -2,
                     isTop: false,
                     isOver: true,
                     submitNumber: 100,
@@ -182,20 +181,17 @@
                 API.post(API.defaults.baseUrl + '/discuss/queryTitle/',
                     JSON.stringify(content)
                 ).then(function (response) {
-                  console.log(blogInfos.length)
+                  console.log(response)
                     while (!(blogInfos.length === 0)) {
                         blogInfos.pop();
                     }
                     console.log(blogInfos.length)
                     let i;
-                    console.log(response.data.data.length)
                     for (i = 0; i < response.data.data.length; i++) {
                         blogInfos.push(response.data.data[i])
-                        console.log(i)
                     }
                     // blogInfos = response.data.blogInfos
                     console.log(blogInfos)
-                  $forceUpdate()
                 })
                     .catch(function (error) {
                         console.log(error);
@@ -233,7 +229,7 @@
                 newBlogInfo.time = yy+'-'+mm+'-'+dd+' '+hh+':'+mf+':'+ss;
 
                 dialogFormVisible.value = false
-                API.post(API.defaults.baseUrl + '/discuss/addtitle/`',
+                API.post(API.defaults.baseUrl + '/discuss/addtitle/',
                     JSON.stringify(newBlogInfo)
                 ).catch(function (error) {
                         console.log(error);

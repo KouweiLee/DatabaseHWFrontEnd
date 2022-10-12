@@ -10,26 +10,25 @@
                     <span class="status-card-font">普通</span></el-tag>
                 <el-tag v-if="myBlogInfo.isOver" shadow="never" class="close-card">
                     <span class="status-card-font">已关闭</span></el-tag>
-                <el-tag v-if="!myBlogInfo.isOver" shadow="never" class="status-card" >
-                    <span class="status-card-font" >{{myBlogInfo.submitNumber}}关注|{{myBlogInfo.replyNumber}}回复</span></el-tag>
+                <el-tag v-if="!myBlogInfo.isOver" shadow="never" class="status-card">
+                    <span class="status-card-font">{{myBlogInfo.submitNumber}}关注|{{myBlogInfo.replyNumber}}回复</span>
+                </el-tag>
             </el-col>
             <el-col :span="4">
-                <el-button type="primary" :icon="Delete" v-on:click="deleteBlog" style="background-color: red;border: 0;height: 25px;float: right;"/>
+                <el-button type="primary" :icon="Delete" @click="deleteBlog"
+                           style="background-color: red;border: 0;height: 25px;float: right;"/>
             </el-col>
 
         </el-row>
         <!-- </div> -->
         <div>
             <!--帖子的标题信息-->
-            <h2 style="text-align: left"><a href="https://developer.mozilla.org/zh-CN/">P8答疑帖</a></h2>
+            <h2 style="text-align: left"><a href="{{myBlogInfo.url}}">{{myBlogInfo.title}}</a></h2>
         </div>
         <div>
             <!--帖子内容简洁，最长四行-->
             <span class="blogContent">
-                {{myBlogInfo.content}}放大了的饭卡机劳动法酒店房卡都发快递发老师肯定激发了的房间拉地府进阿里打开放假啊了的法律可放大来看flakflak附近的啦距离法就拉到激发了方法论垃圾flak积分拉风案例放假啦发来
-                放大了的饭卡机劳动法酒店房卡都发快递发老师肯定激发了的房间拉地府进阿里打开放假啊了的法律可放大来看flakflak附近的啦距离法就拉到激发了方法论垃圾flak积分拉风案例放假啦发来
-                放大了的饭卡机劳动法酒店房卡都发快递发老师肯定激发了的房间拉地府进阿里打开放假啊了的法律可放大来看flakflak附近的啦距离法就拉到激发了方法论垃圾flak积分拉风案例放假啦发来
-                放大了的饭卡机劳动法酒店房卡都发快递发老师肯定激发了的房间拉地府进阿里打开放假啊了的法律可放大来看flakflak附近的啦距离法就拉到激发了方法论垃圾flak积分拉风案例放假啦发来放大
+                {{myBlogInfo.content}}
             </span>
         </div>
         <div style="float: left">
@@ -37,14 +36,16 @@
             <el-tag v-for="(item, i) in myBlogInfo.tags" :key="i"
                     effect="dark"
                     round
-                    style="min-width: 40px; max-width: 70px; margin: 3px; ">{{item}}</el-tag>
+                    style="min-width: 40px; max-width: 70px; margin: 3px; ">{{item}}
+            </el-tag>
         </div>
         <div style="clear:both"></div>
         <div>
             <!--帖子发布人+点赞-->
             <span style="text-align: left; float:left;">{{myBlogInfo.name}} {{myBlogInfo.time}}</span>
             <el-check-tag :checked="checked" @change="onChange" style="float: right;height: 20px; width: 50px;">
-                Like</el-check-tag>
+                Like
+            </el-check-tag>
         </div>
         <div style="clear:both"></div>
     </el-card>
@@ -56,8 +57,9 @@
     // import {assertBoolean} from "@babel/core/lib/config/validation/option-assertions";
     import {ref} from "vue";
     import {reactive} from "@vue/reactivity";
-    import { Delete } from "@element-plus/icons-vue";
+    import {Delete} from "@element-plus/icons-vue";
     import API from "@/axios";
+
     export default {
         name: "blogComponent",
         // props: ['isTop', 'isOver', 'submitNumber', 'replyNumber',
@@ -66,14 +68,14 @@
             blogInfo: {
                 type: Object,
                 default: function () {
-                    return{
-                        id:1,
-                        isTop:true,
-                        isOver:true,
+                    return {
+                        id: 1,
+                        isTop: true,
+                        isOver: true,
                         submitNumber: 100,
                         replyNumber: 25,
                         title: "Nan",
-                        url:"404",
+                        url: "404",
                         content: "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
                             "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
                             "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
@@ -82,7 +84,7 @@
                         tags: ['P7', 'P8'],
                         name: "Zhang_kg",
                         time: "2022-10-1",
-                        isLike:  false
+                        isLike: false
                     }
                 }
             },
@@ -136,12 +138,14 @@
 
             const myBlogInfo = reactive(props.blogInfo);
 
+            console.log(props.blogInfo)
+
             const onChange = (status) => {
                 checked.value = status
             }
 
             function deleteBlog() {
-                API.post(API.defaults.baseUrl + '/discuss/deletetitle/', JSON.stringify( {title_id:myBlogInfo.id}))
+                API.post(API.defaults.baseUrl + '/discuss/deletetitle/', JSON.stringify({title_id: myBlogInfo.id}))
                     .then(function (response) {
                         console.log(response);
                     })
@@ -168,11 +172,13 @@
         padding: 2px;
         margin: 0;
     }
+
     *, :after, :before {
         background-repeat: no-repeat;
         box-sizing: inherit;
     }
-    .wholeClass{
+
+    .wholeClass {
         cursor: pointer;
         width: 30%;
         float: left;
@@ -182,25 +188,31 @@
         margin-left: 1%;
         margin-right: 1%;
     }
+
     .overallInfo {
 
     }
+
     .top-card {
         height: 25px;
         background: #db4a3d;
     }
+
     .normal-card {
         height: 25px;
         background: #6aae56;
     }
+
     .status-card {
         height: 25px;
         background: #e0e0e0;
     }
+
     .close-card {
         height: 25px;
         background: #46269d;
     }
+
     .status-card-font {
         color: #ffffff;
         font-size: 12px;
@@ -210,14 +222,17 @@
         max-width: 100%;
         height: 100%;
     }
+
     a:link, a:visited, a:active {
         color: #000000;
         text-decoration: none;
     }
+
     a:hover {
         color: #000000;
         text-decoration-line: underline;
     }
+
     .blogContent {
         font-size: 12px;
         overflow: hidden;
