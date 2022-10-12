@@ -130,7 +130,7 @@
 
             let blogInfos = reactive([
                 {
-                    id: 1,
+                    id: -1,
                     isTop: true,
                     isOver: true,
                     submitNumber: 100,
@@ -148,7 +148,7 @@
                     isLike: false
                 },
                 {
-                    id: 2,
+                    id: -2,
                     isTop: false,
                     isOver: true,
                     submitNumber: 100,
@@ -179,17 +179,18 @@
 
             function getNowDiscussions(content) {
                 console.log(blogInfos)
-                API.post(API.defaults.baseUrl + '/discuss/queryTitle',
+                API.post(API.defaults.baseUrl + '/discuss/queryTitle/',
                     JSON.stringify(content)
                 ).then(function (response) {
-                    while (!(blogInfos.length === 1)) {
+                  console.log(response)
+                    while (!(blogInfos.length === 0)) {
                         blogInfos.pop();
                     }
                     let i;
-                    for (i = 0; i < response.data.blogInfos.length; i++) {
-                        blogInfos.push(response.data.blogInfos[i])
+                    for (i = 0; i < response.data.data.length; i++) {
+                        blogInfos.push(response.data.data[i])
                     }
-                    blogInfos = response.data.blogInfos
+                    // blogInfos = response.data.blogInfos
                     console.log(blogInfos)
                 })
                     .catch(function (error) {
