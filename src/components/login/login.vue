@@ -1,7 +1,7 @@
 <template>
     <div class="layout">
-        <el-tabs type="border-card">
-            <el-tab-pane label="登录">
+        <el-tabs type="border-card" v-model="tabName">
+            <el-tab-pane label="登录" name="login">
                 <el-form
                         label-position="right"
                         label-width="60px"
@@ -31,10 +31,18 @@
                     >
                         登录
                     </el-button>
+                    <el-row>
+                        <el-link @click="tabName='modify'">
+                            忘记密码
+                            <el-icon>
+                                <QuestionFilled/>
+                            </el-icon>
+                        </el-link>
+                    </el-row>
                 </el-form>
             </el-tab-pane>
 
-            <el-tab-pane label="注册">
+            <el-tab-pane label="注册" name="register">
                 <el-form
                         label-position="right"
                         label-width="100px"
@@ -76,12 +84,38 @@
                         />
                     </el-row>
                     <el-button
-                            v-if="rAgree"
+                            v-if="registerForm.rAgree"
                             type="primary"
                             class="loginBtn"
                             @click="register"
                     >
                         注册
+                    </el-button>
+                </el-form>
+            </el-tab-pane>
+            <el-tab-pane label="修改密码" name="modify">
+                <el-form
+                        label-position="right"
+                        label-width="100px"
+                        style="max-width: 460px"
+                        class="loginForm"
+                >
+                    <el-form-item label="用户名：">
+                        <el-input v-model="modifierForm.username"/>
+                    </el-form-item>
+                    <el-form-item label="原始密码：">
+                        <el-input type="password" v-model="modifierForm.pre_password"/>
+                    </el-form-item>
+                    <el-form-item label="修改后密码：">
+                        <el-input type="password" v-model="modifierForm.now_password"
+                        />
+                    </el-form-item>
+                    <el-button
+                            type="primary"
+                            class="loginBtn"
+                            @click="modify"
+                    >
+                        修改密码
                     </el-button>
                 </el-form>
             </el-tab-pane>
@@ -93,6 +127,9 @@
     import {ElMessage} from "element-plus";
     import router from "@/router";
     import API from "../../axios.js"
+    import {ref} from "@vue/reactivity";
+    // import {QuestionFilled} from '@element-plus/icons-vue';
+    // import { QuestionFilled as IconView } from '@element-plus/icons-vue'
 
     export default {
         name: "LoginView",
@@ -109,7 +146,12 @@
                 identifyCode: "",
                 rAgree: 0,
             });
-
+            const modifierForm = reactive({
+                username: "",
+                pre_password: "",
+                now_password: ""
+            })
+            const tabName = ref("login");
             // const reqData = ref(JSON.stringify(form));
 
             // 方法
@@ -130,9 +172,7 @@
 
             // 注册
             function register() {
-                API.post(API.defaults.baseURL + '/register', {
-                    registerForm
-                })
+                API.post(API.defaults.baseURL + '/login/register/', JSON.stringify(registerForm))
                     .then(function (response) {
                         console.log(response);
                     })
@@ -144,16 +184,25 @@
 
             // 获取验证码
             function getIdentifyCode() {
-                API.get(API.defaults.baseURL + '/register', {
-                    registerForm
-                })
+                // API.get(API.defaults.baseURL + '/login/changepw/', JSON.stringify(modifierForm))
+                //     .then(function (response) {
+                //         console.log(response);
+                //     })
+                //     .catch(function (error) {
+                //         console.log(error);
+                //     });
+                console.log("获取验证码");
+            }
+
+            function modify() {
+                API.post(API.defaults.baseURL + '/login/changepw/', JSON.stringify(modifierForm))
                     .then(function (response) {
                         console.log(response);
                     })
                     .catch(function (error) {
                         console.log(error);
                     });
-                console.log("获取验证码");
+                console.log("修改密码");
             }
 
             // 确认密码
@@ -168,8 +217,11 @@
             return {
                 form,
                 registerForm,
+                modifierForm,
+                tabName,
                 login,
                 register,
+                modify,
                 getIdentifyCode,
                 confirmFunc,
             };
@@ -178,6 +230,10 @@
 </script>
 
 <style scoped>
+    .el-link {
+        margin-left: 80%;
+    }
+
     .layout {
         position: absolute;
         left: calc(50% - 200px);

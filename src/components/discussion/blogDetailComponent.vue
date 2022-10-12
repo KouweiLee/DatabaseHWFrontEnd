@@ -99,7 +99,7 @@
     import {reactive} from "vue";
     // import router from "@/router";
     import {useRoute} from "vue-router";
-    import API from "../axios.js"
+    import API from "../../axios.js"
     export default {
         name: "blogDetailComponent",
         // props: {
@@ -190,6 +190,7 @@
                     });
             }
             return {
+                getInfo,
                 blogInfo,
                 // data
                 ...dataRef
