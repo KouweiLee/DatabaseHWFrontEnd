@@ -178,7 +178,7 @@
                 }]
             })
             function getInfo() {
-                API.post(API.defaults.baseURL + '/discuss/queryone/', route.query.id)
+                API.post(API.defaults.baseUrl + '/discuss/queryone/', route.query.id)
                     .then(function (response) {
                         console.log(response);
                         if (response.status === 400) {

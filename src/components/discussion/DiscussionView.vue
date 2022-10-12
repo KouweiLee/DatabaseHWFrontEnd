@@ -179,7 +179,7 @@
 
             function getNowDiscussions(content) {
                 console.log(blogInfos)
-                API.post(API.defaults.baseURL + '/discuss/deletecomment/queryTitle',
+                API.post(API.defaults.baseUrl + '/discuss/deletecomment/queryTitle',
                     JSON.stringify(content)
                 ).then(function (response) {
                     while (!blogInfos.length == 0) {
@@ -228,7 +228,7 @@
                 newBlogInfo.time = yy+'-'+mm+'-'+dd+' '+hh+':'+mf+':'+ss;
 
                 dialogFormVisible.value = false
-                API.post(API.defaults.baseURL + '/discuss/addtitle/`',
+                API.post(API.defaults.baseUrl + '/discuss/addtitle/`',
                     JSON.stringify(newBlogInfo)
                 ).catch(function (error) {
                         console.log(error);
