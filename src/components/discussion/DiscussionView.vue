@@ -56,7 +56,7 @@
     </div>
     <div>
         <blog-component v-for="blogInfo in blogInfos" :key="blogInfo.id" :blogInfo="blogInfo"
-                        @click="gotoDetail(blogInfo.id)"></blog-component>
+                        ></blog-component>
         <!--        <discussion-thread v-for="discussionThread in discussionThreads" :key="discussionThread.id"-->
         <!--                           :title="discussionThread.title"></discussion-thread>-->
     </div>

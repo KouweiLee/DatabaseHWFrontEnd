@@ -23,7 +23,7 @@
         <!-- </div> -->
         <div>
             <!--帖子的标题信息-->
-            <h2 style="text-align: left"><a href="https://developer.mozilla.org/zh-CN/">P8答疑帖</a></h2>
+            <h2 style="text-align: left" @click="gotoDetail(blogInfo.id)">P8答疑帖</h2>
         </div>
         <div>
             <!--帖子内容简洁，最长四行-->
@@ -62,9 +62,11 @@
     import {reactive} from "@vue/reactivity";
     import {Delete} from "@element-plus/icons-vue";
     import API from "@/axios";
+    import router from "@/router";
 
     export default {
         name: "blogComponent",
+
         // props: ['isTop', 'isOver', 'submitNumber', 'replyNumber',
         // 'title', 'url', 'content', 'tags', 'name', 'time', 'isLike'],
         props: {
@@ -157,12 +159,21 @@
                     });
             }
 
+            function gotoDetail(id) {
+                console.log(router)
+                router.push({
+                    path: '/home/c21',
+                    query: {id}
+                })
+            }
+
             return {
                 deleteBlog,
                 checked,
                 onChange,
                 myBlogInfo,
-                Delete
+                Delete,
+                gotoDetail
             }
         }
     }
