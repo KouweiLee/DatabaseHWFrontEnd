@@ -23,7 +23,7 @@
         <!-- </div> -->
         <div>
             <!--帖子的标题信息-->
-            <h2 style="text-align: left" @click="gotoDetail(blogInfo.id)">P8答疑帖</h2>
+            <h2 style="text-align: left" @click="gotoDetail(myBlogInfo.id)">P8答疑帖</h2>
         </div>
         <div>
             <!--帖子内容简洁，最长四行-->
@@ -150,6 +150,7 @@
             }
 
             function deleteBlog() {
+                console.log(myBlogInfo.id)
                 API.post(API.defaults.baseUrl + '/discuss/deletetitle/', JSON.stringify({title_id: myBlogInfo.id}))
                     .then(function (response) {
                         console.log(response);

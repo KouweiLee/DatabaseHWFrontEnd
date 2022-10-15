@@ -128,12 +128,18 @@
     import router from "@/router";
     import API from "../../axios.js"
     import {ref} from "@vue/reactivity";
+    import STORE from '../../store/index'
+
+
+
     // import {QuestionFilled} from '@element-plus/icons-vue';
     // import { QuestionFilled as IconView } from '@element-plus/icons-vue'
 
     export default {
         name: "LoginView",
         setup() {
+            STORE.state.user = 'liwk2'
+            console.log(STORE.state.user)
             const form = reactive({
                 username: "",
                 password: "",
@@ -164,6 +170,7 @@
                     .then(function (response) {
                         console.log(response);
                         if (response.status === 200) {
+                            STORE.state.user = form.username
                             router.push('/home')
                         }
                     })

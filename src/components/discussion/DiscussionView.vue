@@ -68,6 +68,7 @@
     import router from "@/router";
     import BlogComponent from "@/components/discussion/blogComponent";
     import API from "../../axios.js"
+    import STORE from "@/store";
     // import {getCurrentInstance} from "@vue/runtime-core";
 
     export default {
@@ -227,6 +228,7 @@
                 let mf = new Date().getMinutes()<10 ? '0'+new Date().getMinutes() : new Date().getMinutes();
                 let ss = new Date().getSeconds()<10 ? '0'+new Date().getSeconds() : new Date().getSeconds();
                 newBlogInfo.time = yy+'-'+mm+'-'+dd+' '+hh+':'+mf+':'+ss;
+                newBlogInfo.name = STORE.state.user
 
                 dialogFormVisible.value = false
                 API.post(API.defaults.baseUrl + '/discuss/addtitle/`',
