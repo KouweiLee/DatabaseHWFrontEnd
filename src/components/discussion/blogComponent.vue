@@ -23,7 +23,7 @@
         <!-- </div> -->
         <div>
             <!--帖子的标题信息-->
-            <h2 style="text-align: left" @click="gotoDetail(myBlogInfo.id)">P8答疑帖</h2>
+            <h2 style="text-align: left" @click="gotoDetail(myBlogInfo.id)">{{myBlogInfo.title}}</h2>
         </div>
         <div>
             <!--帖子内容简洁，最长四行-->
@@ -60,6 +60,8 @@
     import {Delete} from "@element-plus/icons-vue";
     import API from "@/axios";
     import router from "@/router";
+  // import { useContext } from "vue";
+
 
     export default {
         name: "blogComponent",
@@ -135,7 +137,7 @@
             // }
             // }
         },
-        setup(props) {
+        setup(props, context) {
             const checked = ref(false)
 
             const myBlogInfo = reactive(props.blogInfo);
@@ -151,6 +153,8 @@
                 API.post(API.defaults.baseUrl + '/discuss/deletetitle/', JSON.stringify({title_id: myBlogInfo.id}))
                     .then(function (response) {
                         console.log(response);
+                        context.emit('eventIsNum', 888)
+
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -197,6 +201,8 @@
         /*padding-right: 1.5%;*/
         margin-left: 1%;
         margin-right: 1%;
+        /*height: 40%;*/
+        /*display: block;*/
     }
 
     .overallInfo {
