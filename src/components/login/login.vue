@@ -1,4 +1,10 @@
 <template>
+  <!-- <el-row>
+    <el-col :span="10" style="margin: 0 auto;">
+     
+    </el-col>
+  </el-row>> -->
+  
   <div class="layout">
     <el-tabs type="border-card" v-model="tabName">
       <el-tab-pane label="登录" name="login">
@@ -129,7 +135,6 @@ import router from "@/router";
 import API from "../../axios.js"
 import {ref} from "@vue/reactivity";
 import useGetGlobalProperties from '@/useGlobal'
-
 // import {QuestionFilled} from '@element-plus/icons-vue';
 // import { QuestionFilled as IconView } from '@element-plus/icons-vue'
 
@@ -160,6 +165,8 @@ export default {
     // 登录
     const globalProperties = useGetGlobalProperties()
 
+    const show = ref(false)
+
     function login() {
       console.log(JSON.stringify(form))
       console.log(API.defaults.baseUrl)
@@ -171,10 +178,25 @@ export default {
             console.log(response);
             if (response.status === 200) {
               router.push('/home')
+              // setTimeout(function() {
+              //   alert("登录成功")
+              // }, 2000)
+              
+              // window.alert = function(msg){
+              //     $("#alertContentId").html(msg);
+              //     $("#alertModalId").modal('show');
+              //     setTimeout('$("#alertModalId").modal("hide")',1000);
+              // };
+              // alert("登录成功")
+              ElMessage({
+                message: '登录成功',
+                type: 'success',
+              })
             }
           })
           .catch(function (error) {
             console.log(error);
+            ElMessage.error('登录失败，请重试')
           });
     }
 
@@ -232,12 +254,22 @@ export default {
       modify,
       getIdentifyCode,
       confirmFunc,
+      show
     };
   },
 };
 </script>
 
 <style scoped>
+
+.el-alert {
+  margin: 20px 0 0;
+}
+.el-alert:first-child {
+  margin: 0;
+  
+}
+
 .el-link {
   margin-left: 80%;
 }

@@ -7,6 +7,10 @@ import Mock from 'mockjs'  //导入mockjs
 //     status:200, //请求成功状态码
 //     dataList:[1,2,3,4,5,6,7,8,9,10] //模拟的请求数据
 // })
+// const testData = Mock.mock('http://localhost:8000/login/login/', 'post', {
+//     status:200
+// })
+
 const testData2 = Mock.mock('http://localhost:8080/discuss/queryTitle/', 'post', {
 
     status: 400, //请求成功状态码
@@ -68,4 +72,6 @@ const testData2 = Mock.mock('http://localhost:8080/discuss/queryTitle/', 'post',
 
 //导出
 // export default testData
-export default testData2
+export default {testData2, 
+    // testData
+}; 

@@ -7,6 +7,7 @@ import axios from '@/axios.js'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 const app = createApp(App)
 import store from './store'
+import './mock/'
 
 app.config.globalProperties.$axios=axios;  //配置axios的全局引用
 // require('./mock/index')
