@@ -1,5 +1,5 @@
 <template>
-    <el-card class="wholeClass" shadow="hover">
+    <el-card class="wholeClass" shadow="hover" :body-style="{height: '200px'}">
         <!-- <div class="overallInfo"> -->
         <!--这个是帖子组件的顶栏信息，包括是否置顶、是否关闭、如果没有关闭则显示关注和回复次数-->
         <el-row>
@@ -14,7 +14,7 @@
                     <span class="status-card-font">{{myBlogInfo.submitNumber}}关注|{{myBlogInfo.replyNumber}}回复</span>
                 </el-tag>
             </el-col>
-            <el-col :span="4">
+            <el-col :span="3">
                 <el-button type="primary" :icon="Delete" @click="deleteBlog"
                            style="background-color: red;border: 0;height: 25px;float: right;"/>
             </el-col>
@@ -257,5 +257,9 @@
         -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
         color: gray;
+        height: 60px;
+        text-align: left;
+        word-wrap: break-word;
+        word-break: normal;
     }
 </style>
