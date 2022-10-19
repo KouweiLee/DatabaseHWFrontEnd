@@ -125,7 +125,7 @@
 <script>
 import {reactive} from 'vue'
 import {ElMessage} from "element-plus";
-import router from "@/router";
+import router from "@/router/router";
 import API from "../../axios.js"
 import {ref} from "@vue/reactivity";
 import STORE from '../../store/index'

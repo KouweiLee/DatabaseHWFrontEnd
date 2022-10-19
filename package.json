@@ -25,6 +25,7 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/reactivity": "^3.2.39",
+    "chokidar": "^3.5.3",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "vuex": "^4.0.2"

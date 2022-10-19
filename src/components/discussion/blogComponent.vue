@@ -59,7 +59,7 @@
     import {reactive} from "@vue/reactivity";
     import {Delete} from "@element-plus/icons-vue";
     import API from "@/axios";
-    import router from "@/router";
+    import router from "@/router/router";
   // import { useContext } from "vue";
 
 
@@ -146,14 +146,14 @@
 
             const onChange = (status) => {
                 checked.value = status
-            }
+            }   //点赞
 
             function deleteBlog() {
                 console.log(myBlogInfo.id)
                 API.post(API.defaults.baseUrl + '/discuss/deletetitle/', JSON.stringify({title_id: myBlogInfo.id}))
                     .then(function (response) {
                         console.log(response);
-                        context.emit('eventIsNum', 888)
+                        context.emit('deleteBlog')
 
                     })
                     .catch(function (error) {
