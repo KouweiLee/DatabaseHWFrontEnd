@@ -1,9 +1,5 @@
 import {createRouter, createWebHashHistory} from "vue-router"
 
-import c1 from '../components/c1.vue'
-import c2 from '../components/discussion/DiscussionView.vue'
-import c3 from '../components/c3.vue'
-import c4 from '../components/c4.vue'
 // 3. 创建路由实例并传递 `routes` 配置
 // 你可以在这里输入更多的配置，但我们在这里
 // 暂时保持简单
@@ -12,34 +8,54 @@ const routes = [
     // {path: '/', component: () => import('@/components/blogDetailComponent')},
     // {path: '/', component: () => import('@/components/login/login.vue')},
     // {path: '/', component: () => import('@/components/learn')},
-    {path: '/home', component: () => import('@/components/Home.vue'),
+    {
+        path: '/home', component: () => import('@/components/Home.vue'),
         children: [
             {
-                path: '/home/c1',
-                component: () => import('@/components/c1.vue')
-            },
-            {
-                path: '/home/c21',
+                path: '/home/blog',
                 component: () => import('@/components/discussion/blogDetailComponent.vue')
             },
             {
-                path: '/home/c2',
+                path: '/home/discussion',
                 component: () => import('@/components/discussion/DiscussionView.vue'),
             },
             {
-                path: '/home/c3',
-                component: () => import('@/components/c3.vue')
+                path: '/home/course',
+                component: () => import('@/components/course/CourseView.vue'),
+                children: [
+                    {
+                        path: '/home/course/description',
+                        component: () => import('@/components/course/CourseDescription'),
+                    },
+                    {
+                        path: '/home/course/work',
+                        component: () => import('@/components/course/CourseWork'),
+                    },
+                    {
+                        path: '/home/course/management',
+                        component: () => import('@/components/course/CourseManagement'),
+                    },
+                ]
             },
             {
-                path: '/home/c4',
-                component: () => import('@/components/c4.vue')
+                path: '/home/courseList',
+                component: () => import('@/components/course/CourseList.vue'),
+            },
+            {
+                path: '/home/judgeSelf',
+                component: () => import('@/components/JudgeSelfView.vue')
+            },
+            {
+                path: '/home/announcement',
+                component: () => import('@/components/AnnouncementView.vue')
+            },
+            {
+                path: '/home/user',
+                component: () => import('@/components/UserView.vue')
             },
 
-        ]},
-    { path: '/1', component: c1 },
-    { path: '/2', component: c2 },
-    { path: '/3', component: c3 },
-    { path: '/4', component: c4 },
+        ]
+    },
 ]
 
 const router = createRouter({

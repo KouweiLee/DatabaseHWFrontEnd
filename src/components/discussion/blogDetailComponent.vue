@@ -97,7 +97,7 @@
     } from '@element-plus/icons-vue'
     import {toRefs} from "@vue/reactivity";
     import {reactive} from "vue";
-    // import router from "@/router";
+    // import router from "@/router/router";
     import {useRoute} from "vue-router";
     import API from "../../axios.js"
     export default {
@@ -151,9 +151,9 @@
         //     }
         // },
         setup() {
-            getInfo();
             let route = useRoute();
-            console.log(route.query.id)
+            console.log(route)
+            getInfo();
             const data = reactive({
                 Star: Star,
                 Edit: Edit

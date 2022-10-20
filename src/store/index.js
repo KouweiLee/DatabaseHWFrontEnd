@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 
 const STORE =  new Vuex.Store({
     state: {
-        user: 'liwk'
+        user: 'liwk',
+        isSuperUser:true
     },
     getters: {},
     mutations: {},

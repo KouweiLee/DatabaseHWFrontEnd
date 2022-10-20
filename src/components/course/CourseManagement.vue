@@ -1,10 +1,10 @@
 <template>
-    <h1>c1</h1>
+    <h1>CourseManagement</h1>
 </template>
 
 <script>
     export default {
-        name: "ComponentOne"
+        name: "CourseManagement"
     }
 </script>
 

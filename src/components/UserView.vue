@@ -1,10 +1,10 @@
 <template>
-    <h1>c4</h1>
+    <h1>User</h1>
 </template>
 
 <script>
     export default {
-        name: "ComponentFour"
+        name: "UserView"
     }
 </script>
 

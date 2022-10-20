@@ -164,7 +164,7 @@
             function gotoDetail(id) {
                 console.log(router)
                 router.push({
-                    path: '/home/c21',
+                    path: '/home/blog',
                     query: {id}
                 })
             }

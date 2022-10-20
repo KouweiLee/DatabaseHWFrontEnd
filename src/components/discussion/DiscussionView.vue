@@ -1,71 +1,100 @@
 <template>
-    <router-view></router-view>
-    <div class="search">
-        <el-row>
-            <el-input
-                    v-model="searchValue"
-                    size="medium"
-                    style="width: 60%"
-                    class="search_input"
-                    suffix-icon="Search"
-                    clearable
-            >
-                输入框
-            </el-input>
-            <el-button size="medium" class="search_button" @click="searchClick(searchValue)">搜索</el-button>
-            <el-button size="medium" class="add_button" @click="createNewThread">新建讨论贴</el-button>
+    <el-header>
+        <div class="h-6"/>
+        <el-menu
+                :default-active="activeIndex2"
+                class="el-menu-demo"
+                mode="horizontal"
+                background-color="#545c64"
+                text-color="#fff"
+                active-text-color="#ffd04b"
+                @select="handleSelect"
+        >
+            <el-menu-item index="1">Processing Center</el-menu-item>
+            <el-sub-menu index="2">
+                <template #title>Workspace</template>
+                <el-menu-item index="2-1">item one</el-menu-item>
+                <el-menu-item index="2-2">item two</el-menu-item>
+                <el-menu-item index="2-3">item three</el-menu-item>
+                <el-sub-menu index="2-4">
+                    <template #title>item four</template>
+                    <el-menu-item index="2-4-1">item one</el-menu-item>
+                    <el-menu-item index="2-4-2">item two</el-menu-item>
+                    <el-menu-item index="2-4-3">item three</el-menu-item>
+                </el-sub-menu>
+            </el-sub-menu>
+            <el-menu-item index="3" disabled>Info</el-menu-item>
+            <el-menu-item index="4">Orders</el-menu-item>
+        </el-menu>
+    </el-header>
+    <el-main>
+        <div class="search">
+            <el-row>
+                <el-input
+                        v-model="searchValue"
+                        size="medium"
+                        style="width: 60%"
+                        class="search_input"
+                        suffix-icon="Search"
+                        clearable
+                >
+                    输入框
+                </el-input>
+                <el-button size="medium" class="search_button" @click="searchClick(searchValue)">搜索</el-button>
+                <el-button size="medium" class="add_button" @click="createNewThread">新建讨论贴</el-button>
 
-            <el-dialog v-model="dialogFormVisible" title="添加主题帖">
-                <el-form :model="form" label-width="120px">
-                    <el-form-item label="主题">
-                        <el-input v-model="newBlogInfo.title"/>
-                    </el-form-item>
-                    <el-form-item label="选择主题相关元素">
-                        <el-select
-                                v-model="newBlogInfo.tags"
-                                multiple
-                                placeholder="Select"
-                                style="width: 240px"
-                        >
-                            <el-option
-                                    v-for="item in cTags"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            />
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="是否置顶">
-                        <el-switch v-model="newBlogInfo.isTop"/>
-                    </el-form-item>
-                    <el-form-item label="是否">
-                        <el-switch v-model="newBlogInfo.isOver"/>
-                    </el-form-item>
-                    <el-form-item label="内容">
-                        <el-input v-model="newBlogInfo.content" type="textarea"/>
-                    </el-form-item>
-                </el-form>
-                <template #footer>
+                <el-dialog v-model="dialogFormVisible" title="添加主题帖">
+                    <el-form :model="form" label-width="120px">
+                        <el-form-item label="主题">
+                            <el-input v-model="newBlogInfo.title"/>
+                        </el-form-item>
+                        <el-form-item label="选择主题相关元素">
+                            <el-select
+                                    v-model="newBlogInfo.tags"
+                                    multiple
+                                    placeholder="Select"
+                                    style="width: 240px"
+                            >
+                                <el-option
+                                        v-for="item in cTags"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value"
+                                />
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="是否置顶">
+                            <el-switch v-model="newBlogInfo.isTop"/>
+                        </el-form-item>
+                        <el-form-item label="是否">
+                            <el-switch v-model="newBlogInfo.isOver"/>
+                        </el-form-item>
+                        <el-form-item label="内容">
+                            <el-input v-model="newBlogInfo.content" type="textarea"/>
+                        </el-form-item>
+                    </el-form>
+                    <template #footer>
                   <span class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取消</el-button>
                     <el-button type="primary" @click="submitNewThread">确认</el-button>
                   </span>
-                </template>
-            </el-dialog>
-        </el-row>
-    </div>
-    <div>
-        <blog-component v-for="blogInfo in blogInfos" :key="blogInfo.id" :blogInfo="blogInfo"
-                        @deleteBlog="childDeleteBlog"></blog-component>
-        <!--        <discussion-thread v-for="discussionThread in discussionThreads" :key="discussionThread.id"-->
-        <!--                           :title="discussionThread.title"></discussion-thread>-->
-    </div>
+                    </template>
+                </el-dialog>
+            </el-row>
+        </div>
+        <div>
+            <blog-component v-for="blogInfo in blogInfos" :key="blogInfo.id" :blogInfo="blogInfo"
+                            @deleteBlog="childDeleteBlog"></blog-component>
+            <!--        <discussion-thread v-for="discussionThread in discussionThreads" :key="discussionThread.id"-->
+            <!--                           :title="discussionThread.title"></discussion-thread>-->
+        </div>
+    </el-main>
 </template>
 
 <script>
     // import DiscussionThread from "@/components/DiscussionThread";
     import {reactive, ref} from "@vue/reactivity";
-    import {watch} from"vue"
+    import {watch} from "vue"
     // import router from "@/router/router";
     import BlogComponent from "@/components/discussion/blogComponent";
     import API from "../../axios.js"
@@ -270,5 +299,10 @@
     }
 
     .search {
+    }
+
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
+        width: 200px;
+        min-height: 400px;
     }
 </style>

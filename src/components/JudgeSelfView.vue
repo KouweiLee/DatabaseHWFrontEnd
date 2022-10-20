@@ -1,10 +1,10 @@
 <template>
-    <h1>c3</h1>
+    <h1>JudgeSelf</h1>
 </template>
 
 <script>
     export default {
-        name: "ComponentThree"
+        name: "JudgeSelfView"
     }
 </script>
 
