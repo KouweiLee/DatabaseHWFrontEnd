@@ -3,11 +3,11 @@
 </template>
 
 <script>
-    import {reactive, ref} from "@vue/reactivity";
+    import {reactive} from "@vue/reactivity";
     import STORE from '../../store/index'
     import {useRoute} from "vue-router";
     import API from "../../axios.js"
-    import router from "@/router/router";
+    // import router from "@/router/router";
 
 
     export default {
