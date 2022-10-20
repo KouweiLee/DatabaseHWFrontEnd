@@ -14,11 +14,10 @@
                     <span class="status-card-font">{{myBlogInfo.submitNumber}}关注|{{myBlogInfo.replyNumber}}回复</span>
                 </el-tag>
             </el-col>
-            <el-col :span="3">
+            <el-col :span="3" >
                 <el-button type="primary" :icon="Delete" @click="deleteBlog"
                            style="background-color: red;border: 0;height: 25px;float: right;"/>
             </el-col>
-
         </el-row>
         <!-- </div> -->
         <div>
