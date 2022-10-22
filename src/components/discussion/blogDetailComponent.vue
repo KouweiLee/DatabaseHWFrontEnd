@@ -77,7 +77,8 @@
                         <div class="spacer"></div>
                         <el-button type="primary" :icon="Edit"
                                    @click="showAddCommentForm(item.commentator)" circle/>
-                        <el-button type="danger" :icon="Delete" @click="showDeleteCommentWindow(item.comment_id)" circle/>
+                        <el-button type="danger" :icon="Delete" @click="showDeleteCommentWindow(item.comment_id)"
+                                   circle/>
                       </el-row>
                     </el-card>
                   </el-col>
@@ -147,14 +148,37 @@ export default {
           {
             title_id: route.query.id
           }).then(function (response) {
+        console.log("!!!!!!!!!!!!!!!")
         console.log(response);
+        console.log("???????????????")
         if (response.data.code === 200) {
-          blogInfo.title_id = response.data.data[0].title_id
-          blogInfo.title = response.data.data[0].title
-          blogInfo.content = response.data.data[0].content
-          blogInfo.member_name = response.data.data[0].member_name
-          blogInfo.member_type = response.data.data[0].member_type
+          blogInfo.title_id = response.data.data.title_id
+          blogInfo.title = response.data.data.title
+          blogInfo.content = response.data.data.content
+          blogInfo.member_name = response.data.data.member_name
+          blogInfo.member_type = response.data.data.member_type
           //TODO: 更新其他信息
+          blogInfo.comments.length = 0
+          for (let [index, item] of response.data.data.comments.entries()) {
+            console.log(item)
+            console.log(index)
+            console.log(item.comment_id)
+            let obj = reactive({
+              comment_id: 1,
+              content: "没有为什么",
+              time: "2017-07-25 21:51:54",
+              commentator: "张凯歌",
+              member_type: "成员",
+              beCommentator: "李国玮",
+            })
+            obj.comment_id = item.comment_id
+            obj.content = item.content
+            obj.time = item.time
+            obj.commentator = item.commentator
+            obj.beCommentator = item.beCommentator
+            obj.member_type = item.member_type
+            blogInfo.comments.push(obj)
+          }
         }
       }).catch(function (error) {
         console.log(error);
@@ -179,6 +203,7 @@ export default {
     // }
 
     function showDeleteCommentWindow(comment_id) {
+      console.log("!!!!!!!!!!!!" + comment_id)
       ElMessageBox.confirm(
           'This action will permanently delete the comment. Continue?\n此操作将永久删除该条评论，是否继续？',
           'Warning',
@@ -193,6 +218,14 @@ export default {
         }).then(function (response) {
           console.log("成功删除评论")
           console.log(response)
+          let i = -1
+          for (let [index, item] of blogInfo.comments.entries()) {
+            if (item.comment_id === comment_id) {
+              i = index
+              break
+            }
+          }
+          blogInfo.comments.splice(i, 1)
           ElMessage({
             type: 'success',
             message: '成功删除评论',
@@ -220,11 +253,12 @@ export default {
             beCommentator_name: addCommentForm.beCommentator_name
           }).then(function (response) {
         if (response.data.code === 200) {
+          console.log(response.data.data)
           blogInfo.comments.push({
             content: addCommentForm.content,
-            time: Date.now().toString(),
+            time: response.data.data.time,
             commentator: STORE.state.user,
-            member_type: STORE.state.isSuperUser ? "社团骨干" : "成员",
+            member_type: STORE.state.isSuperUser ? "adm" : "stu",
             beCommentator: addCommentForm.beCommentator_name,
             commentator_id: STORE.state.user,
           })
