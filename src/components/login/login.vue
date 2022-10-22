@@ -165,7 +165,7 @@ export default {
             console.log(response);
             if (response.data.code === 200) {
               STORE.state.user = form.username
-              router.push('/home/c2')
+              router.push('/home/')
               ElMessage({
                 message: '登录成功',
                 type: 'success',
