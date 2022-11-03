@@ -1,5 +1,5 @@
 <template>
-    <h1>CourseManagement</h1>
+    <h1>WorkDescription</h1>
 </template>
 
 <script>
@@ -7,24 +7,23 @@
     import STORE from '../../store/index'
     import {useRoute} from "vue-router";
     import API from "../../axios.js"
-    // import router from "@/router/router";
-
-
     export default {
-        name: "CourseManagement",
-        setup(){
-            let course = reactive({
+        name: "WorkDescription",
+        setup() {
+            let work = reactive({
                 id: 1,
                 name: "c1",
-                isChoosed: false,
-
+                content: "做十道练习题",
+                begin_time: "2017-07-25 21:51:54",
+                end_time: "2017-07-25 21:51:54"
             })
+
             //获取当前课程信息
-            function getCourse(){
-                API.post(API.defaults.baseUrl + '/course/course/single/', route.query.id)
+            function getWork() {
+                API.post(API.defaults.baseUrl + '/course/work/single/', {id: route.query.id})
                     .then(function (response) {
                         if (response.data.code === 200) {
-                            course = response.data.data
+                            work = response.data.data
                         }
                     })
                     .catch(function (error) {
@@ -34,12 +33,12 @@
             function isSuperUser() {
                 return STORE.state.isSuperUser;
             }
+
             let route = useRoute();
-            console.log(route.query.id)
-            return{
+            return {
                 isSuperUser,
-                course,
-                getCourse,
+                work,
+                getWork
             }
         }
     }

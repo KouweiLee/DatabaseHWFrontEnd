@@ -80,7 +80,20 @@ export default {
   name: "ComponentTwo",
   components: {BlogComponent},
   setup() {
-    let blogInfos = reactive([])
+    let blogInfos = reactive([{
+      id: 0,
+      isTop: false,
+      isOver: false,
+      submitNumber: 0,
+      replyNumber: 0,
+      title: "a1",
+      url: "404",
+      content: "",
+      tags: [],
+      name: "",
+      time: "2022-10-1",
+      isLike: false
+    }])
 
     function childDeleteBlog() {
       searchClick()

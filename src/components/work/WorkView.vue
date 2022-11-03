@@ -6,10 +6,9 @@
                     class="el-menu-demo"
                     mode="horizontal"
             >
-                <el-menu-item index="/home/course/description" @click="handleDescription(course.id)">课程描述</el-menu-item>
-                <el-menu-item index="/home/course/work" @click="handleWork(course.id)" v-if="course.isChoosed">作业列表</el-menu-item>
-                <el-menu-item index="/home/course/management" @click="handleManagement(course.id)" v-if="isSuperUser()">课程管理</el-menu-item>
-                <el-menu-item index="/home/course/attachment" @click="handleAttachment(course.id)" v-if="course.isChoosed">课程附件</el-menu-item>
+                <el-menu-item index="1" @click="handleDescription(work.id)">作业描述</el-menu-item>
+                <el-menu-item index="2" @click="handleManagement(work.id)" v-if="isSuperUser()">作业管理</el-menu-item>
+                <el-menu-item index="3" @click="handleSubmit(work.id)" v-if="isSuperUser()">作业提交情况</el-menu-item>
             </el-menu>
         </el-header>
         <el-main>
@@ -27,65 +26,66 @@
 
 
     export default {
-        name: "CourseView",
-        setup(){
-            let course = reactive({
+        name: "WorkView",
+        setup() {
+            let work = reactive({
                 id: 1,
                 name: "c1",
-                isChoosed: true,
-
+                content: "做十道练习题",
+                begin_time: "2017-07-25 21:51:54",
+                end_time: "2017-07-25 21:51:54"
             })
+
             //获取当前课程信息
-            function getCourse(){
-                API.post(API.defaults.baseUrl + '/course/course/single/', route.query.id)
+            function getWork() {
+                API.post(API.defaults.baseUrl + '/course/work/single/', {id: route.query.id})
                     .then(function (response) {
                         if (response.data.code === 200) {
-                            course = response.data.data
+                            work = response.data.data
                         }
                     })
                     .catch(function (error) {
                         console.log(error);
                     });
             }
+
             //顶栏路由
-            function handleDescription(id){
+            function handleDescription(id) {
                 router.push({
-                    path: '/home/course/description',
+                    path: '/home/work/description',
                     query: {id}
                 })
             }
-            function handleWork(id) {
-                router.push({
-                    path: '/home/course/work',
-                    query: {id}
-                })
-            }
+
             function handleManagement(id) {
                 router.push({
-                    path: '/home/course/management',
+                    path: '/home/work/management',
                     query: {id}
                 })
             }
-            function handleAttachment(id) {
+
+            function handleSubmit(id) {
                 router.push({
-                    path: '/home/course/attachment',
+                    path: '/home/work/submit',
                     query: {id}
                 })
             }
-            const activeIndex = ref('/home/course/description')
+
+            const activeIndex = ref('1')
+
             function isSuperUser() {
                 return STORE.state.isSuperUser;
             }
+
             let route = useRoute();
-            return{
+            return {
                 isSuperUser,
                 activeIndex,
-                course,
-                getCourse,
+                work,
+                getWork,
                 handleDescription,
                 handleManagement,
-                handleAttachment,
-                handleWork
+                handleSubmit,
             }
         }
     }

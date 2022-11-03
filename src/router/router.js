@@ -4,9 +4,9 @@ import {createRouter, createWebHashHistory} from "vue-router"
 // 你可以在这里输入更多的配置，但我们在这里
 // 暂时保持简单
 const routes = [
-    // {path: '/', component: () => import('@/components/Home')},
+    {path: '/', component: () => import('@/components/Home')},
     // {path: '/', component: () => import('@/components/blogDetailComponent')},
-    {path: '/', component: () => import('@/components/login/login.vue')},
+    // {path: '/', component: () => import('@/components/login/login.vue')},
     // {path: '/', component: () => import('@/components/learn')},
     {
         path: '/home', component: () => import('@/components/Home.vue'),
@@ -35,6 +35,28 @@ const routes = [
                         path: '/home/course/management',
                         component: () => import('@/components/course/CourseManagement'),
                     },
+                    {
+                        path: '/home/course/attachment',
+                        component: () => import('@/components/course/CourseAttachment'),
+                    },
+                ]
+            },
+            {
+                path: '/home/work',
+                component: () => import('@/components/work/WorkView'),
+                children: [
+                    {
+                        path: '/home/work/description',
+                        component: () => import('@/components/work/WorkDescription'),
+                    },
+                    {
+                        path: '/home/work/management',
+                        component: () => import('@/components/work/WorkManagement'),
+                    },
+                    {
+                        path: '/home/work/submit',
+                        component: () => import('@/components/work/WorkSubmit'),
+                    }
                 ]
             },
             {

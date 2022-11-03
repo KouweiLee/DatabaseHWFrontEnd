@@ -1,8 +1,8 @@
 <template>
     <el-table :data="filterTableData" style="width: 100%">
-        <el-table-column label="作业名称" @click="gotoWork(scope.row.id)">
+        <el-table-column label="作业名称" >
             <template #default="scope">
-                <span >{{scope.row.name}}</span>
+                <span @click="gotoWork(scope.row.id)">{{scope.row.name}}</span>
             </template>
         </el-table-column>
 <!--        <el-table-column label="是否已选">-->
@@ -39,6 +39,7 @@
     import API from "../../axios.js"
     import STORE from '../../store/index'
     import router from "@/router/router";
+    import {useRoute} from "vue-router";
 
 
     export default {
@@ -56,8 +57,12 @@
                 }
             ])
 
+            let route = useRoute()
+            console.log(route.query.id)
+
+
             function getWorks() {
-                API.post(API.defaults.baseUrl + '/work/all/')
+                API.post(API.defaults.baseUrl + '/course/work/all/')
                     .then(function (response) {
                         if (response.data.code === 200) {
                             data = response.data.data
@@ -92,7 +97,7 @@
 
             function gotoWork(id) {
                 router.push({
-                    path: '/home/course/work/description',
+                    path: '/home/work/description',
                     query: {id}
                 })
             }

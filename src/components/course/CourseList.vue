@@ -32,12 +32,18 @@
             </template>
         </el-table-column>
     </el-table>
-    <el-button type="Plain" style=" margin-top: 20px; width: 30%" v-if="isSuperUser()">
-        <el-icon>
-            <CirclePlus/>
-        </el-icon>
-        点击添加课程
-    </el-button>
+    <el-row>
+        <el-input v-model="newCourseName" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px" placeholder="请输入新建课程名称">
+            <template #prefix>
+                <el-icon>
+                    <CirclePlus/>
+                </el-icon>
+            </template>
+        </el-input>
+        <el-button type="Plain" style=" margin-top: 20px; height: 30px; margin-left: 3%; width: 30%" v-if="isSuperUser()" @click="submitNewCourse">
+            点击添加课程
+        </el-button>
+    </el-row>
 </template>
 
 <script>
@@ -65,7 +71,7 @@
             ])
 
             function getCourses() {
-                API.post(API.defaults.baseUrl + '/course/all/')
+                API.post(API.defaults.baseUrl + '/course/course/all/', {username: STORE.state.user})
                     .then(function (response) {
                         if (response.data.code === 200) {
                             data = response.data.data
@@ -105,6 +111,17 @@
                 })
             }
 
+            //添加课程
+            let newCourseName = ref();
+            function submitNewCourse() {
+                API.post(API.defaults.baseUrl + '/course/course/addone/', {class_name: newCourseName.value})
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+
+            getCourses();
+
             return {
                 filterTableData,
                 handleGiveUp,
@@ -113,7 +130,9 @@
                 getCourses,
                 search,
                 isSuperUser,
-                gotoCourse
+                gotoCourse,
+                newCourseName,
+                submitNewCourse
             }
         }
     }

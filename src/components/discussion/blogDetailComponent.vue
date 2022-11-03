@@ -59,7 +59,7 @@
                         <el-row>
                           <!--回复主要信息-->
                           <div style="margin: 0 20px 0 10px;">
-                            <el-avatar></el-avatar>
+                            <el-avatar :src="item"></el-avatar>
                           </div>
                           <span class="name">{{ item.commentator }}({{ item.member_type }})
                       回复: {{ item.beCommentator }}</span>
@@ -111,7 +111,7 @@ export default {
   setup() {
     let route = useRoute();
     console.log(route)
-    getInfo();
+    // getInfo();
     const data = reactive({
       Delete: Delete,
       Edit: Edit
@@ -132,6 +132,7 @@ export default {
         commentator: "张凯歌",
         member_type: "成员",
         beCommentator: "李国玮",
+        avatarSrc: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
         // commentator_id: 1,
       }]
     })
