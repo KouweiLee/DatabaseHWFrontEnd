@@ -111,7 +111,7 @@ export default {
   setup() {
     let route = useRoute();
     console.log(route)
-    // getInfo();
+    getInfo();
     const data = reactive({
       Delete: Delete,
       Edit: Edit

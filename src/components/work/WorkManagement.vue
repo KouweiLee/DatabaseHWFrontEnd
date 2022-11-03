@@ -1,5 +1,9 @@
 <template>
-    <h1>WorkManagement</h1>
+    <h1>{{work.name}}</h1>
+        <v-time-picker
+        format="ampm"
+      ></v-time-picker>
+    <v-md-editor height="500px" style="text-align: left" v-model="work.content"></v-md-editor>
 </template>
 
 <script>
