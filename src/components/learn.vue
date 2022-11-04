@@ -1,86 +1,77 @@
 <template>
-    <div id="home">
-        <el-container>
-            <el-aside width="auto">
-                <div class="logo"></div>
-                <el-menu class="el-menu-vertical-demo" collapse-transition="true" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-                    <el-submenu index="1" >
-                            <i class="el-icon-location"></i>
-                            <span>1</span>
-                        <el-menu-item-group>
-                            <el-menu-item>
-                                <i class="el-icon-location"></i>
-                                <span>2</span>
-                            </el-menu-item>
-                            <el-menu-item>
-                                <i class="el-icon-location"></i>
-                                <span>3</span>
-                            </el-menu-item>
-                        </el-menu-item-group>
-                    </el-submenu>
-                </el-menu>
-            </el-aside>
-            <el-container>
-                <el-header>
-                    <span @click="toggleCollapse">12</span>
-                    <i class="el-icon-location toggle" @click="toggleCollapse"></i>
-                    <div class="system-title" >管理系统</div>
-                </el-header>
-                <el-main>Main</el-main>
-            </el-container>
-        </el-container>
+    <div style="width: 70%;margin-left: 30px;margin-top: 30px;">
+        <el-button class="filter-item" type="success" icon="el-icon-download" @click="downFile()">下载</el-button>
     </div>
 </template>
+
 <script>
+    import axios from 'axios'
+
     export default {
-        name:"learnView",
+        name:"LearnView",
         data() {
             return {
-                isCollapse: true
-            };
+            }
+        },
+        mounted: function() {
+
         },
         methods: {
-            handleOpen (key, keyPath) {
-                console.log(key, keyPath)
+            downloadFile(url, options = {}){
+                return new Promise((resolve, reject) => {
+                    // console.log(`${url} 请求数据，参数=>`, JSON.stringify(options))
+                    // axios.defaults.headers['content-type'] = 'application/json;charset=UTF-8'
+                    axios({
+                        method: 'post',
+                        url: url, // 请求地址
+                        data: options, // 参数
+                        responseType: 'blob' // 表明返回服务器返回的数据类型
+                    }).then(
+                        response => {
+                            // console.log("下载响应",response)
+                            resolve(response.data)
+                            let blob = new Blob([response.data], {
+                                type: 'application/vnd.ms-excel'
+                            })
+                            // console.log(blob)
+                            // let fileName = Date.parse(new Date()) + '.xlsx'
+                            // 切割出文件名
+                            let fileNameEncode = response.headers['content-disposition'].split("filename=")[1];
+                            // 解码
+                            let fileName = decodeURIComponent(fileNameEncode)
+                            // console.log("fileName",fileName)
+                            if (window.navigator.msSaveOrOpenBlob) {
+                                // console.log(2)
+                                navigator.msSaveBlob(blob, fileName)
+                            } else {
+                                // console.log(3)
+                                var link = document.createElement('a')
+                                link.href = window.URL.createObjectURL(blob)
+                                link.download = fileName
+                                link.click()
+                                //释放内存
+                                window.URL.revokeObjectURL(link.href)
+                            }
+                        },
+                        err => {
+                            reject(err)
+                        }
+                    )
+                })
             },
-            handleClose (key, keyPath) {
-                console.log(key, keyPath)
+            // 下载文件
+            downFile(){
+                let postUrl= "http://127.0.0.1:8000/download/excel/"
+                let params = {
+                    filename: "大江大河.xlsx",
+                }
+                // console.log("下载参数",params)
+                this.downloadFile(postUrl,params)
             },
-            toggleCollapse () {
-                console.log(123456789);
-
-                this.isCollapse = !this.isCollapse
-            }
         }
     }
 </script>
-<style  scoped>
-    #home {
-        width: 100%;
-        height: 100%;
-        .el-menu-admin:not(.el-menu--collapse) {
-            width: 200px;
-            min-height: 400px;
-        }
-        .el-container {
-            height: 100%;
-        }
-        .el-aside {
-            background-color: #545c64;
-        }
-        .el-header {
-            background-color: #fe4;
-        }
-        .el-main {
-            background-color: #f20;
-        }
-        .toggle {
-            font-size: 36px;
-            color: #989898;
-            cursor: pointer;
-            line-height: 30px;
-        }
 
-    }
-
+<style>
 </style>
+
