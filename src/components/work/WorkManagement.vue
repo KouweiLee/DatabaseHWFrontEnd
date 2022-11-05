@@ -8,7 +8,9 @@
         end-placeholder="End date"
         value-format="YYYY-MM-DD HH:mm:ss"
       />
-
+<!--    <v-time-picker-->
+<!--      format="ampm"-->
+<!--    ></v-time-picker>-->
     <el-button type="primary" @click="setDate">Primary</el-button>
 <!--    <v-md-editor height="500px" style="text-align: left" v-model="work.content"></v-md-editor>-->
 

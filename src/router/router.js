@@ -4,9 +4,9 @@ import {createRouter, createWebHashHistory} from "vue-router"
 // 你可以在这里输入更多的配置，但我们在这里
 // 暂时保持简单
 const routes = [
-    // {path: '/', component: () => import('@/components/Home')},
+    {path: '/', component: () => import('@/components/Home')},
     // {path: '/', component: () => import('@/components/blogDetailComponent')},
-    {path: '/', component: () => import('@/components/login/login.vue')},
+    // {path: '/', component: () => import('@/components/login/login.vue')},
     // {path: '/', component: () => import('@/components/learn')},
     {
         path: '/home', component: () => import('@/components/Home.vue'),
