@@ -15,6 +15,20 @@ import Prism from 'prismjs'
 import VmdPreview from '@kangc/v-md-editor/lib/preview';
 import '@kangc/v-md-editor/lib/style/preview.css'
 
+// Vuetify
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
+const vuetify = createVuetify({
+    components,
+    directives,
+})
+
+
+
+
 VmdPreview.use(githubTheme)
 VueMarkdownEditor.use(vuePressTheme, {Prism})
 
@@ -28,6 +42,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app.config.globalProperties.user = 'liwk'
 
+app.use(vuetify)
 app.use(ElementPlus, {size: 'small', zIndex: 3000})
 app.use(VueMarkdownEditor).use(VmdPreview)
 app.use(router).mount('#app')
