@@ -43,7 +43,12 @@
             </el-form-item>
             <el-form-item label="内容">
               <!--              <el-input v-model="newBlogInfo.content" type="textarea"/>-->
-              <v-md-editor min-height="500px" v-model="newBlogInfo.content"></v-md-editor>
+<!--              <v-md-editor min-height="500px" v-model="newBlogInfo.content"></v-md-editor>-->
+              <mavon-editor
+                v-model="newBlogInfo.content"
+                ref="md"
+                style="min-height: 600px"
+              />
 <!--              <mavon-editor v-model="newBlogInfo.content"/>-->
             </el-form-item>
           </el-form>

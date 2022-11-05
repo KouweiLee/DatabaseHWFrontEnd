@@ -1,7 +1,8 @@
 <template>
 
-  <el-dialog v-model="dialogFormVisible" title="增加评论">
-    <v-md-editor min-height="400px" v-model="addCommentForm.content"></v-md-editor>
+  <el-dialog v-model="dialogFormVisible" title="增加评论" style="width: 800px">
+<!--    <v-md-editor min-height="400px" v-model="addCommentForm.content"></v-md-editor>-->
+    <mavon-editor v-model="addCommentForm.content" ref="md" style="min-height: 600px"/>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
@@ -40,7 +41,17 @@
                 </el-row>
               </template>
               <!--主贴主要内容-->
-              <v-md-preview :text="blogInfo.content"></v-md-preview>
+<!--              <v-md-preview :text="blogInfo.content"></v-md-preview>-->
+              <mavon-editor
+                ref="md"
+                v-model="blogInfo.content"
+                :subfield="false"
+                :defaultOpen="'preview'"
+                :toolbarsFlag="false"
+                :editable="false"
+                :scrollStyle="true"
+                :ishljs="true"
+              />
               <el-row>
                 <!--主贴下方的一些功能，包括时间，评论和点赞-->
                 <span style="font-size: 10px; color: gray;margin: auto 20px;">发布于{{ blogInfo.time }}</span>
@@ -65,12 +76,23 @@
                       回复: {{ item.beCommentator }}</span>
                         </el-row>
                       </template>
-                      <el-row>
+
                         <!--回复主要内容-->
-                        <div class="markdown_body">
-                          <p>{{ item.content }}</p>
-                        </div>
-                      </el-row>
+
+<!--                          <p>{{ item.content }}</p>-->
+                          <mavon-editor
+                            ref="md"
+                            v-model="item.content"
+                            :subfield="false"
+                            :defaultOpen="'preview'"
+                            :toolbarsFlag="false"
+                            :editable="false"
+                            :scrollStyle="true"
+                            :ishljs="true"
+                            style="margin: 0"
+                          />
+
+
                       <el-row>
                         <!--回复下方的一些功能，包括时间，评论和点赞-->
                         <span style="font-size: 10px; color: gray;margin: auto 20px;">发布于{{ item.time }}</span>

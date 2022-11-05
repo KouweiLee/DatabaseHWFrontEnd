@@ -6,7 +6,12 @@ import 'element-plus/dist/index.css'
 // import axios from '@/axios.js'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 const app = createApp(App)
-
+// import vuetify from './plugins/vuetify'
+import { createVuetify } from 'vuetify'
+import { loadFonts } from './plugins/webfontloader'
+loadFonts()
+const vuetify = createVuetify()
+app.use(vuetify)
 
 import VueMarkdownEditor from '@kangc/v-md-editor';
 import '@kangc/v-md-editor/lib/style/base-editor.css'
@@ -33,9 +38,9 @@ app.use(VueMarkdownEditor).use(VmdPreview)
 // app.use(Vuetify)
 
 
-// import mavonEditor from 'mavon-editor'
-// import 'mavon-editor/dist/css/index.css'
-// app.use(mavonEditor)
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+app.use(mavonEditor)
 
 
 // app.config.globalProperties.$axios=axios;  //配置axios的全局引用
