@@ -6,12 +6,7 @@ import 'element-plus/dist/index.css'
 // import axios from '@/axios.js'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 const app = createApp(App)
-// import vuetify from './plugins/vuetify'
-import { createVuetify } from 'vuetify'
-import { loadFonts } from './plugins/webfontloader'
-loadFonts()
-const vuetify = createVuetify()
-app.use(vuetify)
+
 
 import VueMarkdownEditor from '@kangc/v-md-editor';
 import '@kangc/v-md-editor/lib/style/base-editor.css'
@@ -32,15 +27,19 @@ VueMarkdownEditor.use(githubTheme, {
 
 })
 app.use(VueMarkdownEditor).use(VmdPreview)
-
-// import Vuetify from 'vuetify'
-// import 'vuetify/dist/vuetify.min.css'
-// app.use(Vuetify)
-
-
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 app.use(mavonEditor)
+// Vuetify
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
+const vuetify = createVuetify({
+    components,
+    directives,
+})
 
 
 // app.config.globalProperties.$axios=axios;  //配置axios的全局引用
@@ -51,6 +50,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app.config.globalProperties.user = 'liwk'
 
+app.use(vuetify)
 app.use(ElementPlus, {size: 'small', zIndex: 3000})
 // app.use(Vuetify)
 app.use(router).mount('#app')
