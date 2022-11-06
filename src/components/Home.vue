@@ -2,14 +2,12 @@
     <el-container>
         <el-aside @mouseover="isCollapse=false" @mouseout="isCollapse=true"
                   @mousemove="isCollapse=false" width="auto">
-
+            <p>{{title}}</p>
             <el-menu
                 :collapse-transition="false"
                 default-active="2"
                 class="el-menu-vertical-demo"
                 :collapse="isCollapse"
-                @open="handleOpen"
-                @close="handleClose"
                 router
             >
 
@@ -61,11 +59,18 @@
 
 <script>
 import {ref} from "@vue/reactivity";
+import {useRoute} from "vue-router";
+import {watch} from  'vue'
+// import router from "@/router/router";
+
+
 // import useGetGlobalProperties from '@/useGlobal'
 
 export default {
     name: "HomeView",
     setup() {
+        const title = ref('123');
+        const route = useRoute()
         let isCollapse = ref(true)
         const handleOpen = (key, keyPath) => {
             console.log(key, keyPath)
@@ -74,18 +79,25 @@ export default {
             console.log(key, keyPath)
         }
 
-        function expandView() {
-            console.log(isCollapse.value)
-            isCollapse.value = isCollapse.value !== true;
-        }
+        watch( route, (to, from) => {
+            switch (from.path) {
+                case '/home/user':
+                    title.value = "123456"
+                    break;
+                default:
+                    title.value = "1234"
+            }
+        })
 
         return {
             isCollapse,
             handleClose,
             handleOpen,
-            expandView,
+            title
         }
-    }
+    },
+
+
 }
 </script>
 

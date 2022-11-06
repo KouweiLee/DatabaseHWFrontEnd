@@ -16,7 +16,7 @@
                 <el-input v-model="search" size="small" placeholder="Type to search"/>
             </template>
             <template #default="scope">
-                <el-button size="small" @click="handleChoose(scope.$index, scope.row)"
+                <el-button size="small" @click="handleChoose(scope.row.id)"
                            v-if="scope.row.isChoosed === false"
                 >选课
                 </el-button
@@ -25,7 +25,7 @@
                         size="small"
                         type="danger"
                         v-if="scope.row.isChoosed"
-                        @click="handleGiveUp(scope.$index, scope.row)"
+                        @click="handleGiveUp(scope.row.id)"
                 >退课
                 </el-button
                 >
@@ -33,14 +33,16 @@
         </el-table-column>
     </el-table>
     <el-row>
-        <el-input v-model="newCourseName" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px" placeholder="请输入新建课程名称">
+        <el-input v-model="newCourseName" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"
+                  placeholder="请输入新建课程名称">
             <template #prefix>
                 <el-icon>
                     <CirclePlus/>
                 </el-icon>
             </template>
         </el-input>
-        <el-button type="Plain" style=" margin-top: 20px; height: 30px; margin-left: 3%; width: 30%" v-if="isSuperUser()" @click="submitNewCourse">
+        <el-button type="Plain" style=" margin-top: 20px; height: 30px; margin-left: 3%; width: 30%"
+                   v-if="isSuperUser()" @click="submitNewCourse">
             点击添加课程
         </el-button>
     </el-row>
@@ -82,6 +84,10 @@
                     });
             }
 
+            function refresh() {
+                getCourses()
+            }
+
             //具体表格区
             const search = ref('')
             const filterTableData = computed(() =>
@@ -91,11 +97,31 @@
                         data.name.toLowerCase().includes(search.value.toLowerCase())
                 )
             )
-            const handleChoose = (index, row) => {
-                console.log(index, row)
+
+            function handleChoose(id) {
+                API.post(API.defaults.baseUrl + '/course/course/choose/', {username: STORE.state.user, class_id: id})
+                    .then(function (response) {
+                        if (response.data.code === 200) {
+                            data = response.data.data
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                refresh()
             }
-            const handleGiveUp = (index, row) => {
-                console.log(index, row)
+
+            function handleGiveUp(id) {
+                API.post(API.defaults.baseUrl + '/course/course/quit/', {username: STORE.state.user, class_id: id})
+                    .then(function (response) {
+                        if (response.data.code === 200) {
+                            data = response.data.data
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                refresh()
             }
 
             function isSuperUser() {
@@ -113,6 +139,7 @@
 
             //添加课程
             let newCourseName = ref();
+
             function submitNewCourse() {
                 API.post(API.defaults.baseUrl + '/course/course/addone/', {class_name: newCourseName.value})
                     .catch(function (error) {
@@ -120,16 +147,17 @@
                     });
             }
 
-            getCourses();
+            refresh();
 
             return {
+                data,
+                getCourses,
+                refresh,
+                isSuperUser,
+                search,
                 filterTableData,
                 handleGiveUp,
                 handleChoose,
-                data,
-                getCourses,
-                search,
-                isSuperUser,
                 gotoCourse,
                 newCourseName,
                 submitNewCourse
