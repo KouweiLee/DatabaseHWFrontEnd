@@ -1,40 +1,16 @@
 <template>
     <el-container>
-        <el-aside  @mouseover="isCollapse=false" @mouseout="isCollapse=true"
+        <el-aside @mouseover="isCollapse=false" @mouseout="isCollapse=true"
                   @mousemove="isCollapse=false" width="auto">
-            <!--                <el-icon @click="expandView" style="margin-bottom: 40px" v-if="isCollapse">-->
-            <!--                    <ArrowRightBold/>-->
-            <!--                </el-icon>-->
-            <!--                <el-icon @click="expandView" style="margin-bottom: 40px" v-if="isCollapse === false">-->
-            <!--                    <ArrowLeftBold/>-->
-            <!--                </el-icon>-->
+            <p>{{title}}</p>
             <el-menu
-                    :collapse-transition="false"
-                    default-active="2"
-                    class="el-menu-vertical-demo"
-                    :collapse="isCollapse"
-                    @open="handleOpen"
-                    @close="handleClose"
-                    router
+                :collapse-transition="false"
+                default-active="2"
+                class="el-menu-vertical-demo"
+                :collapse="isCollapse"
+                router
             >
-                <!--            <el-sub-menu index="1">-->
-                <!--                <template #title>-->
-                <!--                    <el-icon><location /></el-icon>-->
-                <!--                    <span>Navigator One</span>-->
-                <!--                </template>-->
-                <!--                <el-menu-item-group>-->
-                <!--                    <template #title><span>Group One</span></template>-->
-                <!--                    <el-menu-item index="1-1">item one</el-menu-item>-->
-                <!--                    <el-menu-item index="1-2">item two</el-menu-item>-->
-                <!--                </el-menu-item-group>-->
-                <!--                <el-menu-item-group title="Group Two">-->
-                <!--                    <el-menu-item index="1-3">item three</el-menu-item>-->
-                <!--                </el-menu-item-group>-->
-                <!--                <el-sub-menu index="1-4">-->
-                <!--                    <template #title><span>item four</span></template>-->
-                <!--                    <el-menu-item index="1-4-1">item one</el-menu-item>-->
-                <!--                </el-sub-menu>-->
-                <!--            </el-sub-menu>-->
+
                 <el-menu-item index="/home/discussion">
                     <el-icon>
                         <Comment/>
@@ -82,38 +58,52 @@
 </template>
 
 <script>
-    import {ref} from "@vue/reactivity";
-    // import useGetGlobalProperties from '@/useGlobal'
+import {ref} from "@vue/reactivity";
+import {useRoute} from "vue-router";
+import {watch} from  'vue'
+// import router from "@/router/router";
 
-    export default {
-        name: "HomeView",
-        setup() {
-            let isCollapse = ref(true)
-            const handleOpen = (key, keyPath) => {
-                console.log(key, keyPath)
-            }
-            const handleClose = (key, keyPath) => {
-                console.log(key, keyPath)
-            }
 
-            function expandView() {
-                console.log(isCollapse.value)
-                isCollapse.value = isCollapse.value !== true;
-            }
+// import useGetGlobalProperties from '@/useGlobal'
 
-            return {
-                isCollapse,
-                handleClose,
-                handleOpen,
-                expandView,
-            }
+export default {
+    name: "HomeView",
+    setup() {
+        const title = ref('123');
+        const route = useRoute()
+        let isCollapse = ref(true)
+        const handleOpen = (key, keyPath) => {
+            console.log(key, keyPath)
         }
-    }
+        const handleClose = (key, keyPath) => {
+            console.log(key, keyPath)
+        }
+
+        watch( route, (to, from) => {
+            switch (from.path) {
+                case '/home/user':
+                    title.value = "123456"
+                    break;
+                default:
+                    title.value = "1234"
+            }
+        })
+
+        return {
+            isCollapse,
+            handleClose,
+            handleOpen,
+            title
+        }
+    },
+
+
+}
 </script>
 
 <style scoped>
-    .el-menu-vertical-demo:not(.el-menu--collapse) {
-        width: auto !important;
-        min-height: 400px;
-    }
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: auto !important;
+    min-height: 400px;
+}
 </style>
