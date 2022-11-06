@@ -1,25 +1,27 @@
 <template>
     <el-upload
             class="avatar-uploader"
-            action="http://localhost:8000/login/upload/"
+            action="http://localhost:8000/course/work/upload/"
             :show-file-list="false"
+            :data="{username:username}"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
-            :data="{username:}"
     >
-        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+        <img v-if="imageUrl" :src="imageUrl" class="avatar"/>
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
 </template>
 
 <script>
-  import STORE from "@/store";
+
+    import STORE from "@/store";
 
     export default {
-        name:"UserView",
+        name: "UserView",
         data() {
             return {
                 imageUrl: '',
+                username: '',
             }
         },
         methods: {
@@ -30,6 +32,8 @@
                 this.imageUrl = URL.createObjectURL(file.raw)
             },
             beforeAvatarUpload(file) {
+                this.username = STORE.state.user
+                console.log(this.username)
                 const isJPG = file.type === 'image/jpeg'
                 const isLt2M = file.size / 1024 / 1024 < 2
 
@@ -42,9 +46,10 @@
                 return isJPG && isLt2M
             },
         },
-      setup(){
-          console.log(STORE.state.user)
-      }
+
+        setup() {
+
+        }
     }
 </script>
 <style>
@@ -55,9 +60,11 @@
         position: relative;
         overflow: hidden;
     }
+
     .avatar-uploader .el-upload:hover {
         border-color: #409eff;
     }
+
     .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
@@ -66,6 +73,7 @@
         line-height: 178px;
         text-align: center;
     }
+
     .avatar {
         width: 178px;
         height: 178px;
