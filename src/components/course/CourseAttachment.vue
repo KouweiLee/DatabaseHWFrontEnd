@@ -24,30 +24,42 @@
         </el-table-column>
     </el-table>
     <el-row style="text-align: center" v-if="isSuperUser">
-        <el-upload
-                class="upload-demo"
-                ref="upload"
-                action="http://localhost:8000/course/attachment/upload/"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :file-list="fileList"
-                :auto-upload="false"
-                style="margin-left: 45%; margin-top: 20px"
-        >
-            <template #trigger>
-                <el-button size="medium" type="default">选取文件</el-button>
-            </template>
-            <el-button
-                    style="margin-left: 10px;"
-                    size="medium"
-                    type="primary"
-                    @click="submitUpload"
-            >上传附件到服务器</el-button
+<!--        <el-upload-->
+<!--                class="upload-demo"-->
+<!--                ref="upload"-->
+<!--                action="http://localhost:8000/course/attachment/upload/"-->
+<!--                :on-preview="handlePreview"-->
+<!--                :on-remove="handleRemove"-->
+<!--                :file-list="fileList"-->
+<!--                :auto-upload="false"-->
+<!--                style="margin-left: 45%; margin-top: 20px"-->
+<!--        >-->
+<!--            <template #trigger>-->
+<!--                <el-button size="medium" type="default">选取文件</el-button>-->
+<!--            </template>-->
+<!--            <el-button-->
+<!--                    style="margin-left: 10px;"-->
+<!--                    size="medium"-->
+<!--                    type="primary"-->
+<!--                    @click="submitUpload"-->
+<!--            >上传附件到服务器</el-button-->
+<!--            >-->
+<!--            <template #tip>-->
+<!--                <div class="el-upload__tip">文件大小不超过 500kb</div>-->
+<!--            </template>-->
+<!--        </el-upload>-->
+            <el-upload
+                    class="upload-demo"
+                    drag
+                    action="http://localhost:8000/course/attachment/upload/"
+                    multiple
             >
-            <template #tip>
-                <div class="el-upload__tip">文件大小不超过 500kb</div>
-            </template>
-        </el-upload>
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <template #tip>
+                    <div class="el-upload__tip">只能上传 jpg/png 文件，且不超过 500kb</div>
+                </template>
+            </el-upload>
     </el-row>
 </template>
 
