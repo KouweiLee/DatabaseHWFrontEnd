@@ -32,6 +32,20 @@
 <!--            </template>-->
 <!--        </el-table-column>-->
     </el-table>
+    <el-row>
+        <el-input v-model="newWorkName" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"
+                  placeholder="请输入新建课程名称">
+            <template #prefix>
+                <el-icon>
+                    <CirclePlus/>
+                </el-icon>
+            </template>
+        </el-input>
+        <el-button type="Plain" style=" margin-top: 20px; height: 30px; margin-left: 3%; width: 30%"
+                   v-if="isSuperUser()" @click="submitNewWork">
+            点击添加课程
+        </el-button>
+    </el-row>
 </template>
 
 <script>
@@ -56,6 +70,10 @@
                     name: "c2",
                 }
             ])
+
+            function refresh(){
+                getWorks()
+            }
 
             let route = useRoute()
             console.log(route.query.id)
@@ -109,16 +127,31 @@
                     query: {id}
                 })
             }
-            getWorks()
+
+
+            let newWorkName = ref();
+
+            function submitNewWork() {
+                API.post(API.defaults.baseUrl + '/course/work/addone/', {name: newWorkName.value, class_id:route.query.id})
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                refresh();
+            }
+
+            refresh()
             return {
                 filterTableData,
                 handleGiveUp,
                 handleChoose,
                 data,
+                refresh,
                 getWorks,
                 search,
                 isSuperUser,
-                gotoWork
+                gotoWork,
+                newWorkName,
+                submitNewWork
             }
         }
     }

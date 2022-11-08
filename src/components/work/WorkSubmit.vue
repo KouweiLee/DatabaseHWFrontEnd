@@ -231,6 +231,9 @@
                     )
                 })
             }
+            function uploadSuccess() {
+                refresh()
+            }
             refresh()
             return {
                 id,
@@ -245,7 +248,8 @@
                 handleChange,
                 deleteSubmit,
                 downloadFile,
-                download
+                download,
+                uploadSuccess
             }
         }
     }

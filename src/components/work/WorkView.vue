@@ -6,9 +6,9 @@
                     class="el-menu-demo"
                     mode="horizontal"
             >
-                <el-menu-item index="1" @click="handleDescription(work.id)">作业描述</el-menu-item>
-                <el-menu-item index="2" @click="handleManagement(work.id)" v-if="isSuperUser()">作业管理</el-menu-item>
-                <el-menu-item index="3" @click="handleSubmit(work.id)" v-if="isSuperUser()">作业提交情况</el-menu-item>
+                <el-menu-item index="1" @click="handleDescription(id)">作业描述</el-menu-item>
+                <el-menu-item index="2" @click="handleManagement(id)" v-if="isSuperUser()">作业管理</el-menu-item>
+                <el-menu-item index="3" @click="handleSubmit(id)" v-if="isSuperUser()">作业提交情况</el-menu-item>
             </el-menu>
         </el-header>
         <el-main>
@@ -68,7 +68,7 @@
               console.log(id)
                 router.push({
                     path: '/home/work/submit',
-                    query: {id:5}
+                    query: {id}
                 })
             }
 
@@ -79,8 +79,10 @@
             }
 
             let route = useRoute();
+            let id = route.query.id
             getWork()
             return {
+                id,
                 isSuperUser,
                 activeIndex,
                 work,
