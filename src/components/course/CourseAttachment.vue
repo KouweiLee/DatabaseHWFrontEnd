@@ -83,7 +83,13 @@
                 API.post(API.defaults.baseUrl + '/course/attachment/all/', {id: route.query.id})
                     .then(function (response) {
                         if (response.data.code === 200) {
-                            data = response.data.data.attachments
+                            while (!(data.length === 0)) {
+                                data.pop();
+                            }
+                            let i;
+                            for (i = 0; i < response.data.data.attachments.length; i++) {
+                                data.push(response.data.attachments.data[i])
+                            }
                         }
                     })
                     .catch(function (error) {

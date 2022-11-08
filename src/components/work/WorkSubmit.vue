@@ -90,8 +90,12 @@
             function getInfo() {
                 API.post(API.defaults.baseUrl + '/course/work/correcting/', {id: route.query.id})
                     .then(function (response) {
-                        if (response.data.code === 200) {
-                            data = response.data.data.attachments
+                        while (!(data.length === 0)) {
+                            data.pop();
+                        }
+                        let i;
+                        for (i = 0; i < response.data.data.attachments.length; i++) {
+                            data.push(response.data.data.attachments[i])
                         }
                     })
                     .catch(function (error) {
@@ -121,6 +125,7 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+                refresh()
             }
 
             function deleteSubmit(id){

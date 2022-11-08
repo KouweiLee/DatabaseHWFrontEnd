@@ -65,7 +65,13 @@
                 API.post(API.defaults.baseUrl + '/course/work/all/')
                     .then(function (response) {
                         if (response.data.code === 200) {
-                            data = response.data.data
+                            while (!(data.length === 0)) {
+                                data.pop();
+                            }
+                            let i;
+                            for (i = 0; i < response.data.data.length; i++) {
+                                data.push(response.data.data[i])
+                            }
                         }
                     })
                     .catch(function (error) {
