@@ -152,6 +152,7 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+                refresh();
             }
 
             refresh();
