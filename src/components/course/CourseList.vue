@@ -89,6 +89,7 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+                console.log(data)
             }
 
             function refresh() {

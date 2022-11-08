@@ -65,9 +65,10 @@
             }
 
             function handleSubmit(id) {
+              console.log(id)
                 router.push({
                     path: '/home/work/submit',
-                    query: {id}
+                    query: {id:5}
                 })
             }
 
@@ -78,6 +79,7 @@
             }
 
             let route = useRoute();
+            getWork()
             return {
                 isSuperUser,
                 activeIndex,
