@@ -1,7 +1,7 @@
 <template>
     <el-upload
             class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="http://localhost:8000/course/work/upload/"
             :show-file-list="false"
             :data="{username:username}"
             :on-success="handleAvatarSuccess"
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+
     import STORE from "@/store";
 
     export default {
@@ -24,6 +25,9 @@
             }
         },
         methods: {
+            getUserName(){
+              return STORE.state.user
+            },
             handleAvatarSuccess(res, file) {
                 this.imageUrl = URL.createObjectURL(file.raw)
             },
@@ -42,6 +46,7 @@
                 return isJPG && isLt2M
             },
         },
+
         setup() {
 
         }

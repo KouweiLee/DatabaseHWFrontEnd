@@ -28,20 +28,20 @@
 <!--                    </el-card>-->
 <!--                </div>-->
 <!--            </el-tab-pane>-->
-            <el-tab-pane label="成绩评定">
-                <div style="height: 500px">
-                    <div v-for="(grade, i) in course.grade" :key="i"
-                         style="height: 100px; margin-top: 30px; width: 80%;margin-left: 10%; height:10%">
-                        <div style="margin-bottom: 30px"><span>{{grade.name}}</span></div>
-                        <el-progress
-                                :text-inside="true"
-                                :stroke-width="20"
-                                :percentage="grade.percent"
-                                status="format"
-                        />
-                    </div>
-                </div>
-            </el-tab-pane>
+<!--            <el-tab-pane label="成绩评定">-->
+<!--                <div style="height: 500px">-->
+<!--                    <div v-for="(grade, i) in course.grade" :key="i"-->
+<!--                         style="height: 100px; margin-top: 30px; width: 80%;margin-left: 10%; height:10%">-->
+<!--                        <div style="margin-bottom: 30px"><span>{{grade.name}}</span></div>-->
+<!--                        <el-progress-->
+<!--                                :text-inside="true"-->
+<!--                                :stroke-width="20"-->
+<!--                                :percentage="grade.percent"-->
+<!--                                status="format"-->
+<!--                        />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </el-tab-pane>-->
             <el-tab-pane label="上课时间地点">
                 <div style="height: 500px">
                     <el-card shadow="never"
@@ -71,22 +71,22 @@
             let course = reactive({
                 id: 1,
                 name: "走进超算",
-                isChoosed: false,
-                teacher: "张三",
+                // isChoosed: false,
+                // teacher: "张三",
                 time: "周一上午第三、四节课",
                 position: "主楼101",
                 description: "从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算",
-                content: ['学1', '学2', '学3'],
-                grade: [
-                    {
-                        percent: 60,
-                        name: "考试"
-                    },
-                    {
-                        percent: 40,
-                        name: "平时"
-                    }
-                ]
+                // content: ['学1', '学2', '学3'],
+                // grade: [
+                //     {
+                //         percent: 60,
+                //         name: "考试"
+                //     },
+                //     {
+                //         percent: 40,
+                //         name: "平时"
+                //     }
+                // ]
             })
             //获取当前课程信息
             let route = useRoute();
@@ -94,10 +94,12 @@
 
 
             function getCourse() {
-                API.post(API.defaults.baseUrl + '/course/course/single/', route.query.id)
+                API.post(API.defaults.baseUrl + '/course/course/single/', {id:route.query.id,username:STORE.state.user})
                     .then(function (response) {
                         if (response.data.code === 200) {
+                          console.log(response.data.data)
                             course = response.data.data
+                          console.log(course)
                         }
                     })
                     .catch(function (error) {
@@ -108,6 +110,8 @@
             function isSuperUser() {
                 return STORE.state.isSuperUser;
             }
+
+            getCourse()
 
             return {
                 isSuperUser,

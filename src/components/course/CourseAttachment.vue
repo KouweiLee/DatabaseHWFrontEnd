@@ -10,48 +10,59 @@
                 <el-input v-model="search" size="small" placeholder="Type to search"/>
             </template>
             <template #default="scope">
-                <el-button size="small" @click="download(scope.row.attachment_id)"
-                >
+                <el-button size="small" @click="download(scope.row.attachment_id)">
                     <el-icon>
                         <Bottom/>
                     </el-icon>
-                </el-button
-                >
-                <el-button size="small" @click="deleteAttach(scope.row.attachment_id)"
-                >
+                </el-button>
+                <el-button size="small" @click="deleteAttach(scope.row.attachment_id)" v-if="isSuperUser">
                     <el-icon>
                         <Delete/>
                     </el-icon>
-                </el-button
-                >
+                </el-button>
             </template>
         </el-table-column>
     </el-table>
-    <el-row style="text-align: center">
-        <el-upload
-                class="upload-demo"
-                ref="upload"
-                action="http://localhost:8000/course/attachment/upload/"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :file-list="fileList"
-                :auto-upload="false"
-                style="margin-left: 45%; margin-top: 20px"
-        >
-            <template #trigger>
-                <el-button size="small" type="primary">选取文件</el-button>
-            </template>
-            <el-button
-                    style="margin-left: 10px;"
-                    size="small"
-                    type="success"
-                    @click="submitUpload"
-            >上传附件到服务器</el-button
+    <el-row style="text-align: center" v-if="isSuperUser">
+<!--        <el-upload-->
+<!--                class="upload-demo"-->
+<!--                ref="upload"-->
+<!--                action="http://localhost:8000/course/attachment/upload/"-->
+<!--                :on-preview="handlePreview"-->
+<!--                :on-remove="handleRemove"-->
+<!--                :file-list="fileList"-->
+<!--                :auto-upload="false"-->
+<!--                style="margin-left: 45%; margin-top: 20px"-->
+<!--        >-->
+<!--            <template #trigger>-->
+<!--                <el-button size="medium" type="default">选取文件</el-button>-->
+<!--            </template>-->
+<!--            <el-button-->
+<!--                    style="margin-left: 10px;"-->
+<!--                    size="medium"-->
+<!--                    type="primary"-->
+<!--                    @click="submitUpload"-->
+<!--            >上传附件到服务器</el-button-->
+<!--            >-->
+<!--            <template #tip>-->
+<!--                <div class="el-upload__tip">文件大小不超过 500kb</div>-->
+<!--            </template>-->
+<!--        </el-upload>-->
+            <el-upload
+                    style="margin-left: 45%; margin-top: 30px"
+                    class="upload-demo"
+                    drag
+                    action="http://localhost:8000/course/attachment/upload/"
+                    multiple
+                    :data="{class_id:id}"
+                    :on-sucess="uploadSuccess"
             >
-            <template #tip>
-                <div class="el-upload__tip">只能上传 jpg/png 文件，且不超过 500kb</div>
-            </template>
-        </el-upload>
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <template #tip>
+                    <div class="el-upload__tip">不超过 500kb</div>
+                </template>
+            </el-upload>
     </el-row>
 </template>
 
@@ -63,6 +74,11 @@
 
     export default {
         name: "CourseAttachment",
+        methods:{
+            submitUpload() {
+                this.$refs.upload.submit()
+            },
+        },
         setup() {
             let data = reactive([
                 {
@@ -82,12 +98,20 @@
             }
 
             const route = useRoute()
+                    let id = route.query.id
+
 
             function getAttachments() {
                 API.post(API.defaults.baseUrl + '/course/attachment/all/', {id: route.query.id})
                     .then(function (response) {
                         if (response.data.code === 200) {
-                            data = response.data.data.attachments
+                            while (!(data.length === 0)) {
+                                data.pop();
+                            }
+                            let i;
+                            for (i = 0; i < response.data.data.attachments.length; i++) {
+                                data.push(response.data.data.attachments[i])
+                            }
                         }
                     })
                     .catch(function (error) {
@@ -106,7 +130,7 @@
             )
             //下载
             function download(id) {
-                let postUrl= "http://localhost:8000/course/work/downloadOne/"
+                let postUrl= "http://localhost:8000/course/attachment/downloadOne/"
                 let params = {
                     id: id,
                 }
@@ -156,9 +180,8 @@
                 })
             }
             //upload
-            function submitUpload() {
-                this.$refs.upload.submit()
-                refresh();
+            function uploadSuccess() {
+                refresh()
             }
             function handleRemove(file, fileList) {
                 console.log(file, fileList)
@@ -194,11 +217,12 @@
                 download,
                 downloadFile,
                 fileList,
-                submitUpload,
+                uploadSuccess,
                 handlePreview,
                 handleRemove,
                 deleteAttach,
                 isSuperUser,
+              id
             }
         }
     }

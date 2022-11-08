@@ -76,12 +76,20 @@
                 API.post(API.defaults.baseUrl + '/course/course/all/', {username: STORE.state.user})
                     .then(function (response) {
                         if (response.data.code === 200) {
-                            data = response.data.data
+                            // data = response.data.data
+                            while (!(data.length === 0)) {
+                                data.pop();
+                            }
+                            let i;
+                            for (i = 0; i < response.data.data.length; i++) {
+                                data.push(response.data.data[i])
+                            }
                         }
                     })
                     .catch(function (error) {
                         console.log(error);
                     });
+                console.log(data)
             }
 
             function refresh() {
@@ -100,11 +108,6 @@
 
             function handleChoose(id) {
                 API.post(API.defaults.baseUrl + '/course/course/choose/', {username: STORE.state.user, class_id: id})
-                    .then(function (response) {
-                        if (response.data.code === 200) {
-                            data = response.data.data
-                        }
-                    })
                     .catch(function (error) {
                         console.log(error);
                     });
@@ -113,11 +116,6 @@
 
             function handleGiveUp(id) {
                 API.post(API.defaults.baseUrl + '/course/course/quit/', {username: STORE.state.user, class_id: id})
-                    .then(function (response) {
-                        if (response.data.code === 200) {
-                            data = response.data.data
-                        }
-                    })
                     .catch(function (error) {
                         console.log(error);
                     });
@@ -145,6 +143,7 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+                refresh();
             }
 
             refresh();

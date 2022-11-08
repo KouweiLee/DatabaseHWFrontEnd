@@ -15,7 +15,7 @@
                 <span>{{scope.row.score}}</span>
             </template>
         </el-table-column>
-        <el-table-column>
+        <el-table-column align="right" label="下载作业附件">
             <template #default="scope">
                 <el-button size="small" @click="download(scope.row.attachment_id)"
                 >
@@ -26,7 +26,18 @@
                 >
             </template>
         </el-table-column>
-        <el-table-column align="right">
+        <el-table-column align="right" style="width: 70px;" v-if="isSuperUser">
+            <template #default="scope">
+                <el-button size="small" @click="deleteSubmit(scope.row.attachment_id)"
+                >
+                    <el-icon>
+                        <Delete/>
+                    </el-icon>
+                </el-button
+                >
+            </template>
+        </el-table-column>
+        <el-table-column align="right" v-if="isSuperUser">
             <template #header>
 <!--                <el-input v-model="search" size="small" placeholder="Type to search"/>-->
                 <el-switch
@@ -39,8 +50,48 @@
                 <el-input-number :disabled="!judgeMode" v-model="scope.row.score" :min="0" :max="100" @change="handleChange(scope.row.attachment_id, scope.row.score)"/>
             </template>
         </el-table-column>
-
     </el-table>
+    <el-row style="text-align: center" v-if="isSuperUser">
+        <!--        <el-upload-->
+        <!--                class="upload-demo"-->
+        <!--                ref="upload"-->
+        <!--                action="http://localhost:8000/course/attachment/upload/"-->
+        <!--                :on-preview="handlePreview"-->
+        <!--                :on-remove="handleRemove"-->
+        <!--                :file-list="fileList"-->
+        <!--                :auto-upload="false"-->
+        <!--                style="margin-left: 45%; margin-top: 20px"-->
+        <!--        >-->
+        <!--            <template #trigger>-->
+        <!--                <el-button size="medium" type="default">选取文件</el-button>-->
+        <!--            </template>-->
+        <!--            <el-button-->
+        <!--                    style="margin-left: 10px;"-->
+        <!--                    size="medium"-->
+        <!--                    type="primary"-->
+        <!--                    @click="submitUpload"-->
+        <!--            >上传附件到服务器</el-button-->
+        <!--            >-->
+        <!--            <template #tip>-->
+        <!--                <div class="el-upload__tip">文件大小不超过 500kb</div>-->
+        <!--            </template>-->
+        <!--        </el-upload>-->
+        <el-upload
+                style="margin-left: 45%; margin-top: 30px"
+                class="upload-demo"
+                drag
+                :data="{username: username, homework_id: id}"
+                action="http://localhost:8000/course/work/upload/"
+                multiple
+                :on-sucess="uploadSuccess"
+        >
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <template #tip>
+                <div class="el-upload__tip">不超过 500kb</div>
+            </template>
+        </el-upload>
+    </el-row>
 </template>
 
 <script>
@@ -69,15 +120,25 @@
                         score: 99
                     }
                 ])
+            function refresh(){
+                getInfo()
+            }
 
             //获取当前提交信息
             let route = useRoute();
+            let id = route.query.id
+            let username = STORE.state.user
 
             function getInfo() {
+              console.log(route.query.id)
                 API.post(API.defaults.baseUrl + '/course/work/correcting/', {id: route.query.id})
                     .then(function (response) {
-                        if (response.data.code === 200) {
-                            data = response.data.data.attachments
+                        while (!(data.length === 0)) {
+                            data.pop();
+                        }
+                        let i;
+                        for (i = 0; i < response.data.data.attachments.length; i++) {
+                            data.push(response.data.data.attachments[i])
                         }
                     })
                     .catch(function (error) {
@@ -107,6 +168,16 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+                refresh()
+            }
+
+            function deleteSubmit(id){
+                console.log(id)
+                API.post(API.defaults.baseUrl + '/course/work/deleteRecord/', {id: id})
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                refresh()
             }
 
             //下载
@@ -160,17 +231,25 @@
                     )
                 })
             }
-
+            function uploadSuccess() {
+                refresh()
+            }
+            refresh()
             return {
+                id,
+                username,
                 isSuperUser,
                 data,
+                refresh,
                 getInfo,
                 search,
                 filterTableData,
                 judgeMode,
                 handleChange,
+                deleteSubmit,
                 downloadFile,
-                download
+                download,
+                uploadSuccess
             }
         }
     }
