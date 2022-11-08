@@ -50,8 +50,48 @@
                 <el-input-number :disabled="!judgeMode" v-model="scope.row.score" :min="0" :max="100" @change="handleChange(scope.row.attachment_id, scope.row.score)"/>
             </template>
         </el-table-column>
-
     </el-table>
+    <el-row style="text-align: center" v-if="isSuperUser">
+        <!--        <el-upload-->
+        <!--                class="upload-demo"-->
+        <!--                ref="upload"-->
+        <!--                action="http://localhost:8000/course/attachment/upload/"-->
+        <!--                :on-preview="handlePreview"-->
+        <!--                :on-remove="handleRemove"-->
+        <!--                :file-list="fileList"-->
+        <!--                :auto-upload="false"-->
+        <!--                style="margin-left: 45%; margin-top: 20px"-->
+        <!--        >-->
+        <!--            <template #trigger>-->
+        <!--                <el-button size="medium" type="default">选取文件</el-button>-->
+        <!--            </template>-->
+        <!--            <el-button-->
+        <!--                    style="margin-left: 10px;"-->
+        <!--                    size="medium"-->
+        <!--                    type="primary"-->
+        <!--                    @click="submitUpload"-->
+        <!--            >上传附件到服务器</el-button-->
+        <!--            >-->
+        <!--            <template #tip>-->
+        <!--                <div class="el-upload__tip">文件大小不超过 500kb</div>-->
+        <!--            </template>-->
+        <!--        </el-upload>-->
+        <el-upload
+                style="margin-left: 45%; margin-top: 30px"
+                class="upload-demo"
+                drag
+                :data="{username: username, homework_id: id}"
+                action="http://localhost:8000/course/work/upload/"
+                multiple
+                :on-sucess="uploadSuccess"
+        >
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <template #tip>
+                <div class="el-upload__tip">不超过 500kb</div>
+            </template>
+        </el-upload>
+    </el-row>
 </template>
 
 <script>
@@ -86,6 +126,8 @@
 
             //获取当前提交信息
             let route = useRoute();
+            let id = route.query.id
+            let username = STORE.state.user
 
             function getInfo() {
               console.log(route.query.id)
@@ -191,6 +233,8 @@
             }
             refresh()
             return {
+                id,
+                username,
                 isSuperUser,
                 data,
                 refresh,

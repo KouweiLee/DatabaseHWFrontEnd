@@ -49,15 +49,17 @@
 <!--            </template>-->
 <!--        </el-upload>-->
             <el-upload
+                    style="margin-left: 45%; margin-top: 30px"
                     class="upload-demo"
                     drag
                     action="http://localhost:8000/course/attachment/upload/"
                     multiple
+                    :on-sucess="uploadSuccess"
             >
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                 <template #tip>
-                    <div class="el-upload__tip">只能上传 jpg/png 文件，且不超过 500kb</div>
+                    <div class="el-upload__tip">不超过 500kb</div>
                 </template>
             </el-upload>
     </el-row>
@@ -175,6 +177,9 @@
                 })
             }
             //upload
+            function uploadSuccess() {
+                refresh()
+            }
             function handleRemove(file, fileList) {
                 console.log(file, fileList)
             }
@@ -209,6 +214,7 @@
                 download,
                 downloadFile,
                 fileList,
+                uploadSuccess,
                 handlePreview,
                 handleRemove,
                 deleteAttach,
