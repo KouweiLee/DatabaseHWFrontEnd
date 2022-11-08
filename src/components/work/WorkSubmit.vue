@@ -15,7 +15,7 @@
                 <span>{{scope.row.score}}</span>
             </template>
         </el-table-column>
-        <el-table-column>
+        <el-table-column align="right" label="下载作业附件">
             <template #default="scope">
                 <el-button size="small" @click="download(scope.row.attachment_id)"
                 >
@@ -26,7 +26,18 @@
                 >
             </template>
         </el-table-column>
-        <el-table-column align="right">
+        <el-table-column align="right" style="width: 70px;" v-if="isSuperUser">
+            <template #default="scope">
+                <el-button size="small" @click="deleteSubmit(scope.row.attachment_id)"
+                >
+                    <el-icon>
+                        <Delete/>
+                    </el-icon>
+                </el-button
+                >
+            </template>
+        </el-table-column>
+        <el-table-column align="right" v-if="isSuperUser">
             <template #header>
 <!--                <el-input v-model="search" size="small" placeholder="Type to search"/>-->
                 <el-switch
@@ -69,6 +80,9 @@
                         score: 99
                     }
                 ])
+            function refresh(){
+                getInfo()
+            }
 
             //获取当前提交信息
             let route = useRoute();
@@ -107,6 +121,15 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+            }
+
+            function deleteSubmit(id){
+                console.log(id)
+                API.post(API.defaults.baseUrl + '/course/work/deleteRecord/', {id: id})
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                refresh()
             }
 
             //下载
@@ -164,11 +187,13 @@
             return {
                 isSuperUser,
                 data,
+                refresh,
                 getInfo,
                 search,
                 filterTableData,
                 judgeMode,
                 handleChange,
+                deleteSubmit,
                 downloadFile,
                 download
             }

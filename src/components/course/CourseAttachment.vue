@@ -10,24 +10,20 @@
                 <el-input v-model="search" size="small" placeholder="Type to search"/>
             </template>
             <template #default="scope">
-                <el-button size="small" @click="download(scope.row.attachment_id)"
-                >
+                <el-button size="small" @click="download(scope.row.attachment_id)">
                     <el-icon>
                         <Bottom/>
                     </el-icon>
-                </el-button
-                >
-                <el-button size="small" @click="deleteAttach(scope.row.attachment_id)"
-                >
+                </el-button>
+                <el-button size="small" @click="deleteAttach(scope.row.attachment_id)" v-if="isSuperUser">
                     <el-icon>
                         <Delete/>
                     </el-icon>
-                </el-button
-                >
+                </el-button>
             </template>
         </el-table-column>
     </el-table>
-    <el-row style="text-align: center">
+    <el-row style="text-align: center" v-if="isSuperUser">
         <el-upload
                 class="upload-demo"
                 ref="upload"
@@ -39,17 +35,17 @@
                 style="margin-left: 45%; margin-top: 20px"
         >
             <template #trigger>
-                <el-button size="small" type="primary">选取文件</el-button>
+                <el-button size="medium" type="default">选取文件</el-button>
             </template>
             <el-button
                     style="margin-left: 10px;"
-                    size="small"
-                    type="success"
+                    size="medium"
+                    type="primary"
                     @click="submitUpload"
             >上传附件到服务器</el-button
             >
             <template #tip>
-                <div class="el-upload__tip">只能上传 jpg/png 文件，且不超过 500kb</div>
+                <div class="el-upload__tip">文件大小不超过 500kb</div>
             </template>
         </el-upload>
     </el-row>
