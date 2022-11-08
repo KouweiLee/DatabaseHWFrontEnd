@@ -54,6 +54,7 @@
                     drag
                     action="http://localhost:8000/course/attachment/upload/"
                     multiple
+                    :data="{class_id:id}"
                     :on-sucess="uploadSuccess"
             >
                 <i class="el-icon-upload"></i>
@@ -97,6 +98,8 @@
             }
 
             const route = useRoute()
+                    let id = route.query.id
+
 
             function getAttachments() {
                 API.post(API.defaults.baseUrl + '/course/attachment/all/', {id: route.query.id})
@@ -107,7 +110,7 @@
                             }
                             let i;
                             for (i = 0; i < response.data.data.attachments.length; i++) {
-                                data.push(response.data.attachments.data[i])
+                                data.push(response.data.data.attachments[i])
                             }
                         }
                     })
@@ -127,7 +130,7 @@
             )
             //下载
             function download(id) {
-                let postUrl= "http://localhost:8000/course/work/downloadOne/"
+                let postUrl= "http://localhost:8000/course/attachment/downloadOne/"
                 let params = {
                     id: id,
                 }
@@ -219,6 +222,7 @@
                 handleRemove,
                 deleteAttach,
                 isSuperUser,
+              id
             }
         }
     }
