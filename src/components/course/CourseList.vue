@@ -89,6 +89,7 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+                console.log(data)
             }
 
             function refresh() {
@@ -107,11 +108,6 @@
 
             function handleChoose(id) {
                 API.post(API.defaults.baseUrl + '/course/course/choose/', {username: STORE.state.user, class_id: id})
-                    .then(function (response) {
-                        if (response.data.code === 200) {
-                            data = response.data.data
-                        }
-                    })
                     .catch(function (error) {
                         console.log(error);
                     });
@@ -120,11 +116,6 @@
 
             function handleGiveUp(id) {
                 API.post(API.defaults.baseUrl + '/course/course/quit/', {username: STORE.state.user, class_id: id})
-                    .then(function (response) {
-                        if (response.data.code === 200) {
-                            data = response.data.data
-                        }
-                    })
                     .catch(function (error) {
                         console.log(error);
                     });

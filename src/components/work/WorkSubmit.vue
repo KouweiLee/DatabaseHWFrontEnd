@@ -88,6 +88,7 @@
             let route = useRoute();
 
             function getInfo() {
+              console.log(route.query.id)
                 API.post(API.defaults.baseUrl + '/course/work/correcting/', {id: route.query.id})
                     .then(function (response) {
                         while (!(data.length === 0)) {
@@ -188,7 +189,7 @@
                     )
                 })
             }
-
+            refresh()
             return {
                 isSuperUser,
                 data,

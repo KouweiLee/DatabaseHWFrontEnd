@@ -62,7 +62,7 @@
 
 
             function getWorks() {
-                API.post(API.defaults.baseUrl + '/course/work/all/')
+                API.post(API.defaults.baseUrl + '/course/work/all/', {id:route.query.id})
                     .then(function (response) {
                         if (response.data.code === 200) {
                             while (!(data.length === 0)) {
@@ -72,6 +72,7 @@
                             for (i = 0; i < response.data.data.length; i++) {
                                 data.push(response.data.data[i])
                             }
+                            console.log(response.data.data)
                         }
                     })
                     .catch(function (error) {
@@ -102,12 +103,13 @@
             //跳转到具体课程页面
 
             function gotoWork(id) {
+              console.log(id)
                 router.push({
                     path: '/home/work/description',
                     query: {id}
                 })
             }
-
+            getWorks()
             return {
                 filterTableData,
                 handleGiveUp,
