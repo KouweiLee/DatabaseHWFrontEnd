@@ -59,6 +59,11 @@
 
     export default {
         name: "CourseAttachment",
+        methods:{
+            submitUpload() {
+                this.$refs.upload.submit()
+            },
+        },
         setup() {
             let data = reactive([
                 {
@@ -158,10 +163,6 @@
                 })
             }
             //upload
-            function submitUpload() {
-                this.$refs.upload.submit()
-                refresh();
-            }
             function handleRemove(file, fileList) {
                 console.log(file, fileList)
             }
@@ -196,7 +197,6 @@
                 download,
                 downloadFile,
                 fileList,
-                submitUpload,
                 handlePreview,
                 handleRemove,
                 deleteAttach,
