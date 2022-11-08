@@ -1,6 +1,6 @@
 <template>
     <el-catainer>
-        <el-header>
+        <el-header >
             <el-menu
                     :default-active="activeIndex"
                     class="el-menu-demo"
@@ -92,5 +92,12 @@
 </script>
 
 <style scoped>
-
+.el-header {
+    height: 80px;
+    position: relative;
+    /*position: fixed;*/
+}
+.el-main {
+    height: calc(100vh - 85px);
+}
 </style>

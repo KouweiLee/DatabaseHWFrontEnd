@@ -9,7 +9,17 @@
     <div style="margin-left: 20%; width: 60%">
         <el-tabs :tab-position="tabPosition" style="height: 60%" class="demo-tabs">
             <el-tab-pane label="课程介绍">
-                <div style="height: 500px">{{course.description}}</div>
+<!--                <div style="height: 500px">{{course.description}}</div>-->
+                <mavon-editor
+                    ref="md"
+                    v-model="course.description"
+                    :subfield="false"
+                    :defaultOpen="'preview'"
+                    :toolbarsFlag="false"
+                    :editable="false"
+                    :scrollStyle="true"
+                    :ishljs="true"
+                  />
             </el-tab-pane>
 <!--            <el-tab-pane label="课程内容">-->
 <!--                <div style="height: 500px">-->
