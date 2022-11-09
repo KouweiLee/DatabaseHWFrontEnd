@@ -75,16 +75,24 @@ export default {
 
         //获取当前课程信息
         function getCourse() {
-            API.post(API.defaults.baseUrl + '/course/course/single/',
-                route.query.id
-            ).then(function (response) {
-                if (response.data.code === 200) {
-                    course = response.data.data
-                }
-            }).catch(function (error) {
-                console.log(error);
-            });
-        }
+                API.post(API.defaults.baseUrl + '/course/course/single/', {id:route.query.id,username:STORE.state.user})
+                    .then(function (response) {
+                        if (response.data.code === 200) {
+                          console.log(response.data.data)
+                          course.name = response.data.data.name
+                          course.id = response.data.data.id
+                          course.description = response.data.data.description
+                          course.exam = response.data.data.exam
+                          course.pingshi = response.data.data.pingshi
+                          course.position = response.data.data.position
+                          course.time = response.data.data.time
+                          console.log(course)
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
 
         function changeCourseInfo() {
             API.post(API.defaults.baseUrl + '/course/course/change/',

@@ -70,35 +70,30 @@
 
             let course = reactive({
                 id: 1,
-                name: "走进超算",
-                // isChoosed: false,
-                // teacher: "张三",
-                time: "周一上午第三、四节课",
-                position: "主楼101",
-                description: "从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算",
-                // content: ['学1', '学2', '学3'],
-                // grade: [
-                //     {
-                //         percent: 60,
-                //         name: "考试"
-                //     },
-                //     {
-                //         percent: 40,
-                //         name: "平时"
-                //     }
-                // ]
+                name: "",
+                time: "",
+                position: "",
+                description: "",
+                pingshi: 0,
+                exam: 0
             })
             //获取当前课程信息
             let route = useRoute();
             console.log(route.query.id)
-
+            getCourse()
 
             function getCourse() {
                 API.post(API.defaults.baseUrl + '/course/course/single/', {id:route.query.id,username:STORE.state.user})
                     .then(function (response) {
                         if (response.data.code === 200) {
                           console.log(response.data.data)
-                            course = response.data.data
+                          course.name = response.data.data.name
+                          course.id = response.data.data.id
+                          course.description = response.data.data.description
+                          course.exam = response.data.data.exam
+                          course.pingshi = response.data.data.pingshi
+                          course.position = response.data.data.position
+                          course.time = response.data.data.time
                           console.log(course)
                         }
                     })

@@ -80,25 +80,33 @@ export default {
         })
         let route = useRoute();
         getWork()
-        const dateSpan = ref([work.begin_time, work.end_time])
+        // const dateSpan = ref([work.begin_time, work.end_time])
 
+        const dateSpan = ref([
+            new Date(work.begin_time),
+            new Date(work.end_time)
+        ])
+      console.log(dateSpan)
         //获取当前课程信息
         function getWork() {
-            API.post(API.defaults.baseUrl + '/course/work/single/',
-                {
-                    id: route.query.id
-                }).then(function (response) {
-                if (response.data.code === 200) {
-                    work = response.data.data
-                }
-            })
+            API.post(API.defaults.baseUrl + '/course/work/single/', {id: route.query.id})
+                .then(function (response) {
+                    if (response.data.code === 200) {
+                        work.id = response.data.data.id
+                        work.begin_time = response.data.data.begin_time
+                        work.end_time = response.data.data.end_time
+                        work.content = response.data.data.content
+                        work.name = response.data.data.name
+
+                    }
+                })
                 .catch(function (error) {
                     console.log(error);
                 });
         }
 
         function changeWork() {
-            API.post(API.defaults.baseURL + '/course/work/change/', {
+            API.post(API.defaults.baseUrl + '/course/work/change/', {
                 id: route.query.id,
                 name: work.name,
                 begin_time: dateSpan.value[0],
