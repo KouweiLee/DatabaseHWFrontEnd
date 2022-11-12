@@ -1,99 +1,169 @@
 <template>
-    <h1>{{work.name}}</h1>
-    <el-date-picker
-        v-model="dateSpan"
-        type="datetimerange"
-        range-separator="To"
-        start-placeholder="Start date"
-        end-placeholder="End date"
-        value-format="YYYY-MM-DD HH:mm:ss"
-      />
-<!--    <v-time-picker-->
-<!--      format="ampm"-->
-<!--    ></v-time-picker>-->
-    <el-button type="primary" @click="setDate">Primary</el-button>
-<!--    <v-md-editor height="500px" style="text-align: left" v-model="work.content"></v-md-editor>-->
+    <el-row>
+        <el-col :span="12">
+            <h2>作业名称：{{ work.name }}</h2>
+            <h3>作业起始时间-结束时间</h3>
+        </el-col>
+        <el-col :span="12">
+            <el-row>
+                <span>作业名称修改</span>
+                <el-input v-model="work.name" style="width: 300px"></el-input>
+            </el-row>
+            <el-row>
+                <el-date-picker
+                    v-model="dateSpan"
+                    type="datetimerange"
+                    range-separator="To"
+                    start-placeholder="Start date"
+                    end-placeholder="End date"
+                    value-format="YYYY-MM-DD HH:mm:ss"
+                />
+            </el-row>
+        </el-col>
+        <!--        <el-select v-model="course.time" class="m-2" placeholder="Select" size="large">-->
+        <!--            <el-option-->
+        <!--                v-for="item in options"-->
+        <!--                :key="item.value"-->
+        <!--                :label="item.label"-->
+        <!--                :value="item.value"-->
+        <!--            />-->
+        <!--        </el-select>-->
+    </el-row>
+
+    <!--    <v-time-picker-->
+    <!--      format="ampm"-->
+    <!--    ></v-time-picker>-->
+    <!--    <el-button type="primary" @click="setDate">Primary</el-button>-->
+    <!--    <v-md-editor height="500px" style="text-align: left" v-model="work.content"></v-md-editor>-->
 
     <mavon-editor
         v-model="work.content"
         ref="md"
         style="min-height: 600px"
-      />
-    <el-button type="primary" @click="changeWork">Primary</el-button>
-    <el-button type="primary" @click="displayData">Primary</el-button>
+    />
+    <el-row>
+        <el-button type="primary" round @click="changeWork" style="margin: 0 auto">修改作业</el-button>
+        <el-button type="primary" round @click="deleteWorkDialogShow = true" style="margin: 0 auto">删除作业</el-button>
+    </el-row>
+    <el-dialog
+        v-model="deleteWorkDialogShow"
+        title="Warning"
+        width="30%"
+        align-center
+    >
+        <span>此操作将会删除作业</span>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="deleteWorkDialogShow = false">取消</el-button>
+                <el-button type="primary" @click="deleteWork">删除</el-button>
+            </span>
+        </template>
+    </el-dialog>
 </template>
 
 <script>
 import {reactive, ref} from "@vue/reactivity";
-    import STORE from '../../store/index'
-    import {useRoute} from "vue-router";
-    import API from "../../axios.js"
-    export default {
-        name: "WorkManagement",
-        setup() {
-            let work = reactive({
-                id: 1,
-                name: "c1",
-                content: "做十道练习题",
-                begin_time: "2017-07-25 21:51:54",
-                end_time: "2017-07-25 21:51:54"
-            })
-            const dateSpan = ref([work.begin_time, work.end_time])
+import STORE from '../../store/index'
+import {useRoute} from "vue-router";
+import API from "../../axios.js"
+import {ElMessage} from "element-plus";
 
-            //获取当前课程信息
-            function getWork() {
-                API.post(API.defaults.baseUrl + '/course/work/single/', {id: route.query.id})
-                    .then(function (response) {
-                        if (response.data.code === 200) {
-                            work = response.data.data
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            }
+export default {
+    name: "WorkManagement",
+    setup() {
+        let work = reactive({
+            id: 1,
+            name: "",
+            content: "",
+            begin_time: "",
+            end_time: ""
+        })
+        let route = useRoute();
+        getWork()
+        // const dateSpan = ref([work.begin_time, work.end_time])
 
-            function changeWork() {
-              API.post(API.defaults.baseURL + '/course/work/change/', {
+        const dateSpan = ref([
+            new Date(work.begin_time),
+            new Date(work.end_time)
+        ])
+      console.log(dateSpan)
+        //获取当前课程信息
+        function getWork() {
+            API.post(API.defaults.baseUrl + '/course/work/single/', {id: route.query.id})
+                .then(function (response) {
+                    if (response.data.code === 200) {
+                        work.id = response.data.data.id
+                        work.begin_time = response.data.data.begin_time
+                        work.end_time = response.data.data.end_time
+                        work.content = response.data.data.content
+                        work.name = response.data.data.name
+
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+        function changeWork() {
+            API.post(API.defaults.baseUrl + '/course/work/change/', {
                 id: route.query.id,
                 name: work.name,
                 begin_time: dateSpan.value[0],
                 end_time: dateSpan.value[1],
                 content: work.content
-              }).then(function (response) {
+            }).then(function (response) {
                 console.log(response)
-              }).catch(function (error) {
+            }).catch(function (error) {
                 console.log(error)
-              })
-            }
+            })
+        }
 
-            function displayData() {
-              console.log(work.content)
-            }
+        let deleteWorkDialogShow = ref(false)
 
-            function isSuperUser() {
-                return STORE.state.isSuperUser;
-            }
+        function deleteWork() {
+            deleteWorkDialogShow = false
+            API.post(API.defaults.baseUrl + '/course/course/delete', {
+                id: route.query.id
+            }).then(function (response) {
+                if (response.data.code === 200) {
+                    ElMessage({
+                        message: "删除成功",
+                        type: 'success',
+                    })
+                } else {
+                    ElMessage.error("删除失败")
+                }
+            }).catch(function (error) {
+                console.log("Catch error when trying to delete the course")
+                console.log(error)
+            })
+        }
 
-            function setDate() {
-              // * 这里只能更改dateSpan中的数据，不能更改原本的work.begin_time的数据
-              console.log(work.begin_time)
-              console.log(dateSpan.value[0])
-              // console.log(value2.value[0])
-            }
+        function isSuperUser() {
+            return STORE.state.isSuperUser;
+        }
 
-            let route = useRoute();
-            return {
-                isSuperUser,
-                work,
-                getWork,
-                dateSpan,
-              setDate,
-              changeWork,
-              displayData
-            }
+        function setDate() {
+            // * 这里只能更改dateSpan中的数据，不能更改原本的work.begin_time的数据
+            console.log(work.begin_time)
+            console.log(dateSpan.value[0])
+            // console.log(value2.value[0])
+        }
+
+
+        return {
+            isSuperUser,
+            work,
+            getWork,
+            dateSpan,
+            setDate,
+            changeWork,
+            deleteWork,
+            deleteWorkDialogShow
         }
     }
+}
 </script>
 
 <style scoped>
