@@ -51,6 +51,7 @@
 
             //顶栏路由
             function handleDescription(id) {
+                console.log(id)
                 router.push({
                     path: '/home/work/description',
                     query: {id}

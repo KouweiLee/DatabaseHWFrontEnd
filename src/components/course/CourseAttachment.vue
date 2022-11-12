@@ -181,7 +181,9 @@
             }
             //upload
             function uploadSuccess() {
-                refresh()
+                setTimeout(() => {
+                    refresh()
+                }, 100);
             }
             function handleRemove(file, fileList) {
                 console.log(file, fileList)
@@ -198,7 +200,9 @@
                     .catch(function (error) {
                         console.log(error);
                     });
-                refresh()
+                setTimeout(() => {
+                    refresh()
+                }, 100);
             }
 
 
@@ -222,7 +226,7 @@
                 handleRemove,
                 deleteAttach,
                 isSuperUser,
-              id
+                id
             }
         }
     }

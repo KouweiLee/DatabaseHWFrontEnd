@@ -11,63 +11,29 @@ import Mock from 'mockjs'  //导入mockjs
 //     status:200
 // })
 
-const testData2 = Mock.mock('http://localhost:8080/discuss/queryTitle/', 'post', {
+const testData2 = Mock.mock('http://localhost:8080/course/course/single', 'post', {
 
-    status: 400, //请求成功状态码
-    data: [{
-        id: 34,
-        isTop: true,
-        isOver: true,
-        submitNumber: 100,
-        replyNumber: 25,
-        title: "1",
-        url: "404",
-        content: "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-            "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-            "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-            "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-            "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja",
-        tags: ['P7', 'P8'],
-        name: "Zhang_kg",
-        time: "2022-10-1",
-        isLike: false
-    },
-        {
-            id: 35,
-            isTop: false,
-            isOver: true,
-            submitNumber: 100,
-            replyNumber: 25,
-            title: "2",
-            url: "404",
-            content: "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja",
-            tags: ['P7', 'P8'],
-            name: "Zhang_kg",
-            time: "2022-10-1",
-            isLike: false
-        },
-        {
-            id: 36,
-            isTop: true,
-            isOver: true,
-            submitNumber: 100,
-            replyNumber: 25,
-            title: "3",
-            url: "404",
-            content: "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +
-                "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja",
-            tags: ['P7', 'P8'],
-            name: "Zhang_kg",
-            time: "2022-10-1",
-            isLike: false
-        },]
+    status: 200, //请求成功状态码
+    data: {
+        id: 1,
+        name: "走进超算",
+        // isChoosed: false,
+        // teacher: "张三",
+        time: "周一上午第三、四节课",
+        position: "主楼101",
+        description: "从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算",
+        // content: ['学1', '学2', '学3'],
+        // grade: [
+        //     {
+        //         percent: 60,
+        //         name: "考试"
+        //     },
+        //     {
+        //         percent: 40,
+        //         name: "平时"
+        //     }
+        // ]
+    }
 })
 
 //导出

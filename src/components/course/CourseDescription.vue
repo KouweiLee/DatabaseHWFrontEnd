@@ -60,7 +60,7 @@
 
             let course = reactive({
                 id: 1,
-                name: "走进超算",
+                name: "走进超算123",
                 // isChoosed: false,
                 // teacher: "张三",
                 time: "周一上午第三、四节课",

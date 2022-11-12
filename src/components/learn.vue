@@ -1,77 +1,56 @@
 <template>
-    <div style="width: 70%;margin-left: 30px;margin-top: 30px;">
-        <el-button class="filter-item" type="success" icon="el-icon-download" @click="downFile()">下载</el-button>
-    </div>
+    <el-upload
+            class="upload-demo"
+            ref="upload"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="fileList"
+            :auto-upload="false"
+    >
+        <template #trigger>
+            <el-button size="small" type="primary">选取文件</el-button>
+        </template>
+        <el-button
+                style="margin-left: 10px;"
+                size="small"
+                type="success"
+                @click="submitUpload"
+        >上传到服务器</el-button
+        >
+        <template #tip>
+            <div class="el-upload__tip">只能上传 jpg/png 文件，且不超过 500kb</div>
+        </template>
+    </el-upload>
 </template>
 
 <script>
-    import axios from 'axios'
-
     export default {
-        name:"LearnView",
+        name: "LearnView",
         data() {
             return {
+                fileList: [
+                    {
+                        name: 'food.jpeg',
+                        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+                    },
+                    {
+                        name: 'food2.jpeg',
+                        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+                    },
+                ],
             }
         },
-        mounted: function() {
-
-        },
         methods: {
-            downloadFile(url, options = {}){
-                return new Promise((resolve, reject) => {
-                    // console.log(`${url} 请求数据，参数=>`, JSON.stringify(options))
-                    // axios.defaults.headers['content-type'] = 'application/json;charset=UTF-8'
-                    axios({
-                        method: 'post',
-                        url: url, // 请求地址
-                        data: options, // 参数
-                        responseType: 'blob' // 表明返回服务器返回的数据类型
-                    }).then(
-                        response => {
-                            // console.log("下载响应",response)
-                            resolve(response.data)
-                            let blob = new Blob([response.data], {
-                                type: 'application/vnd.ms-excel'
-                            })
-                            // console.log(blob)
-                            // let fileName = Date.parse(new Date()) + '.xlsx'
-                            // 切割出文件名
-                            let fileNameEncode = response.headers['content-disposition'].split("filename=")[1];
-                            // 解码
-                            let fileName = decodeURIComponent(fileNameEncode)
-                            // console.log("fileName",fileName)
-                            if (window.navigator.msSaveOrOpenBlob) {
-                                // console.log(2)
-                                navigator.msSaveBlob(blob, fileName)
-                            } else {
-                                // console.log(3)
-                                var link = document.createElement('a')
-                                link.href = window.URL.createObjectURL(blob)
-                                link.download = fileName
-                                link.click()
-                                //释放内存
-                                window.URL.revokeObjectURL(link.href)
-                            }
-                        },
-                        err => {
-                            reject(err)
-                        }
-                    )
-                })
+            submitUpload() {
+                this.$refs.upload.submit()
             },
-            // 下载文件
-            downFile(){
-                let postUrl= "http://127.0.0.1:8000/download/excel/"
-                let params = {
-                    filename: "大江大河.xlsx",
-                }
-                // console.log("下载参数",params)
-                this.downloadFile(postUrl,params)
+            handleRemove(file, fileList) {
+                console.log(file, fileList)
             },
-        }
+            handlePreview(file) {
+                console.log(file)
+            },
+        },
     }
 </script>
-
-<style>
-</style>
-
