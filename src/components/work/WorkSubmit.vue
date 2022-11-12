@@ -10,6 +10,11 @@
                 <span>{{scope.row.username}}</span>
             </template>
         </el-table-column>
+        <el-table-column label="提交时间">
+        <template #default="scope">
+            <span>{{scope.row.time}}</span>
+        </template>
+    </el-table-column>
         <el-table-column label="成绩">
             <template #default="scope">
                 <span>{{scope.row.score}}</span>
