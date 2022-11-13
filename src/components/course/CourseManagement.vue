@@ -1,5 +1,101 @@
 <template>
     <el-row>
+        <h2 style="text-align: left">设置课程名称</h2>
+    </el-row>
+    <el-row style="margin-top: 5px">
+        <v-text-field
+            label="课程名称"
+            placeholder="Placeholder"
+            v-model="course.name"
+            variant="outlined"
+        ></v-text-field>
+    </el-row>
+    <el-divider></el-divider>
+    <el-row>
+        <el-col :span="12">
+            <h2 style="text-align: left">设置课程地点</h2>
+        </el-col>
+        <el-col :span="12">
+            <h2 style="text-align: left">设置课程时间</h2>
+        </el-col>
+    </el-row>
+    <el-row style="margin-top: 5px">
+        <el-col :span="12">
+            <v-text-field
+                label="课程地点"
+                placeholder="Placeholder"
+                v-model="course.position"
+                variant="outlined"
+                style="margin-right: 5px"
+            ></v-text-field>
+        </el-col>
+        <el-col :span="12">
+            <v-text-field
+                label="课程时间"
+                placeholder="Placeholder"
+                v-model="course.time"
+                variant="outlined"
+                style="margin-left: 5px"
+            ></v-text-field>
+        </el-col>
+    </el-row>
+    <el-divider></el-divider>
+    <el-row>
+        <h2 style="text-align: left">修改考试和平时占比</h2>
+    </el-row>
+    <el-row style="margin-top: 30px; margin-left: 5%; width: 90%">
+        <el-col :span="12">
+            <el-progress type="dashboard" :percentage="course.exam">
+                <template #default="{ percentage }">
+                    <span class="percentage-value">{{ percentage }}%</span>
+                    <span class="percentage-label">考试占比</span>
+                </template>
+            </el-progress>
+        </el-col>
+        <el-col :span="12">
+            <el-progress type="dashboard" :percentage="100 - course.exam">
+                <template #default="{ percentage }">
+                    <span class="percentage-value">{{ percentage }}%</span>
+                    <span class="percentage-label">平时占比</span>
+                </template>
+            </el-progress>
+        </el-col>
+    </el-row>
+
+    <el-row  style="margin-top: 30px; margin-left: 5%; width: 90%;">
+        <el-slider v-model="course.exam" />
+    </el-row>
+    <el-divider></el-divider>
+    <el-row>
+        <h2 style="text-align: left">设置课程描述</h2>
+    </el-row>
+    <el-row style="margin-top: 5px">
+        <el-col :span="24">
+            <mavon-editor
+                v-model="course.description"
+                ref="md"
+                style="min-height: 600px"
+            />
+        </el-col>
+
+    </el-row>
+    <el-row style="margin-top: 30px">
+<!--        <el-button type="primary" round style="margin: 0 auto" @click="changeCourseInfo">修改</el-button>-->
+<!--        <el-button type="danger" round style="margin: 0 auto" @click="deleteCourseDialogShow=true">删除</el-button>-->
+        <v-btn
+            style="margin: 0 auto"
+            @click="changeCourseInfo"
+            color="info">
+            修改
+        </v-btn>
+        <v-btn
+            style="margin: 0 auto"
+            @click="deleteCourseDialogShow=true "
+            color="error">
+            删除
+        </v-btn>
+    </el-row>
+    <el-row>
         <el-col :span="12">
             <h2>课程名称：{{ course.name }}</h2>
             <h3>课程时间：{{ course.time }}</h3>
@@ -56,6 +152,7 @@ import STORE from '../../store/index'
 import {useRoute} from "vue-router";
 import API from "../../axios.js"
 import {ElMessage} from "element-plus";
+
 // import router from "@/router/router";
 
 
@@ -75,24 +172,26 @@ export default {
 
         //获取当前课程信息
         function getCourse() {
-                API.post(API.defaults.baseUrl + '/course/course/single/', {id:route.query.id,username:STORE.state.user})
-                    .then(function (response) {
-                        if (response.data.code === 200) {
-                          console.log(response.data.data)
-                          course.name = response.data.data.name
-                          course.id = response.data.data.id
-                          course.description = response.data.data.description === null? "": response.data.data.description
-                          course.exam = response.data.data.exam
-                          course.pingshi = response.data.data.pingshi
-                          course.position = response.data.data.position
-                          course.time = response.data.data.time
-                          console.log(course)
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            }
+            API.post(API.defaults.baseUrl + '/course/course/single/', {
+                id: route.query.id, username: STORE.state.user
+            })
+                .then(function (response) {
+                    if (response.data.code === 200) {
+                        console.log(response.data.data)
+                        course.name = response.data.data.name
+                        course.id = response.data.data.id
+                        course.description = response.data.data.description === null ? "" : response.data.data.description
+                        course.exam = response.data.data.exam
+                        course.pingshi = response.data.data.pingshi
+                        course.position = response.data.data.position
+                        course.time = response.data.data.time
+                        console.log(course)
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
 
         function changeCourseInfo() {
             API.post(API.defaults.baseUrl + '/course/course/change/',
@@ -103,7 +202,7 @@ export default {
                     position: course.position,
                     description: course.description,
                     exam: course.exam,
-                    pingshi: course.pingshi
+                    pingshi: 100 - course.exam
                 }
             ).then(function (response) {
                 if (response.data.code === 200) {
@@ -163,5 +262,14 @@ export default {
 </script>
 
 <style scoped>
-
+.percentage-value {
+  display: block;
+  margin-top: 10px;
+  font-size: 28px;
+}
+.percentage-label {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+}
 </style>

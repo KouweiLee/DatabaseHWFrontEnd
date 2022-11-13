@@ -32,7 +32,7 @@
             let course = reactive({
                 id: 4,
                 name: "c1",
-                isChoosed: 1,
+                isChoosed: true,
 
             })
             let route = useRoute();

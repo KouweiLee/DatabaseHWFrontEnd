@@ -7,8 +7,8 @@
         </el-table-column>
         <el-table-column label="是否已选">
             <template #default="scope">
-                <el-tag v-if="scope.row.isChoosed === 1">已选</el-tag>
-                <el-tag v-if="scope.row.isChoosed === 0">未选</el-tag>
+                <el-tag v-if="scope.row.isChoosed">已选</el-tag>
+                <el-tag v-if="scope.row.isChoosed === false">未选</el-tag>
             </template>
         </el-table-column>
         <el-table-column align="right">
@@ -17,14 +17,14 @@
             </template>
             <template #default="scope">
                 <el-button size="small" @click="handleChoose(scope.row.id)"
-                           v-if="scope.row.isChoosed === 0"
+                           v-if="scope.row.isChoosed === false"
                 >选课
                 </el-button
                 >
                 <el-button
                         size="small"
                         type="danger"
-                        v-if="scope.row.isChoosed === 1"
+                        v-if="scope.row.isChoosed"
                         @click="handleGiveUp(scope.row.id)"
                 >退课
                 </el-button
@@ -32,6 +32,18 @@
             </template>
         </el-table-column>
     </el-table>
+
+
+    <el-row>
+        <el-col :span="16"></el-col>
+        <el-col :span="8">
+            <v-text-field label="搜索课程" v-model="search"></v-text-field>
+        </el-col>
+    </el-row>
+
+
+    <course-list-component v-for="courseInfo in filterTableData" :key="courseInfo.id" :courseInfo="courseInfo"
+        @refresh="refresh"></course-list-component>
     <el-row>
         <el-input v-model="newCourseName" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"
                   placeholder="请输入新建课程名称">
@@ -53,22 +65,24 @@
     import API from "../../axios.js"
     import STORE from '../../store/index'
     import router from "@/router/router";
+    import CourseListComponent from "@/components/course/CourseListComponent";
 
 
     export default {
 
         name: "CourseList",
+        components: {CourseListComponent},
         setup() {
             let data = reactive([
                 {
-                    id: 1,
-                    name: "c1",
-                    isChoosed: 1
+                    id: 999999,
+                    name: "",
+                    isChoosed: true
                 },
                 {
-                    id: 2,
-                    name: "c2",
-                    isChoosed: 0
+                    id: 9999999,
+                    name: "",
+                    isChoosed: false
                 }
             ])
 
@@ -110,7 +124,8 @@
             )
 
             function handleChoose(id) {
-                API.post(API.defaults.baseUrl + '/course/course/choose/', {username: STORE.state.user, class_id: id})
+                API.post(API.defaults.baseUrl + '/course/course/choose/',
+                    {username: STORE.state.user, class_id: id})
                     .catch(function (error) {
                         console.log(error);
                     });

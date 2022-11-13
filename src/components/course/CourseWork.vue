@@ -1,36 +1,20 @@
 <template>
+    <!--after-->
+    <el-row>
+        <el-col :span="16"></el-col>
+        <el-col :span="8">
+            <v-text-field label="搜索作业" v-model="search"></v-text-field>
+        </el-col>
+    </el-row>
+    <course-work-list-component v-for="courseWorkInfo in filterTableData" :key="courseWorkInfo.id"
+                                :work-info="courseWorkInfo"></course-work-list-component>
+    <!--Before-->
     <el-table :data="filterTableData" style="width: 100%">
         <el-table-column label="作业名称" >
             <template #default="scope">
                 <span @click="gotoWork(scope.row.id)">{{scope.row.name}}</span>
             </template>
         </el-table-column>
-<!--        <el-table-column label="是否已选">-->
-<!--            <template #default="scope">-->
-<!--                <el-tag v-if="scope.row.isChoosed">已选</el-tag>-->
-<!--                <el-tag v-if="scope.row.isChoosed === false">未选</el-tag>-->
-<!--            </template>-->
-<!--        </el-table-column>-->
-<!--        <el-table-column align="right">-->
-<!--            <template #header>-->
-<!--                <el-input v-model="search" size="small" placeholder="Type to search"/>-->
-<!--            </template>-->
-<!--            <template #default="scope">-->
-<!--                <el-button size="small" @click="handleChoose(scope.$index, scope.row)"-->
-<!--                           v-if="scope.row.isChoosed === false"-->
-<!--                >选课-->
-<!--                </el-button-->
-<!--                >-->
-<!--                <el-button-->
-<!--                        size="small"-->
-<!--                        type="danger"-->
-<!--                        v-if="scope.row.isChoosed"-->
-<!--                        @click="handleGiveUp(scope.$index, scope.row)"-->
-<!--                >退课-->
-<!--                </el-button-->
-<!--                >-->
-<!--            </template>-->
-<!--        </el-table-column>-->
     </el-table>
     <el-row>
         <el-input v-model="newWorkName" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"
@@ -54,11 +38,13 @@
     import STORE from '../../store/index'
     import router from "@/router/router";
     import {useRoute} from "vue-router";
+    import CourseWorkListComponent from "@/components/course/CourseWorkListComponent";
 
 
     export default {
 
         name: "CourseWork",
+        components: {CourseWorkListComponent},
         setup() {
             let data = reactive([
                 {
