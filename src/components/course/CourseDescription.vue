@@ -89,7 +89,7 @@
                           console.log(response.data.data)
                           course.name = response.data.data.name
                           course.id = response.data.data.id
-                          course.description = response.data.data.description
+                          course.description = response.data.data.description === null? "": response.data.data.description
                           course.exam = response.data.data.exam
                           course.pingshi = response.data.data.pingshi
                           course.position = response.data.data.position

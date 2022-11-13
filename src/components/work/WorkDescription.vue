@@ -38,7 +38,7 @@ let route = useRoute();
                         work.id = response.data.data.id
                         work.begin_time = response.data.data.begin_time
                         work.end_time = response.data.data.end_time
-                        work.content = response.data.data.content
+                        work.content = response.data.data.content === null? "": response.data.data.content
                         work.name = response.data.data.name
 
                     }

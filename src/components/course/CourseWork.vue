@@ -34,7 +34,7 @@
     </el-table>
     <el-row>
         <el-input v-model="newWorkName" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"
-                  placeholder="请输入新建课程名称">
+                  placeholder="请输入新建作业名称">
             <template #prefix>
                 <el-icon>
                     <CirclePlus/>
@@ -43,7 +43,7 @@
         </el-input>
         <el-button type="Plain" style=" margin-top: 20px; height: 30px; margin-left: 3%; width: 30%"
                    v-if="isSuperUser()" @click="submitNewWork">
-            点击添加课程
+            点击添加作业
         </el-button>
     </el-row>
 </template>
@@ -73,6 +73,8 @@
 
             function refresh(){
                 getWorks()
+                console.log("refresh")
+                console.log(data)
             }
 
             let route = useRoute()
@@ -118,7 +120,7 @@
                 return STORE.state.isSuperUser;
             }
 
-            //跳转到具体课程页面
+            //跳转到具体作业页面
 
             function gotoWork(id) {
               console.log(id)
@@ -136,7 +138,9 @@
                     .catch(function (error) {
                         console.log(error);
                     });
-                refresh();
+                setTimeout(() => {
+                    refresh()
+                }, 100);
             }
 
             refresh()

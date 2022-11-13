@@ -30,18 +30,28 @@
         name: "CourseView",
         setup(){
             let course = reactive({
-                id: 1,
+                id: 4,
                 name: "c1",
-                isChoosed: true,
+                isChoosed: 1,
 
             })
+            let route = useRoute();
             //获取当前课程信息
             function getCourse(){
-                API.post(API.defaults.baseUrl + '/course/course/single/', route.query.id)
+                API.post(API.defaults.baseUrl + '/course/course/single/', {id:route.query.id,username:STORE.state.user})
                     .then(function (response) {
                         if (response.data.code === 200) {
                             course = response.data.data
+                            console.log("courseView show course msg")
+                            course.id = response.data.data.id
+                            course.name = response.data.data.name
+                            course.isChoosed = response.data.data.isChoosed
+                            console.log(course.id)
+                            console.log("courseView end show course msg")
+
+
                         }
+
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -49,24 +59,33 @@
             }
             //顶栏路由
             function handleDescription(id){
+                id = route.query.id
+                // getCourse()
                 router.push({
                     path: '/home/course/description',
                     query: {id}
                 })
             }
             function handleWork(id) {
+                // getCourse()
+                id = route.query.id
                 router.push({
                     path: '/home/course/work',
                     query: {id}
                 })
             }
             function handleManagement(id) {
+                // getCourse()
+                id = route.query.id
                 router.push({
                     path: '/home/course/management',
                     query: {id}
                 })
+                console.log(id)
             }
             function handleAttachment(id) {
+                // getCourse()
+                id = route.query.id
                 router.push({
                     path: '/home/course/attachment',
                     query: {id}
@@ -76,7 +95,7 @@
             function isSuperUser() {
                 return STORE.state.isSuperUser;
             }
-            let route = useRoute();
+
             return{
                 isSuperUser,
                 activeIndex,

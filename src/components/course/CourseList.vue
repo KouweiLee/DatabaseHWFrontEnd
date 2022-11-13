@@ -7,8 +7,8 @@
         </el-table-column>
         <el-table-column label="是否已选">
             <template #default="scope">
-                <el-tag v-if="scope.row.isChoosed">已选</el-tag>
-                <el-tag v-if="scope.row.isChoosed === false">未选</el-tag>
+                <el-tag v-if="scope.row.isChoosed === 1">已选</el-tag>
+                <el-tag v-if="scope.row.isChoosed === 0">未选</el-tag>
             </template>
         </el-table-column>
         <el-table-column align="right">
@@ -17,14 +17,14 @@
             </template>
             <template #default="scope">
                 <el-button size="small" @click="handleChoose(scope.row.id)"
-                           v-if="scope.row.isChoosed === false"
+                           v-if="scope.row.isChoosed === 0"
                 >选课
                 </el-button
                 >
                 <el-button
                         size="small"
                         type="danger"
-                        v-if="scope.row.isChoosed"
+                        v-if="scope.row.isChoosed === 1"
                         @click="handleGiveUp(scope.row.id)"
                 >退课
                 </el-button
@@ -63,18 +63,19 @@
                 {
                     id: 1,
                     name: "c1",
-                    isChoosed: true
+                    isChoosed: 1
                 },
                 {
                     id: 2,
                     name: "c2",
-                    isChoosed: false
+                    isChoosed: 0
                 }
             ])
 
             function getCourses() {
                 API.post(API.defaults.baseUrl + '/course/course/all/', {username: STORE.state.user})
                     .then(function (response) {
+                        console.log(response.data.data)
                         if (response.data.code === 200) {
                             // data = response.data.data
                             while (!(data.length === 0)) {
@@ -93,7 +94,9 @@
             }
 
             function refresh() {
-                getCourses()
+                setTimeout(() => {
+                    getCourses()
+                }, 100);
             }
 
             //具体表格区

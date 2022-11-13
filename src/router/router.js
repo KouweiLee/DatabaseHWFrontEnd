@@ -6,8 +6,8 @@ import {createRouter, createWebHashHistory} from "vue-router"
 const routes = [
     // {path: '/', component: () => import('@/components/Home')},
     // {path: '/', component: () => import('@/components/blogDetailComponent')},
-    // {path: '/', component: () => import('@/components/login/login.vue')},
-    {path: '/', component: () => import('@/components/learn')},
+    {path: '/', component: () => import('@/components/login/login.vue')},
+    // {path: '/', component: () => import('@/components/learn')},
     // {path: '/', component: () => import('@/components/work/learn2View')},
     {
         path: '/home', component: () => import('@/components/Home.vue'),
