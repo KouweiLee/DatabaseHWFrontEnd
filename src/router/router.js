@@ -4,9 +4,9 @@ import {createRouter, createWebHashHistory} from "vue-router"
 // 你可以在这里输入更多的配置，但我们在这里
 // 暂时保持简单
 const routes = [
-    // {path: '/', component: () => import('@/components/Home')},
+    {path: '/', component: () => import('@/components/Home')},
     // {path: '/', component: () => import('@/components/blogDetailComponent')},
-    {path: '/', component: () => import('@/components/login/login.vue')},
+    // {path: '/', component: () => import('@/components/login/login.vue')},
     // {path: '/', component: () => import('@/components/learn')},
     // {path: '/', component: () => import('@/components/work/learn2View')},
     {
@@ -70,7 +70,10 @@ const routes = [
             },
             {
                 path: '/home/announcement',
-                component: () => import('@/components/AnnouncementView.vue')
+                component: () => import('@/components/announce/AnnouncementView.vue'),
+            },{
+                path: '/home/member',
+                component: () => import('@/components/announce/MemberView.vue'),
             },
             {
                 path: '/home/user',
