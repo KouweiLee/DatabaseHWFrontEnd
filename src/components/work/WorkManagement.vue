@@ -1,5 +1,61 @@
 <template>
     <el-row>
+        <h2 style="text-align: left">设置作业名称</h2>
+    </el-row>
+    <el-row style="margin-top: 5px">
+        <v-text-field
+            label="作业名称"
+            placeholder="Placeholder"
+            v-model="work.name"
+            variant="outlined"
+        ></v-text-field>
+    </el-row>
+    <el-divider></el-divider>
+    <el-row>
+        <h2 style="text-align: left">设置作业起始和截止日期</h2>
+    </el-row>
+    <el-row style="margin-top: 5px">
+        <el-date-picker
+            v-model="dateSpan"
+            type="datetimerange"
+            range-separator="To"
+            start-placeholder="Start date"
+            end-placeholder="End date"
+            value-format="YYYY-MM-DD HH:mm:ss"
+        />
+    </el-row>
+    <el-divider></el-divider>
+    <el-row>
+        <h2 style="text-align: left">设置作业描述</h2>
+    </el-row>
+    <el-row style="margin-top: 5px">
+        <el-col :span="24">
+            <mavon-editor
+                v-model="work.content"
+                ref="md"
+                style="min-height: 600px"
+            />
+        </el-col>
+    </el-row>
+    <el-row style="margin-top: 30px">
+<!--        <el-button type="primary" round style="margin: 0 auto" @click="changeCourseInfo">修改</el-button>-->
+<!--        <el-button type="danger" round style="margin: 0 auto" @click="deleteCourseDialogShow=true">删除</el-button>-->
+        <v-btn
+            style="margin: 0 auto"
+            @click="changeWork"
+            color="info">
+            修改
+        </v-btn>
+        <v-btn
+            style="margin: 0 auto"
+            @click="deleteWorkDialogShow=true "
+            color="error">
+            删除
+        </v-btn>
+    </el-row>
+    <el-divider></el-divider>
+    <el-divider></el-divider>
+    <el-row>
         <el-col :span="12">
             <h2>作业名称：{{ work.name }}</h2>
             <h3>作业起始时间-结束时间</h3>
@@ -20,22 +76,8 @@
                 />
             </el-row>
         </el-col>
-        <!--        <el-select v-model="course.time" class="m-2" placeholder="Select" size="large">-->
-        <!--            <el-option-->
-        <!--                v-for="item in options"-->
-        <!--                :key="item.value"-->
-        <!--                :label="item.label"-->
-        <!--                :value="item.value"-->
-        <!--            />-->
-        <!--        </el-select>-->
     </el-row>
-
-    <!--    <v-time-picker-->
-    <!--      format="ampm"-->
-    <!--    ></v-time-picker>-->
-    <!--    <el-button type="primary" @click="setDate">Primary</el-button>-->
-    <!--    <v-md-editor height="500px" style="text-align: left" v-model="work.content"></v-md-editor>-->
-
+    <el-button type="primary" @click="setDate">Primary</el-button>
     <mavon-editor
         v-model="work.content"
         ref="md"
@@ -83,21 +125,25 @@ export default {
         // const dateSpan = ref([work.begin_time, work.end_time])
 
         const dateSpan = ref([
-            new Date(work.begin_time),
-            new Date(work.end_time)
+          // new Date("2022-11-13 17:00:00"),
+          // new Date("2022-11-14 17:00:00")
+            work.begin_time, work.end_time
         ])
-      console.log(dateSpan)
+        console.log(dateSpan.value)
         //获取当前课程信息
         function getWork() {
             API.post(API.defaults.baseUrl + '/course/work/single/', {id: route.query.id})
                 .then(function (response) {
                     if (response.data.code === 200) {
+                        console.log(response.data.data)
                         work.id = response.data.data.id
-                        work.begin_time = response.data.data.begin_time
-                        work.end_time = response.data.data.end_time
+                        work.begin_time = response.data.data.begin_time.replace('T', ' ')
+                        work.end_time = response.data.data.end_time.replace('T', ' ')
+                        console.log(work.begin_time)
                         work.content = response.data.data.content === null? "": response.data.data.content
                         work.name = response.data.data.name
-
+                        dateSpan.value[0] = work.begin_time
+                        dateSpan.value[1] = work.end_time
                     }
                 })
                 .catch(function (error) {
@@ -114,8 +160,13 @@ export default {
                 content: work.content
             }).then(function (response) {
                 console.log(response)
+                ElMessage({
+                    message: "修改成功",
+                    type: 'success',
+                })
             }).catch(function (error) {
                 console.log(error)
+                ElMessage.error("修改失败")
             })
         }
 
@@ -147,7 +198,7 @@ export default {
         function setDate() {
             // * 这里只能更改dateSpan中的数据，不能更改原本的work.begin_time的数据
             console.log(work.begin_time)
-            console.log(dateSpan.value[0])
+            console.log(dateSpan.value)
             // console.log(value2.value[0])
         }
 
