@@ -35,12 +35,12 @@
                     </el-icon>
                     <template #title>课程区</template>
                 </el-menu-item>
-<!--                <el-menu-item index="/home/judgeSelf">-->
-<!--                    <el-icon>-->
-<!--                        <CircleCheck/>-->
-<!--                    </el-icon>-->
-<!--                    <template #title>自测区</template>-->
-<!--                </el-menu-item>-->
+                <el-menu-item index="/home/imagePool">
+                    <el-icon>
+                        <CircleCheck/>
+                    </el-icon>
+                    <template #title>个人图床</template>
+                </el-menu-item>
                 <el-menu-item index="/home/user">
                     <el-icon>
                         <User/>

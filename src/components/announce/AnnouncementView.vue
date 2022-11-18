@@ -121,6 +121,7 @@
 <script>
     import API from "../../axios.js"
     import router from "@/router/router";
+    import {ElMessage} from "element-plus";
 
     export default {
         name: "AnnouncementView",
@@ -161,6 +162,7 @@
                 console.log(this.items)
                 API.post(API.defaults.baseUrl + '/announce/develop/all/')
                     .then(function (response) {
+                        console.log("111111")
                         if (response.data.code === 200) {
                             while (!(this.items.length === 0)) {
                                 this.items.pop();
@@ -169,9 +171,11 @@
                             for (i = 0; i < response.data.data.length; i++) {
                                 this.items.push(response.data.data[i])
                             }
+                            ElMessage.success("成功获取所有信息")
                         }
                     })
                     .catch(function (error) {
+                        ElMessage.error("获取社团信息错误")
                         console.log(error);
                     });
             },

@@ -69,6 +69,10 @@ const routes = [
                 component: () => import('@/components/JudgeSelfView.vue')
             },
             {
+                path: '/home/imagePool',
+                component: () => import('@/components/images/ImagePoolView')
+            },
+            {
                 path: '/home/announcement',
                 component: () => import('@/components/announce/AnnouncementView.vue'),
             },{
