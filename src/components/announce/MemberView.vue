@@ -107,7 +107,7 @@ export default {
             overview: 'A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123',
             pics: []
         })
-        let selected = reactive(['John'])
+        let selected = ref(['John'])
         let members = reactive([
             {
                 name: "成员姓名",
