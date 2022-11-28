@@ -42,22 +42,33 @@
                     <el-input type="textarea" v-model="newGroup.overview" size="large" rows="15"></el-input>
                 </el-form-item>
                 <div style="text-align: center;">
-                    <el-upload
-                            class="upload-demo"
-                            ref="upload"
-                            action="https://jsonplaceholder.typicode.com/posts/"
-                            :on-preview="handlePreview"
-                            :on-remove="handleRemove"
-                            :file-list="newGroup.pics"
-                            :auto-upload="false"
-                    >
-                        <el-row>
-                            <el-button size="medium" type="primary">选取文件</el-button>
-                        </el-row>
-                        <template #tip>
-                            <div class="el-upload__tip">只能上传 jpg/png 文件，且不超过 500kb</div>
-                        </template>
-                    </el-upload>
+                    <!--                    <el-upload-->
+                    <!--                            class="upload-demo"-->
+                    <!--                            ref="upload"-->
+                    <!--                            action="https://jsonplaceholder.typicode.com/posts/"-->
+                    <!--                            :on-preview="handlePreview"-->
+                    <!--                            :on-remove="handleRemove"-->
+                    <!--                            :file-list="newGroup.pics"-->
+                    <!--                            :auto-upload="false"-->
+                    <!--                            :multiple="true"-->
+                    <!--                    >-->
+                    <!--                        <el-row>-->
+                    <!--                            <el-button size="medium" type="primary">选取文件</el-button>-->
+                    <!--                        </el-row>-->
+                    <!--                    </el-upload>-->
+<!--                    <el-upload-->
+<!--                            class="upload-demo"-->
+<!--                            ref="upload"-->
+<!--                            action="http://localhost:8000/announce/develop/add/"-->
+<!--                            :mutiple="true"-->
+<!--                            :on-preview="handlePreview"-->
+<!--                            :on-remove="handleRemove"-->
+<!--                            :on-change="handleChange"-->
+<!--                            :file-list="fileList"-->
+<!--                            :auto-upload="false">-->
+<!--                        <el-button size="medium" type="primary">选取文件</el-button>-->
+<!--                        &lt;!&ndash;                        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>&ndash;&gt;-->
+<!--                    </el-upload>-->
                 </div>
                 <div style="text-align: center;">
                     <el-form-item>
@@ -80,22 +91,33 @@
                     <el-input type="textarea" v-model="newGroup.overview" size="large" rows="15"></el-input>
                 </el-form-item>
                 <div style="text-align: center;">
-                    <el-upload
-                            class="upload-demo"
-                            ref="upload"
-                            action="https://jsonplaceholder.typicode.com/posts/"
-                            :on-preview="handlePreview"
-                            :on-remove="handleRemove"
-                            :file-list="newGroup.pics"
-                            :auto-upload="false"
-                    >
-                        <el-row>
-                            <el-button size="medium" type="primary">选取文件</el-button>
-                        </el-row>
-                        <template #tip>
-                            <div class="el-upload__tip">只能上传 jpg/png 文件，且不超过 500kb</div>
-                        </template>
-                    </el-upload>
+                    <!--                    <el-upload-->
+                    <!--                            class="upload-demo"-->
+                    <!--                            ref="upload"-->
+                    <!--                            action="https://jsonplaceholder.typicode.com/posts/"-->
+                    <!--                            :on-preview="handlePreview"-->
+                    <!--                            :on-remove="handleRemove"-->
+                    <!--                            :file-list="newGroup.pics"-->
+                    <!--                            :auto-upload="false"-->
+                    <!--                    >-->
+                    <!--                        <el-row>-->
+                    <!--                            <el-button size="medium" type="primary">选取文件</el-button>-->
+                    <!--                        </el-row>-->
+                    <!--                        <template #tip>-->
+                    <!--                            <div cl<el-upload
+                                                class="upload-demo"
+                                                ref="upload"
+                                                action="https://jsonplaceholder.typicode.com/posts/"
+                                                :on-preview="handlePreview"
+                                                :on-remove="handleRemove"
+                                                :file-list="fileList"
+                                                :auto-upload="false">
+                                            <el-button size="small" type="primary">选取121文件</el-button>
+                                            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+                                        </el-upload>ass="el-upload__tip">只能上传 jpg/png 文件，且不超过 500kb</div>-->
+                    <!--                        </template>-->
+                    <!--                    </el-upload>-->
+
                 </div>
                 <div style="text-align: center;">
                     <el-form-item>
@@ -154,23 +176,28 @@
                     overview: 'A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123',
                     pics: []
                 },
+                fileList: [],
                 changeDialogVisible: false
             }
         },
         methods: {
             getInfo() {
                 console.log(this.items)
+                let that = this;
                 API.post(API.defaults.baseUrl + '/announce/develop/all/')
                     .then(function (response) {
                         console.log("111111")
+                        console.log(that.items)
                         if (response.data.code === 200) {
-                            while (!(this.items.length === 0)) {
-                                this.items.pop();
+                            while (!(that.items.length === 0)) {
+                                that.items.pop();
                             }
                             let i;
+                            console.log(response.data.data.size)
                             for (i = 0; i < response.data.data.length; i++) {
-                                this.items.push(response.data.data[i])
+                                that.items.push(response.data.data[i])
                             }
+                            console.log(that.items)
                             ElMessage.success("成功获取所有信息")
                         }
                     })
@@ -183,24 +210,39 @@
                 this.centerDialogVisible = true
                 this.newGroup.year = ""
                 this.newGroup.overview = ""
-                this.pics = []
+                this.newGroup.pics = []
             },
             submitNewGroup() {
                 console.log(this.newGroup)
+                // console.log(this.fileList)
+                // for (var i=0; i<this.fileList.length; i++){
+                //     console.log(this.fileList[i].url)
+                //     this.pics.append(this.fileList[i].url)
+                // }
                 API.post(API.defaults.baseUrl + '/announce/develop/add/', JSON.stringify(this.newGroup))
                     .catch(function (error) {
                         console.log(error);
                     });
             },
-            submitUpload() {
-                this.$refs.upload.submit()
-            },
-            handleRemove(file, fileList) {
-                console.log(file, fileList)
-            },
-            handlePreview(file) {
-                console.log(file)
-            },
+            // submitUpload() {
+            //     this.$refs.upload.submit()
+            // },
+            // handleRemove(file, fileList) {
+            //     console.log(file, fileList)
+            // },
+            // handlePreview(file) {
+            //     console.log(file)
+            // },
+            // handleChange(file, fileList) {
+            //     while (this.newGroup.pics.length > 0) {
+            //         this.pics.pop()
+            //     }
+            //     console.log(file, fileList)
+            //     for (var i = 0; i < fileList.length; i++) {
+            //         console.log("123"+this.fileList[i].url)
+            //         this.newGroup.pics.append(fileList[i].url)
+            //     }
+            // },
             gotoMemberView(item) {
                 let id = item.id;
                 router.push({
@@ -208,7 +250,7 @@
                     query: {id}
                 })
             },
-            changeGroup(item){
+            changeGroup(item) {
                 this.changeDialogVisible = true
                 this.newGroup = item
             },
