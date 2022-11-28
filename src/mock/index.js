@@ -11,28 +11,30 @@ import Mock from 'mockjs'  //导入mockjs
 //     status:200
 // })
 
-const testData2 = Mock.mock('http://localhost:8080/course/course/single', 'post', {
+const testData2 = Mock.mock('http://localhost:8000/announce/develop/all/', 'post', {
 
-    status: 200, //请求成功状态码
+    code: 200, //请求成功状态码
     data: {
-        id: 1,
-        name: "走进超算",
-        // isChoosed: false,
-        // teacher: "张三",
-        time: "周一上午第三、四节课",
-        position: "主楼101",
-        description: "从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算从初学者的视角理解超算",
-        // content: ['学1', '学2', '学3'],
-        // grade: [
-        //     {
-        //         percent: 60,
-        //         name: "考试"
-        //     },
-        //     {
-        //         percent: 40,
-        //         name: "平时"
-        //     }
-        // ]
+        data:[
+            {
+                id: '5',
+                year: '时期123',
+                overview: 'A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123',
+                pics: []
+            },
+            {
+                id: '6',
+                year: '时期123',
+                overview: 'A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123',
+                pics: []
+            },
+            {
+                id: '7',
+                year: '时期123',
+                overview: 'A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123',
+                pics: []
+            },
+        ],
     }
 })
 
