@@ -5,7 +5,8 @@
     <el-upload
         v-model:file-list="imageUrls"
 
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action="http://localhost:8000/login/picture/upload/"
+        :data="{username: username}"
         list-type="picture-card"
         :on-preview="handlePictureCardPreview"
         :on-remove="handleRemove"
@@ -46,10 +47,12 @@ export default {
             }
         ])
 
+        let username = STORE.state.user
+
         const dialogImageUrl = ref('')
         const dialogVisible = ref(false)
 
-        // getAllPics()
+        getAllPics()
 
         function getAllPics() {
             API.post(API.defaults.baseUrl + '/login/picture/all/', {
@@ -98,7 +101,8 @@ export default {
             getAllPics,
             postPic,
             handleRemove,
-            handlePictureCardPreview
+            handlePictureCardPreview,
+            username
         }
     }
 }

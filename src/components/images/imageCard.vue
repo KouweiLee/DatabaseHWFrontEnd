@@ -1,7 +1,7 @@
 <template>
     <el-card>
         <img
-            src={{imageUrl}}
+            :src=imageUrl
             class="image"
         />
         <div style="padding: 14px">

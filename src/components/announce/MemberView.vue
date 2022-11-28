@@ -1,19 +1,39 @@
-<template>
+<template xmlns:el-col="http://www.w3.org/1999/html">
     <h1>Member</h1>
-    <p>{{selected}}</p>
-    <v-container fluid>
+    <el-row>
+        <el-col >
+            <v-carousel style="margin-left: 10%; width: 80%" cycle>
+                <v-carousel-item v-for="(o, index) in groupInfo.pics"
+                    :src=o :key=index cover
+                ></v-carousel-item>
+
+<!--                <v-carousel-item-->
+<!--                    -->
+<!--                    cover-->
+<!--                ></v-carousel-item>-->
+
+<!--                <v-carousel-item-->
+<!--                    src=-->
+<!--                    cover-->
+<!--                ></v-carousel-item>-->
+            </v-carousel>
+        </el-col>
+
+    </el-row>
     <p>{{ selected }}</p>
-    <v-checkbox
-      v-model="selected"
-      label="John"
-      value="John"
-    ></v-checkbox>
-    <v-checkbox
-      v-model="selected"
-      label="Jacob"
-      value="Jacob"
-    ></v-checkbox>
-  </v-container>
+    <v-container fluid>
+        <p>{{ selected }}</p>
+        <v-checkbox
+            v-model="selected"
+            label="John"
+            value="John"
+        ></v-checkbox>
+        <v-checkbox
+            v-model="selected"
+            label="Jacob"
+            value="Jacob"
+        ></v-checkbox>
+    </v-container>
     <!--TODO 这里要添加一个相册。并展示当前年份、具体简介-->
     <el-row>
         <el-col
@@ -49,7 +69,7 @@
     <el-dialog v-model="changeMemberDialogShow" title="修改成员">
         <el-form>
             <el-form-item label="调整展示队员">
-                <p>{{selectedMembers}}</p>
+                <p>{{ selectedMembers }}</p>
                 <v-container fluid>
                     <v-checkbox
                         v-for="(stu, key) in allMembers"
@@ -105,9 +125,14 @@ export default {
             id: '1',
             year: '时期一',
             overview: 'A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123',
-            pics: []
+            pics: [
+                "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+                "https://cdn.vuetifyjs.com/images/cards/hotel.jpg",
+                "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+                "https://upfile2.asqql.com/upfile/hdimg/wmtp/wmtp/2015-12/30/9835VicmIhquvD.jpg"
+            ]
         })
-        let selected = reactive(['John'])
+        let selected = ref(['John'])
         let members = reactive([
             {
                 name: "成员姓名",
@@ -158,7 +183,7 @@ export default {
         ])
 
         // * 存储学号
-        let selectedMembers = reactive([
+        let selectedMembers = ref([
             20373067, 19373354
         ])
 
