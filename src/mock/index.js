@@ -11,29 +11,13 @@ import Mock from 'mockjs'  //导入mockjs
 //     status:200
 // })
 
-const testData2 = Mock.mock('http://localhost:8000/announce/develop/all/', 'post', {
+const testData2 = Mock.mock('http://localhost:8000/login/picture/all/', 'post', {
 
     code: 200, //请求成功状态码
     data: {
         data:[
-            {
-                id: '5',
-                year: '时期123',
-                overview: 'A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123',
-                pics: []
-            },
-            {
-                id: '6',
-                year: '时期123',
-                overview: 'A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123',
-                pics: []
-            },
-            {
-                id: '7',
-                year: '时期123',
-                overview: 'A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123A123B123C123D123',
-                pics: []
-            },
+            '123',
+            '1234'
         ],
     }
 })
