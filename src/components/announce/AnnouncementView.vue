@@ -90,6 +90,7 @@
                 <el-form-item label="发展概况">
                     <el-input type="textarea" v-model="newGroup.overview" size="large" rows="15"></el-input>
                 </el-form-item>
+
                 <div style="text-align: center;">
                     <!--                    <el-upload-->
                     <!--                            class="upload-demo"-->
@@ -177,7 +178,8 @@
                     pics: []
                 },
                 fileList: [],
-                changeDialogVisible: false
+                changeDialogVisible: false,
+                allPicList: []
             }
         },
         methods: {
@@ -253,6 +255,31 @@
             changeGroup(item) {
                 this.changeDialogVisible = true
                 this.newGroup = item
+                console.log("allPicListBef " + this.allPicList)
+                let that = this
+                API.post(API.defaults.baseUrl + '/login/picture/all/', {
+                    username: 123, // * 突然忘记怎么获取username了
+                }).then(function (response) {
+                    console.log("response")
+                    console.log(response)
+                    if (response.data.code === 200) {
+                        console.log("i am in")
+                        while (!(that.allPicList.length === 0)) {
+                            that.allPicList.pop();
+                        }
+                        let i;
+                        for (i = 0; i < response.data.data.length; i++) {
+                            console.log(response.data.data[i])
+                            that.allPicList.push(response.data.data[i])
+                        }
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                    ElMessage.error("获取" + 123 + "所有照片错误")
+                })
+                console.log("!!!!!!!!!!!!!")
+                console.log(this.allPicList)
+                console.log("!!!!!!!!!!!!!")
             },
             submitChangeGroup() {
                 console.log(this.newGroup)

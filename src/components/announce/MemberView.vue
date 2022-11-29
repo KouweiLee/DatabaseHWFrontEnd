@@ -64,7 +64,7 @@
             </v-card>
         </el-col>
     </el-row>
-    <v-btn @click="changeMemberDialogShow = true">修改成员</v-btn>
+    <v-btn @click="changeMemberDialogShow = true; getAllUsers()">修改成员</v-btn>
     <!--增加成员-->
     <el-dialog v-model="changeMemberDialogShow" title="修改成员">
         <el-form>
@@ -81,8 +81,8 @@
                     <el-checkbox
                         v-for="(stu, key) in allMembers"
                         v-model="selectedMembers"
-                        :label="stu.name"
-                        :value="stu.username"
+                        :label="stu.username"
+                        :value="stu.name"
                         :key="key"
                     />
                 </v-container>
@@ -191,26 +191,38 @@ export default {
 
         let route = useRoute()
 
+        getGroupInfo();
+        // getAllUsers();
+        getMemberInfo();
+
         function getGroupInfo() {
+            // * 得到组对应的信息
             console.log("group id" + route.query.id)
             API.post(API.defaults.baseUrl +
                 '/announce/develop/all/'
             ).then(function (response) {
                 if (response.data.code === 200) {
+                    console.log(response.data)
                     let i
                     for (i = 0; i < response.data.data.length; i++) {
-                        if (response.data.data[i].id === route.query.id) {
+                        console.log("response id " + response.data.data[i].id + " " + typeof response.data.data[i].id)
+                        console.log("route id " + route.query.id + " " + typeof route.query.id)
+                        console.log(route.query.id === response.data.data[i].id)
+                        if (response.data.data[i].id.toString() === route.query.id) {
+                            console.log(response.data.data[i].pics)
                             groupInfo.id = response.data.data[i].id
                             groupInfo.year = response.data.data[i].year
                             groupInfo.overview = response.data.data[i].overview
                             groupInfo.pics = response.data.data[i].pics
+                            console.log("!!!!!!!!!!!")
+                            console.log(groupInfo.pics)
                         }
                     }
                 } else {
                     ElMessage.error("获取社团信息错误")
                 }
             }).catch(function (error) {
-
+                ElMessage.error("获取社团信息错误")
                 console.log(error)
             })
         }
@@ -241,16 +253,22 @@ export default {
         }
 
         function getAllUsers() {
+            console.log("调用getAllUsers")
+            // * 获取所有成员
             API.post(API.defaults.baseUrl + '/announce/member/getAllName/'
             ).then(function (response) {
                 if (response.data.code === 200) {
+                    // console.log("finish!!!!!!!!!!!!!!")
                     let i;
                     let memberSet = new Set();
                     for (i = 0; i < members.length; i++) {
                         memberSet.add(members[i].name)
                     }
-                    while (selectedMembers.length !== 0) {
-                        selectedMembers.pop();
+                    while (selectedMembers.value.length !== 0) {
+                        selectedMembers.value.pop();
+                    }
+                    while (allMembers.length !== 0) {
+                        allMembers.pop();
                     }
                     for (i = 0; i < response.data.data['usernames'].length; i++) {
                         allMembers.push({
@@ -258,9 +276,10 @@ export default {
                             name: response.data.data['names'][i]
                         });
                         if (memberSet.has(response.data.data['names'][i])) {
-                            selectedMembers.push(response.data.data['usernames'][i]);
+                            selectedMembers.value.push(response.data.data['usernames'][i]);
                         }
                     }
+                    console.log("allMembers " + allMembers)
                 } else {
                     ElMessage.error("获取所有成员错误码" + response.data.code);
                 }
@@ -270,10 +289,16 @@ export default {
             })
         }
 
+        // function changeMembersPost() {
+        //     getAllUsers();
+        //     changeMemberDialogShow = true
+        //     console.log("change member dialog show " + changeMemberDialogShow)
+        // }
+
         function changeMembers() {
             API.post(API.defaults.baseUrl + '/announce/member/add/', {
                 develop_id: route.query.id,
-                usernames: selectedMembers
+                usernames: selectedMembers.value
             }).catch(function (error) {
                 ElMessage.error("修改成员失败")
                 console.log(error)
@@ -297,7 +322,7 @@ export default {
             getAllUsers,
             changeMembers,
             refresh,
-            selected
+            selected,
         }
     }
 }
