@@ -299,6 +299,11 @@ export default {
             API.post(API.defaults.baseUrl + '/announce/member/add/', {
                 develop_id: route.query.id,
                 usernames: selectedMembers.value
+            }).then(function (response) {
+                if (response.data.code === 200) {
+                    ElMessage.success("修改成员成功")
+                    changeMemberDialogShow = false
+                }
             }).catch(function (error) {
                 ElMessage.error("修改成员失败")
                 console.log(error)
