@@ -257,9 +257,7 @@
                 this.newGroup = item
                 console.log("allPicListBef " + this.allPicList)
                 let that = this
-                API.post(API.defaults.baseUrl + '/login/picture/all/', {
-                    username: 123, // * 突然忘记怎么获取username了
-                }).then(function (response) {
+                API.post(API.defaults.baseUrl + '/login/picture/all/').then(function (response) {
                     console.log("response")
                     console.log(response)
                     if (response.data.code === 200) {
@@ -268,7 +266,8 @@
                             that.allPicList.pop();
                         }
                         let i;
-                        for (i = 0; i < response.data.data.length; i++) {
+                        // console.log(response.data.data)
+                        for (i = 0; i < 2; i++) {
                             console.log(response.data.data[i])
                             that.allPicList.push(response.data.data[i])
                         }

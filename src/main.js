@@ -43,7 +43,7 @@ const vuetify = createVuetify({
 
 
 // app.config.globalProperties.$axios=axios;  //配置axios的全局引用
-// require('./mock/index')
+require('./mock/index')
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
