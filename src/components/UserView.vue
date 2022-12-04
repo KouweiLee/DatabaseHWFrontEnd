@@ -439,37 +439,45 @@ export default {
             })
         },
         removeSuperUser() {
-            let that = this
-            API.post(API.defaults.baseUrl + '/login/user/changeSuper/', {
-                username: that.newNormalUser,
-                isSuperUser: false
-            }).then(function (response) {
-                if (response.data.code === 200) {
-                    ElMessage.success("撤销管理员成功")
-                } else {
-                    ElMessage.error("撤销管理员失败")
-                }
-            }).catch(function (error) {
-                console.log(error)
-                ElMessage.error("撤销管理员错误")
-            })
+            if (this.newNormalUser === STORE.state.user) {
+                ElMessage.error("不能调整自己的权限")
+            } else {
+                let that = this
+                API.post(API.defaults.baseUrl + '/login/user/changeSuper/', {
+                    username: that.newNormalUser,
+                    isSuperUser: false
+                }).then(function (response) {
+                    if (response.data.code === 200) {
+                        ElMessage.success("撤销管理员成功")
+                    } else {
+                        ElMessage.error("撤销管理员失败")
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                    ElMessage.error("撤销管理员错误")
+                })
+            }
         },
         addSuperUser() {
             console.log(this.newSuperUser)
-            let that = this
-            API.post(API.defaults.baseUrl + '/login/user/changeSuper/', {
-                username: that.newSuperUser,
-                isSuperUser: true
-            }).then(function (response) {
-                if (response.data.code === 200) {
-                    ElMessage.success("添加管理员成功")
-                } else {
-                    ElMessage.error("添加管理员失败")
-                }
-            }).catch(function (error) {
-                console.log(error)
-                ElMessage.error("添加管理员错误")
-            })
+            if (this.newSuperUser === STORE.state.user) {
+                ElMessage.error("不能调整自己的权限")
+            } else {
+                let that = this
+                API.post(API.defaults.baseUrl + '/login/user/changeSuper/', {
+                    username: that.newSuperUser,
+                    isSuperUser: true
+                }).then(function (response) {
+                    if (response.data.code === 200) {
+                        ElMessage.success("添加管理员成功")
+                    } else {
+                        ElMessage.error("添加管理员失败")
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                    ElMessage.error("添加管理员错误")
+                })
+            }
         },
         change_name() {
             let that = this
@@ -524,7 +532,30 @@ export default {
             })
         },
         change_password() {
-
+            let that = this
+            API.post(API.defaults.baseUrl + '/login/changepw/', {
+                username: STORE.state.user,
+                pre_password: that.old_password,
+                now_password: that.new_password
+            }).then(function (response) {
+                console.log(response.data.code);
+                if (response.data.code === 200) {
+                    ElMessage({
+                        message: '修改成功',
+                        type: 'success',
+                    })
+                } else {
+                    ElMessage.error("修改失败");
+                }
+            }).catch(function (error) {
+                console.log(error);
+                ElMessage.error("修改错误");
+            });
+        },
+        refresh() {
+            setTimeout(() => {
+                this.getUserInfo()
+            }, 100);
         }
     },
     created() {
