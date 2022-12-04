@@ -95,41 +95,41 @@
             删除
         </v-btn>
     </el-row>
-    <el-row>
-        <el-col :span="12">
-            <h2>课程名称：{{ course.name }}</h2>
-            <h3>课程时间：{{ course.time }}</h3>
-        </el-col>
-        <el-col :span="12">
-            <el-row>
-                <span>课程名称修改</span>
-                <el-input v-model="course.name" style="width: 300px"></el-input>
-            </el-row>
-            <el-row>
-                <span>课程时间修改</span>
-                <el-input v-model="course.time" style="width: 300px"></el-input>
-            </el-row>
-        </el-col>
+<!--    <el-row>-->
+<!--        <el-col :span="12">-->
+<!--            <h2>课程名称：{{ course.name }}</h2>-->
+<!--            <h3>课程时间：{{ course.time }}</h3>-->
+<!--        </el-col>-->
+<!--        <el-col :span="12">-->
+<!--            <el-row>-->
+<!--                <span>课程名称修改</span>-->
+<!--                <el-input v-model="course.name" style="width: 300px"></el-input>-->
+<!--            </el-row>-->
+<!--            <el-row>-->
+<!--                <span>课程时间修改</span>-->
+<!--                <el-input v-model="course.time" style="width: 300px"></el-input>-->
+<!--            </el-row>-->
+<!--        </el-col>-->
 
 
-        <!--        <el-select v-model="course.time" class="m-2" placeholder="Select" size="large">-->
-        <!--            <el-option-->
-        <!--                v-for="item in options"-->
-        <!--                :key="item.value"-->
-        <!--                :label="item.label"-->
-        <!--                :value="item.value"-->
-        <!--            />-->
-        <!--        </el-select>-->
-    </el-row>
-    <mavon-editor
-        v-model="course.description"
-        ref="md"
-        style="min-height: 600px"
-    />
-    <el-row>
-        <el-button type="primary" round style="margin: 0 auto" @click="changeCourseInfo">修改</el-button>
-        <el-button type="danger" round style="margin: 0 auto" @click="deleteCourseDialogShow=true">删除</el-button>
-    </el-row>
+<!--        &lt;!&ndash;        <el-select v-model="course.time" class="m-2" placeholder="Select" size="large">&ndash;&gt;-->
+<!--        &lt;!&ndash;            <el-option&ndash;&gt;-->
+<!--        &lt;!&ndash;                v-for="item in options"&ndash;&gt;-->
+<!--        &lt;!&ndash;                :key="item.value"&ndash;&gt;-->
+<!--        &lt;!&ndash;                :label="item.label"&ndash;&gt;-->
+<!--        &lt;!&ndash;                :value="item.value"&ndash;&gt;-->
+<!--        &lt;!&ndash;            />&ndash;&gt;-->
+<!--        &lt;!&ndash;        </el-select>&ndash;&gt;-->
+<!--    </el-row>-->
+<!--    <mavon-editor-->
+<!--        v-model="course.description"-->
+<!--        ref="md"-->
+<!--        style="min-height: 600px"-->
+<!--    />-->
+<!--    <el-row>-->
+<!--        <el-button type="primary" round style="margin: 0 auto" @click="changeCourseInfo">修改</el-button>-->
+<!--        <el-button type="danger" round style="margin: 0 auto" @click="deleteCourseDialogShow=true">删除</el-button>-->
+<!--    </el-row>-->
     <el-dialog
         v-model="deleteCourseDialogShow"
         title="Warning"

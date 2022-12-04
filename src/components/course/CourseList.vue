@@ -1,37 +1,37 @@
 <template>
-    <el-table :data="filterTableData" style="width: 100%">
-        <el-table-column label="课程名称">
-            <template #default="scope">
-                <span @click="gotoCourse(scope.row.id)">{{scope.row.name}}</span>
-            </template>
-        </el-table-column>
-        <el-table-column label="是否已选">
-            <template #default="scope">
-                <el-tag v-if="scope.row.isChoosed">已选</el-tag>
-                <el-tag v-if="scope.row.isChoosed === false">未选</el-tag>
-            </template>
-        </el-table-column>
-        <el-table-column align="right">
-            <template #header>
-                <el-input v-model="search" size="small" placeholder="Type to search"/>
-            </template>
-            <template #default="scope">
-                <el-button size="small" @click="handleChoose(scope.row.id)"
-                           v-if="scope.row.isChoosed === false"
-                >选课
-                </el-button
-                >
-                <el-button
-                        size="small"
-                        type="danger"
-                        v-if="scope.row.isChoosed"
-                        @click="handleGiveUp(scope.row.id)"
-                >退课
-                </el-button
-                >
-            </template>
-        </el-table-column>
-    </el-table>
+<!--    <el-table :data="filterTableData" style="width: 100%">-->
+<!--        <el-table-column label="课程名称">-->
+<!--            <template #default="scope">-->
+<!--                <span @click="gotoCourse(scope.row.id)">{{scope.row.name}}</span>-->
+<!--            </template>-->
+<!--        </el-table-column>-->
+<!--        <el-table-column label="是否已选">-->
+<!--            <template #default="scope">-->
+<!--                <el-tag v-if="scope.row.isChoosed">已选</el-tag>-->
+<!--                <el-tag v-if="scope.row.isChoosed === false">未选</el-tag>-->
+<!--            </template>-->
+<!--        </el-table-column>-->
+<!--        <el-table-column align="right">-->
+<!--            <template #header>-->
+<!--                <el-input v-model="search" size="small" placeholder="Type to search"/>-->
+<!--            </template>-->
+<!--            <template #default="scope">-->
+<!--                <el-button size="small" @click="handleChoose(scope.row.id)"-->
+<!--                           v-if="scope.row.isChoosed === false"-->
+<!--                >选课-->
+<!--                </el-button-->
+<!--                >-->
+<!--                <el-button-->
+<!--                        size="small"-->
+<!--                        type="danger"-->
+<!--                        v-if="scope.row.isChoosed"-->
+<!--                        @click="handleGiveUp(scope.row.id)"-->
+<!--                >退课-->
+<!--                </el-button-->
+<!--                >-->
+<!--            </template>-->
+<!--        </el-table-column>-->
+<!--    </el-table>-->
 
 
     <el-row>

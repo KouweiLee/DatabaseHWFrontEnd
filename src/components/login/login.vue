@@ -141,44 +141,45 @@
             // 方法
             // 登录
             function login() {
-                API.post(API.defaults.baseUrl + '/login/login/', JSON.stringify(form))
-                    .then(function (response) {
-                        console.log(response);
-                        if (response.data.code === 200) {
-                            STORE.state.user = form.username
-                            STORE.state.isSuperUser = response.data.data
-                            router.push('/home/')
-                            ElMessage({
-                                message: '登录成功',
-                                type: 'success',
-                            })
-                        } else {
-                            ElMessage.error('登录失败，请重试')
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                API.post(API.defaults.baseUrl + '/login/login/',
+                    JSON.stringify(form)
+                ).then(function (response) {
+                    console.log(response);
+                    if (response.data.code === 200) {
+                        STORE.state.user = form.username
+                        STORE.state.isSuperUser = response.data.data['isSuperUser']
+                        STORE.state.userName = response.data.data['name']
+                        router.push('/home/')
+                        ElMessage({
+                            message: '登录成功',
+                            type: 'success',
+                        })
+                    } else {
+                        ElMessage.error('登录失败，请重试')
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
 
             // 注册
             function register() {
-                API.post(API.defaults.baseUrl + '/login/register/', JSON.stringify(registerForm))
-                    .then(function (response) {
-                        console.log(response);
-                        if (response.data.code === 200) {
-                            ElMessage({
-                                message: '注册成功',
-                                type: 'success',
-                            })
-                            tabName.value = 'login'
-                        } else {
-                            ElMessage.error('注册失败，请重试')
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                API.post(API.defaults.baseUrl + '/login/register/',
+                    JSON.stringify(registerForm)
+                ).then(function (response) {
+                    console.log(response);
+                    if (response.data.code === 200) {
+                        ElMessage({
+                            message: '注册成功',
+                            type: 'success',
+                        })
+                        tabName.value = 'login'
+                    } else {
+                        ElMessage.error('注册失败，请重试')
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
 
             // 获取验证码
@@ -194,23 +195,23 @@
             }
 
             function modify() {
-                API.post(API.defaults.baseUrl + '/login/changepw/', JSON.stringify(modifierForm))
-                    .then(function (response) {
-                        console.log(response.data.code);
-                        if (response.data.code === 200) {
-                            ElMessage({
-                                message: '修改成功',
-                                type: 'success',
-                            })
-                            tabName.value = 'login'
-                        } else {
-                            ElMessage.error("修改失败");
-                        }
+                API.post(API.defaults.baseUrl + '/login/changepw/',
+                    JSON.stringify(modifierForm)
+                ).then(function (response) {
+                    console.log(response.data.code);
+                    if (response.data.code === 200) {
+                        ElMessage({
+                            message: '修改成功',
+                            type: 'success',
+                        })
+                        tabName.value = 'login'
+                    } else {
+                        ElMessage.error("修改失败");
+                    }
 
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
 
             // 确认密码

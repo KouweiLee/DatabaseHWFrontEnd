@@ -53,40 +53,40 @@
             删除
         </v-btn>
     </el-row>
-    <el-divider></el-divider>
-    <el-divider></el-divider>
-    <el-row>
-        <el-col :span="12">
-            <h2>作业名称：{{ work.name }}</h2>
-            <h3>作业起始时间-结束时间</h3>
-        </el-col>
-        <el-col :span="12">
-            <el-row>
-                <span>作业名称修改</span>
-                <el-input v-model="work.name" style="width: 300px"></el-input>
-            </el-row>
-            <el-row>
-                <el-date-picker
-                    v-model="dateSpan"
-                    type="datetimerange"
-                    range-separator="To"
-                    start-placeholder="Start date"
-                    end-placeholder="End date"
-                    value-format="YYYY-MM-DD HH:mm:ss"
-                />
-            </el-row>
-        </el-col>
-    </el-row>
-    <el-button type="primary" @click="setDate">Primary</el-button>
-    <mavon-editor
-        v-model="work.content"
-        ref="md"
-        style="min-height: 600px"
-    />
-    <el-row>
-        <el-button type="primary" round @click="changeWork" style="margin: 0 auto">修改作业</el-button>
-        <el-button type="primary" round @click="deleteWorkDialogShow = true" style="margin: 0 auto">删除作业</el-button>
-    </el-row>
+<!--    <el-divider></el-divider>-->
+<!--    <el-divider></el-divider>-->
+<!--    <el-row>-->
+<!--        <el-col :span="12">-->
+<!--            <h2>作业名称：{{ work.name }}</h2>-->
+<!--            <h3>作业起始时间-结束时间</h3>-->
+<!--        </el-col>-->
+<!--        <el-col :span="12">-->
+<!--            <el-row>-->
+<!--                <span>作业名称修改</span>-->
+<!--                <el-input v-model="work.name" style="width: 300px"></el-input>-->
+<!--            </el-row>-->
+<!--            <el-row>-->
+<!--                <el-date-picker-->
+<!--                    v-model="dateSpan"-->
+<!--                    type="datetimerange"-->
+<!--                    range-separator="To"-->
+<!--                    start-placeholder="Start date"-->
+<!--                    end-placeholder="End date"-->
+<!--                    value-format="YYYY-MM-DD HH:mm:ss"-->
+<!--                />-->
+<!--            </el-row>-->
+<!--        </el-col>-->
+<!--    </el-row>-->
+<!--    <el-button type="primary" @click="setDate">Primary</el-button>-->
+<!--    <mavon-editor-->
+<!--        v-model="work.content"-->
+<!--        ref="md"-->
+<!--        style="min-height: 600px"-->
+<!--    />-->
+<!--    <el-row>-->
+<!--        <el-button type="primary" round @click="changeWork" style="margin: 0 auto">修改作业</el-button>-->
+<!--        <el-button type="primary" round @click="deleteWorkDialogShow = true" style="margin: 0 auto">删除作业</el-button>-->
+<!--    </el-row>-->
     <el-dialog
         v-model="deleteWorkDialogShow"
         title="Warning"

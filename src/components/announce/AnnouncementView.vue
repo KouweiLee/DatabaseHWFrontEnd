@@ -185,7 +185,6 @@ export default {
                 console.log(error);
             });
         },
-
         getAllPics() {
             let that = this
             API.post(API.defaults.baseUrl + '/login/picture/all/', {
@@ -213,8 +212,6 @@ export default {
             })
         },
         createNewGroup() {
-
-
             this.getAllPics()
             this.centerDialogVisible = true
             this.newGroup.year = ""
@@ -236,25 +233,6 @@ export default {
                 console.log(error);
             });
         },
-        // submitUpload() {
-        //     this.$refs.upload.submit()
-        // },
-        // handleRemove(file, fileList) {
-        //     console.log(file, fileList)
-        // },
-        // handlePreview(file) {
-        //     console.log(file)
-        // },
-        // handleChange(file, fileList) {
-        //     while (this.newGroup.pics.length > 0) {
-        //         this.pics.pop()
-        //     }
-        //     console.log(file, fileList)
-        //     for (var i = 0; i < fileList.length; i++) {
-        //         console.log("123"+this.fileList[i].url)
-        //         this.newGroup.pics.append(fileList[i].url)
-        //     }
-        // },
         gotoMemberView(item) {
             let id = item.id;
             router.push({
@@ -269,39 +247,7 @@ export default {
             }, 2000)
             this.changeDialogVisible = true
             this.newGroup = item
-            console.log("allPicListBef " + this.allPicList)
-
-
-            // let that = this
-            // API.post(API.defaults.baseUrl + '/login/picture/all/', {
-            //     username: STORE.state.user
-            // }).then(function (response) {
-            //     console.log("response")
-            //     console.log(response)
-            //     if (response.data.code === 200) {
-            //         console.log("i am in")
-            //         while (!(that.allPicList.length === 0)) {
-            //             that.allPicList.pop();
-            //         }
-            //         let i;
-            //         // console.log(response.data.data)
-            //         for (i = 0; i < 2; i++) {
-            //             console.log(response.data.data[i])
-            //             that.allPicList.push(response.data.data[i])
-            //             console.log("after push")
-            //         }
-            //         console.log(that.allPicList)
-            //     }
-            // }).catch(function (error) {
-            //     console.log(error)
-            //     ElMessage.error("获取" + 123 + "所有照片错误")
-            // })
-            console.log("!!!!!!!!!!!!!")
-            console.log(this.allPicList)
-            console.log("!!!!!!!!!!!!!")
         },
-
-
         submitChangeGroup() {
             console.log(this.newGroup)
             API.post(API.defaults.baseUrl + '/announce/develop/change/',

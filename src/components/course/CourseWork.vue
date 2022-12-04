@@ -9,13 +9,13 @@
     <course-work-list-component v-for="courseWorkInfo in filterTableData" :key="courseWorkInfo.id"
                                 :work-info="courseWorkInfo"></course-work-list-component>
     <!--Before-->
-    <el-table :data="filterTableData" style="width: 100%">
-        <el-table-column label="作业名称" >
-            <template #default="scope">
-                <span @click="gotoWork(scope.row.id)">{{scope.row.name}}</span>
-            </template>
-        </el-table-column>
-    </el-table>
+<!--    <el-table :data="filterTableData" style="width: 100%">-->
+<!--        <el-table-column label="作业名称" >-->
+<!--            <template #default="scope">-->
+<!--                <span @click="gotoWork(scope.row.id)">{{scope.row.name}}</span>-->
+<!--            </template>-->
+<!--        </el-table-column>-->
+<!--    </el-table>-->
     <el-row>
         <el-input v-model="newWorkName" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"
                   placeholder="请输入新建作业名称">
@@ -47,14 +47,7 @@
         components: {CourseWorkListComponent},
         setup() {
             let data = reactive([
-                {
-                    id: 1,
-                    name: "c1",
-                },
-                {
-                    id: 2,
-                    name: "c2",
-                }
+
             ])
 
             function refresh(){
@@ -68,22 +61,22 @@
 
 
             function getWorks() {
-                API.post(API.defaults.baseUrl + '/course/work/all/', {id:route.query.id})
-                    .then(function (response) {
-                        if (response.data.code === 200) {
-                            while (!(data.length === 0)) {
-                                data.pop();
-                            }
-                            let i;
-                            for (i = 0; i < response.data.data.length; i++) {
-                                data.push(response.data.data[i])
-                            }
-                            console.log(response.data.data)
+                API.post(API.defaults.baseUrl + '/course/work/all/', {
+                    id:route.query.id
+                }).then(function (response) {
+                    if (response.data.code === 200) {
+                        while (!(data.length === 0)) {
+                            data.pop();
                         }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                        let i;
+                        for (i = 0; i < response.data.data.length; i++) {
+                            data.push(response.data.data[i])
+                        }
+                        console.log(response.data.data)
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
 
             //具体表格区
