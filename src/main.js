@@ -49,8 +49,10 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 app.config.globalProperties.user = 'liwk'
-
+// import {mdi} from "vuetify/iconsets/mdi";
+import '@mdi/font/css/materialdesignicons.min.css'
 app.use(vuetify)
 app.use(ElementPlus, {size: 'small', zIndex: 3000})
 // app.use(Vuetify)
 app.use(router).mount('#app')
+

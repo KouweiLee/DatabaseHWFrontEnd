@@ -1,5 +1,6 @@
 <template xmlns:el-col="http://www.w3.org/1999/html">
     <h1>Member</h1>
+    <h2>{{groupInfo.year}}</h2>
     <el-row>
         <el-col >
             <v-carousel style="margin-left: 10%; width: 80%" cycle>
@@ -20,20 +21,20 @@
         </el-col>
 
     </el-row>
-    <p>{{ selected }}</p>
-    <v-container fluid>
-        <p>{{ selected }}</p>
-        <v-checkbox
-            v-model="selected"
-            label="John"
-            value="John"
-        ></v-checkbox>
-        <v-checkbox
-            v-model="selected"
-            label="Jacob"
-            value="Jacob"
-        ></v-checkbox>
-    </v-container>
+<!--    <p>{{ selected }}</p>-->
+<!--    <v-container fluid>-->
+<!--        <p>{{ selected }}</p>-->
+<!--        <v-checkbox-->
+<!--            v-model="selected"-->
+<!--            label="John"-->
+<!--            value="John"-->
+<!--        ></v-checkbox>-->
+<!--        <v-checkbox-->
+<!--            v-model="selected"-->
+<!--            label="Jacob"-->
+<!--            value="Jacob"-->
+<!--        ></v-checkbox>-->
+<!--    </v-container>-->
     <!--TODO 这里要添加一个相册。并展示当前年份、具体简介-->
     <el-row>
         <el-col
@@ -78,13 +79,6 @@
                         :value="stu.username"
                         :key="key"
                     ></v-checkbox>
-                    <el-checkbox
-                        v-for="(stu, key) in allMembers"
-                        v-model="selectedMembers"
-                        :label="stu.username"
-                        :value="stu.name"
-                        :key="key"
-                    />
                 </v-container>
             </el-form-item>
         </el-form>
@@ -117,6 +111,7 @@ import {useRoute} from "vue-router";
 import API from "@/axios";
 import {ElMessage} from "element-plus";
 import {ref} from "@vue/reactivity";
+
 
 export default {
     name: "memberView",
@@ -252,6 +247,8 @@ export default {
             })
         }
 
+        console.log(1)
+
         function getAllUsers() {
             console.log("调用getAllUsers")
             // * 获取所有成员
@@ -303,6 +300,7 @@ export default {
                 if (response.data.code === 200) {
                     ElMessage.success("修改成员成功")
                     changeMemberDialogShow = false
+                    console.log(changeMemberDialogShow)
                 }
             }).catch(function (error) {
                 ElMessage.error("修改成员失败")

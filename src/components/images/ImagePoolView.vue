@@ -1,6 +1,15 @@
 <template>
     <h1>images pool</h1>
-    <image-card v-for="(url, i) in imageUrls" :key="i" :image-url="url.url"></image-card>
+    <el-row>
+        <el-col
+            v-for="(url, i) in imageUrls"
+            :key="i"
+            :span="8"
+        >
+            <image-card :key="i" :image-url="url.url" :click="handlePictureCardPreview(url)"></image-card>
+        </el-col>
+    </el-row>
+
     <!--    action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"-->
     <el-upload
         v-model:file-list="imageUrls"
@@ -19,8 +28,9 @@
     <el-dialog
         v-model="dialogVisible"
         :title=dialogImageUrl
+        style="width: auto"
     >
-        <img w-full :src="dialogImageUrl" alt="Preview Image"/>
+        <img w-full :src="dialogImageUrl" alt="Preview Image" style="max-width: 80%"/>
     </el-dialog>
 </template>
 
@@ -72,6 +82,7 @@ export default {
                             url: response.data.data[i]
                         })
                     }
+                    console.log(imageUrls)
                 } else {
                     ElMessage.error("返回码：" + response.data.code)
                 }
@@ -85,9 +96,24 @@ export default {
 
         }
 
-        function handleRemove() {
-
+        function handleRemove(file) {
+            console.log(file.url)
+            API.post(API.defaults.baseUrl + '/login/picture/delete/', {
+                url: file.url
+            }).then(function (response) {
+                console.log(API.defaults.baseUrl)
+                if (response.data.code === 200) {
+                    ElMessage.success("删除照片成功")
+                } else {
+                    ElMessage.error("删除照片失败，错误码：" + response.data.code)
+                }
+            }).catch(function (error) {
+                ElMessage.error("删除照片错误")
+                console.log(error)
+            })
         }
+
+
 
         function handlePictureCardPreview(url) {
             dialogImageUrl.value = url.url
