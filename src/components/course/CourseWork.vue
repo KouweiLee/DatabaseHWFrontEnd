@@ -125,7 +125,7 @@
                 }, 100);
             }
 
-            // refresh()
+            refresh()
             return {
                 filterTableData,
                 handleGiveUp,
