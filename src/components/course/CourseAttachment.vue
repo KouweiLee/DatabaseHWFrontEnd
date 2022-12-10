@@ -49,6 +49,7 @@
 <!--            </template>-->
 <!--        </el-upload>-->
             <el-upload
+                    v-if="isSuperUser()"
                     style="margin-left: 40%; margin-top: 30px"
                     class="upload-demo"
                     drag
