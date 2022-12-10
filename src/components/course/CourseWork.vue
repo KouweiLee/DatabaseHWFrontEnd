@@ -47,7 +47,10 @@
         components: {CourseWorkListComponent},
         setup() {
             let data = reactive([
-
+                {
+                    id:1,
+                    name:123
+                }
             ])
 
             function refresh(){
@@ -122,7 +125,7 @@
                 }, 100);
             }
 
-            refresh()
+            // refresh()
             return {
                 filterTableData,
                 handleGiveUp,

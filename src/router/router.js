@@ -57,6 +57,10 @@ const routes = [
                     {
                         path: '/home/work/submit',
                         component: () => import('@/components/work/WorkSubmit'),
+                    },
+                    {
+                        path: '/home/work/submit2',
+                        component: () => import('@/components/work/WorkSubmit2'),
                     }
                 ]
             },
