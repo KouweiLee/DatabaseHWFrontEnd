@@ -49,7 +49,8 @@
 <!--            </template>-->
 <!--        </el-upload>-->
             <el-upload
-                    style="margin-left: 45%; margin-top: 30px"
+                    v-if="isSuperUser()"
+                    style="margin-left: 40%; margin-top: 30px"
                     class="upload-demo"
                     drag
                     action="http://localhost:8000/course/attachment/upload/"

@@ -10,53 +10,18 @@
                 <span>{{scope.row.username}}</span>
             </template>
         </el-table-column>
-        <el-table-column label="提交时间">
-        <template #default="scope">
-            <span>{{scope.row.time}}</span>
-        </template>
-    </el-table-column>
-        <el-table-column label="成绩">
+        <el-table-column align="right" label="提交时间">
+            <template #default="scope">
+                <span>{{scope.row.time}}</span>
+            </template>
+        </el-table-column>
+        <el-table-column align="right" label="成绩">
             <template #default="scope">
                 <span>{{scope.row.score}}</span>
             </template>
         </el-table-column>
-        <el-table-column align="right" label="下载作业附件">
-            <template #default="scope">
-                <el-button size="small" @click="download(scope.row.attachment_id)"
-                >
-                    <el-icon>
-                        <Bottom/>
-                    </el-icon>
-                </el-button
-                >
-            </template>
-        </el-table-column>
-        <el-table-column align="right" style="width: 70px;" v-if="isSuperUser">
-            <template #default="scope">
-                <el-button size="small" @click="deleteSubmit(scope.row.attachment_id)"
-                >
-                    <el-icon>
-                        <Delete/>
-                    </el-icon>
-                </el-button
-                >
-            </template>
-        </el-table-column>
-        <el-table-column align="right" v-if="isSuperUser">
-            <template #header>
-<!--                <el-input v-model="search" size="small" placeholder="Type to search"/>-->
-                <el-switch
-                v-model="judgeMode"
-                size="large"
-                active-text="是否开启评分模式"
-                />
-            </template>
-            <template #default="scope">
-                <el-input-number :disabled="!judgeMode" v-model="scope.row.score" :min="0" :max="100" @change="handleChange(scope.row.attachment_id, scope.row.score)"/>
-            </template>
-        </el-table-column>
     </el-table>
-    <el-row style="text-align: center" v-if="isSuperUser">
+    <el-row style="text-align: center">
         <!--        <el-upload-->
         <!--                class="upload-demo"-->
         <!--                ref="upload"-->
@@ -101,7 +66,7 @@
 
 <script>
     import {reactive, ref, computed} from "@vue/reactivity";
-    import STORE from '../../store/index'
+    import STORE from '../../store'
     import {useRoute} from "vue-router";
     import API from "../../axios.js"
 
@@ -135,7 +100,7 @@
             let username = STORE.state.user
 
             function getInfo() {
-              console.log(route.query.id)
+                console.log(route.query.id)
                 API.post(API.defaults.baseUrl + '/course/work/correcting/', {id: route.query.id})
                     .then(function (response) {
                         while (!(data.length === 0)) {

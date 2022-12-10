@@ -16,7 +16,7 @@
 <!--            </template>-->
 <!--        </el-table-column>-->
 <!--    </el-table>-->
-    <el-row>
+    <el-row v-if="isSuperUser()">
         <el-input v-model="newWorkName" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"
                   placeholder="请输入新建作业名称">
             <template #prefix>
@@ -26,7 +26,7 @@
             </template>
         </el-input>
         <el-button type="Plain" style=" margin-top: 20px; height: 30px; margin-left: 3%; width: 30%"
-                   v-if="isSuperUser()" @click="submitNewWork">
+                   @click="submitNewWork">
             点击添加作业
         </el-button>
     </el-row>
@@ -47,7 +47,10 @@
         components: {CourseWorkListComponent},
         setup() {
             let data = reactive([
-
+                {
+                    id:1,
+                    name:123
+                }
             ])
 
             function refresh(){
@@ -122,7 +125,7 @@
                 }, 100);
             }
 
-            refresh()
+            // refresh()
             return {
                 filterTableData,
                 handleGiveUp,
