@@ -65,7 +65,8 @@
             </v-card>
         </el-col>
     </el-row>
-    <v-btn @click="changeMemberDialogShow = true; getAllUsers()">修改成员</v-btn>
+    <v-btn @click="changeMemberDialogShow = true; getAllUsers()" :disabled="!isSuperUser()">修改成员</v-btn>
+<!--    <v-btn :disabled="true">成员</v-btn>-->
     <!--增加成员-->
     <el-dialog v-model="changeMemberDialogShow" title="修改成员">
         <el-form>
@@ -111,6 +112,7 @@ import {useRoute} from "vue-router";
 import API from "@/axios";
 import {ElMessage} from "element-plus";
 import {ref} from "@vue/reactivity";
+import STORE from "@/store";
 
 
 export default {
@@ -189,6 +191,8 @@ export default {
         getGroupInfo();
         // getAllUsers();
         getMemberInfo();
+
+        console.log(!isSuperUser())
 
         function getGroupInfo() {
             // * 得到组对应的信息
@@ -314,6 +318,16 @@ export default {
             }, 1000);
         }
 
+        function isSuperUser() {
+            if (STORE.state.isSuperUser === false) {
+                return false
+            } else {
+                return true
+            }
+            // return STORE.state.isSuperUser;
+        }
+
+
         return {
             groupInfo,
             members,
@@ -326,6 +340,7 @@ export default {
             changeMembers,
             refresh,
             selected,
+            isSuperUser
         }
     }
 }

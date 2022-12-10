@@ -23,7 +23,7 @@
             </template>
         </el-table-column>
     </el-table>
-    <el-row style="text-align: center" v-if="isSuperUser">
+    <el-row v-if="isSuperUser">
 <!--        <el-upload-->
 <!--                class="upload-demo"-->
 <!--                ref="upload"-->
@@ -60,7 +60,7 @@
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                 <template #tip>
-                    <div class="el-upload__tip">不超过 500kb</div>
+                    <div class="el-upload__tip">管理员在此处上传课程附件</div>
                 </template>
             </el-upload>
     </el-row>

@@ -178,6 +178,7 @@
             class="mt-4 mr-2"
             color="primary"
             @click="dialog_change_manager = true; getAllSuperUsers(); getAllUsers();"
+            :disabled="!isSuperUser()"
         >
             设置管理员
         </v-btn>
@@ -377,6 +378,8 @@ export default {
             let that = this
             API.post(API.defaults.baseUrl + '/login/getSuperUsers/'
             ).then(function (response) {
+                console.log("all super users")
+                console.log(response)
                 if (response.data.code === 200) {
                     ElMessage.success("获取所有管理员成功")
                     while (!(that.superUserIDs.length === 0)) {
@@ -551,6 +554,9 @@ export default {
                 console.log(error);
                 ElMessage.error("修改错误");
             });
+        },
+        isSuperUser() {
+            return STORE.state.isSuperUser;
         },
         refresh() {
             // abc
