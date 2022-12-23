@@ -11,9 +11,7 @@
                 <el-tag v-if="myBlogInfo.isOver" shadow="never" class="close-card">
                     <span class="status-card-font" style="margin: 0 4px">已关闭</span></el-tag>
                 <el-tag v-if="!myBlogInfo.isOver" shadow="never" class="status-card">
-                    <span class="status-card-font" style="margin: 0 4px">{{
-                            myBlogInfo.submitNumber
-                        }}关注|{{ myBlogInfo.replyNumber }}回复</span>
+                    <span class="status-card-font" style="margin: 0 4px">{{ myBlogInfo.numofcoms }}回复</span>
                 </el-tag>
             </el-col>
             <el-col :span="17">
@@ -82,7 +80,7 @@ export default {
                     isTop: true,
                     isOver: true,
                     submitNumber: 100,
-                    replyNumber: 25,
+                    numofcoms: 25,
                     title: "Nan",
                     url: "404",
                     content: "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja" +

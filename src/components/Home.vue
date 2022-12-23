@@ -6,7 +6,9 @@
         <el-aside >
 <!--            <p>{{title}}</p>-->
 <!--            <a href="https://www.flaticon.com/free-icons/data-center" title="data center icons">Data center icons created by Freepik - Flaticon</a>-->
-            <img :src="require('@/image/data-center.png')" width="150" height="150"
+<!--            <img :src="require('@/image/data-center.png')" width="150" height="150"-->
+<!--                 style="margin: 25px 75px 25px 75px; position:fixed; display: flex"  />-->
+            <img :src="require('@/image/img.png')" width="150" height="150"
                  style="margin: 25px 75px 25px 75px; position:fixed; display: flex"  />
             <el-menu
                 :collapse-transition="false"
@@ -66,7 +68,7 @@
 <!--        <div class="navbar-wrapper">-->
             <el-container >
                 <el-header >
-
+                    <span style="font-size: 40px; text-align: left; font-weight: bold; margin: 0 auto">你好，{{username}}</span>
                 </el-header>
                 <el-main style="padding: 0 0 0 0">
                     <router-view></router-view>
@@ -82,6 +84,8 @@
 import {ref} from "@vue/reactivity";
 import {useRoute} from "vue-router";
 import {watch} from  'vue'
+import STORE from "@/store";
+
 // import router from "@/router/router";
 
 
@@ -93,6 +97,7 @@ export default {
         const title = ref('123');
         const route = useRoute()
         let isCollapse = ref(false)
+        let username = ref(STORE.state.userName)
         const handleOpen = (key, keyPath) => {
             console.log(key, keyPath)
         }
@@ -114,7 +119,8 @@ export default {
             isCollapse,
             handleClose,
             handleOpen,
-            title
+            title,
+            username
         }
     },
 

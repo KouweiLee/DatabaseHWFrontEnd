@@ -121,6 +121,7 @@ export default {
             end_time: ""
         })
         let route = useRoute();
+        let workId = ref(route.query.id)
         getWork()
         // const dateSpan = ref([work.begin_time, work.end_time])
 
@@ -132,7 +133,7 @@ export default {
         console.log(dateSpan.value)
         //获取当前课程信息
         function getWork() {
-            API.post(API.defaults.baseUrl + '/course/work/single/', {id: route.query.id})
+            API.post(API.defaults.baseUrl + '/course/work/single/', {id: workId.value})
                 .then(function (response) {
                     if (response.data.code === 200) {
                         console.log(response.data.data)
@@ -153,7 +154,7 @@ export default {
 
         function changeWork() {
             API.post(API.defaults.baseUrl + '/course/work/change/', {
-                id: route.query.id,
+                id: workId.value,
                 name: work.name,
                 begin_time: dateSpan.value[0],
                 end_time: dateSpan.value[1],
@@ -175,7 +176,7 @@ export default {
         function deleteWork() {
             deleteWorkDialogShow = false
             API.post(API.defaults.baseUrl + '/course/course/delete', {
-                id: route.query.id
+                id: workId.value
             }).then(function (response) {
                 if (response.data.code === 200) {
                     ElMessage({

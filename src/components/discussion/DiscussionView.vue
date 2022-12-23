@@ -119,7 +119,9 @@ export default {
                     blogInfos.push(response.data.data[i])
                 }
                 // blogInfos = response.data.blogInfos
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
                 console.log(blogInfos)
+                console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
             })
                 .catch(function (error) {
                     console.log(error);
