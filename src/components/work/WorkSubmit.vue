@@ -56,7 +56,7 @@
             </template>
         </el-table-column>
     </el-table>
-    <el-row style="text-align: center" v-if="isSuperUser">
+    <el-row style="text-align: center">
         <!--        <el-upload-->
         <!--                class="upload-demo"-->
         <!--                ref="upload"-->
@@ -81,21 +81,12 @@
         <!--                <div class="el-upload__tip">文件大小不超过 500kb</div>-->
         <!--            </template>-->
         <!--        </el-upload>-->
-        <el-upload
-                style="margin-left: 45%; margin-top: 30px"
-                class="upload-demo"
-                drag
-                :data="{username: username, homework_id: id}"
-                action="http://localhost:8000/course/work/upload/"
-                multiple
-                :on-sucess="uploadSuccess"
-        >
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <template #tip>
-                <div class="el-upload__tip">在此处上传作业附件</div>
-            </template>
-        </el-upload>
+            <el-progress type="dashboard" :percentage="avg" style="margin-left: 42%; margin-top: 40px">
+                <template #default="{ percentage }">
+                    <span class="percentage-value">{{ percentage }}%</span>
+                    <span class="percentage-label">平时占比</span>
+                </template>
+            </el-progress>
     </el-row>
 </template>
 
@@ -126,7 +117,8 @@
                     }
                 ])
             function refresh(){
-                getInfo()
+                getInfo();
+                getAvg();
             }
 
             //获取当前提交信息
@@ -239,12 +231,24 @@
             function uploadSuccess() {
                 refresh()
             }
+
+            let avg = ref(60);
+            function getAvg(){
+                API.post(API.defaults.baseUrl + '/course/work/single/')
+                    .then(function (response) {
+                        avg = response.data.data.average;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+            }
+
             refresh()
             return {
                 id,
                 username,
                 isSuperUser,
                 data,
+                avg,
                 refresh,
                 getInfo,
                 search,
