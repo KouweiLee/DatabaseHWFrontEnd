@@ -26,6 +26,7 @@
                             variant="outlined"
                             style="margin-left: 30%; margin-top: 30px"
                             @click="changeGroup(item)"
+                            :disabled="!isSuperUser()"
                         >
                             修改
                         </v-btn>
@@ -261,6 +262,9 @@ export default {
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        isSuperUser() {
+            return STORE.state.isSuperUser;
         }
     },
     created: function () {
