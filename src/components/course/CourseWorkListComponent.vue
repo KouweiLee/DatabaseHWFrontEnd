@@ -4,11 +4,14 @@
         <el-col :span="12">
             <h2 class="workTitle" @click="gotoWork">{{refWorkInfo.name}}</h2>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="8">
             <span v-if="timeDifference(BETime.begin_time, BETime.end_time) >= 0">
                 还有{{getRemainTime(BETime.end_time)}}结束</span>
             <span v-if="timeDifference(BETime.begin_time, BETime.end_time) < 0">
                 作业已结束</span>
+        </el-col>
+        <el-col :span="4">
+            <span>作业平均{{average.score}}分</span>
         </el-col>
     </el-row>
     <el-row style="margin: 0 0 0 0">
@@ -43,6 +46,9 @@ export default {
             begin_time: "",
             end_time: ""
         })
+        const average = reactive({
+            score: 100
+        })
         const colors = [
           { color: '#f56c6c', percentage: 20 },
           { color: '#e6a23c', percentage: 40 },
@@ -65,6 +71,7 @@ export default {
                 if (response.data.code === 200) {
                     BETime.begin_time = response.data.data.begin_time
                     BETime.end_time = response.data.data.end_time
+                    average.score = response.data.data.average
                 }
             })
         }
@@ -103,7 +110,8 @@ export default {
             BETime,
             colors,
             timeDifference,
-            getRemainTime
+            getRemainTime,
+            average
         }
     }
 }

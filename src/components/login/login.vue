@@ -9,7 +9,7 @@
                         style="max-width: 460px"
                         class="loginForm"
                 >
-                    <el-form-item label="邮箱：" style="margin-top: 30px">
+                    <el-form-item label="账号：" style="margin-top: 30px">
                         <el-input size="large" v-model="form.username"/>
                     </el-form-item>
                     <el-form-item label="密码：" style="margin-top: 30px">
@@ -42,7 +42,7 @@
                         style="max-width: 460px"
                         class="loginForm"
                 >
-                    <el-form-item label="邮箱：" style="margin-top: 30px">
+                    <el-form-item label="账号：" style="margin-top: 30px">
                         <el-input size="large" v-model="registerForm.username"/>
                     </el-form-item>
                     <el-form-item label="密码：">
@@ -85,13 +85,13 @@
                         style="max-width: 460px"
                         class="loginForm"
                 >
-                    <el-form-item label="用户名：" style="margin-top: 30px">
+                    <el-form-item label="账号：" style="margin-top: 30px">
                         <el-input size="large" v-model="modifierForm.username"/>
                     </el-form-item>
-                    <el-form-item label="原始值：">
+                    <el-form-item label="原始密码：">
                         <el-input size="large" type="password" v-model="modifierForm.pre_password"/>
                     </el-form-item>
-                    <el-form-item label="修改后值：">
+                    <el-form-item label="修改密码：">
                         <el-input size="large" type="password" v-model="modifierForm.now_password"/>
                     </el-form-item>
                     <el-button
@@ -310,7 +310,7 @@
 
 
     .building {
-        background: url("back.jpg");
+        background: url("back2.jpg");
         width: 100%;
         height: 100%;
         position: fixed;

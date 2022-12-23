@@ -46,9 +46,10 @@
         name: "CourseWork",
         components: {CourseWorkListComponent},
         setup() {
+
             let data = reactive([
                 {
-                    id:1,
+                    id:999,
                     name:123
                 }
             ])
@@ -61,12 +62,15 @@
 
             let route = useRoute()
             console.log(route.query.id)
-
+            let courseID = ref(route.query.id)
+            console.log(courseID.value)
+            getWorks()
 
             function getWorks() {
                 API.post(API.defaults.baseUrl + '/course/work/all/', {
-                    id:route.query.id
+                    id:courseID.value
                 }).then(function (response) {
+                    console.log(courseID.value)
                     if (response.data.code === 200) {
                         while (!(data.length === 0)) {
                             data.pop();
@@ -78,6 +82,8 @@
                         console.log(response.data.data)
                     }
                 }).catch(function (error) {
+                    console.log("error")
+                    console.log(courseID.value)
                     console.log(error);
                 });
             }
@@ -137,7 +143,8 @@
                 isSuperUser,
                 gotoWork,
                 newWorkName,
-                submitNewWork
+                submitNewWork,
+                courseID
             }
         }
     }
