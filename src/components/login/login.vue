@@ -9,7 +9,7 @@
                         style="max-width: 460px"
                         class="loginForm"
                 >
-                    <el-form-item label="邮箱：" style="margin-top: 30px">
+                    <el-form-item label="用户：" style="margin-top: 30px">
                         <el-input size="large" v-model="form.username"/>
                     </el-form-item>
                     <el-form-item label="密码：" style="margin-top: 30px">
