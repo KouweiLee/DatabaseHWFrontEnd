@@ -9,7 +9,7 @@ const API = axios.create({
     timeout: 2000                   //请求超时设置，单位ms
 })
 API.interceptors.request.use(function (config) {
-    config.headers.Authorization = "Bearer " + STORE.state.token
+    config.headers.Authorization = "JWT " + STORE.state.token
     console.log(config)
     return config
 }, function (error) {

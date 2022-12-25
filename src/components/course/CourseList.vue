@@ -74,26 +74,26 @@
         components: {CourseListComponent},
         setup() {
             let data = reactive([
-                {
-                    id: 999999,
-                    name: "走进超级计算机",
-                    isChoosed: true
-                },
-                {
-                    id: 9999999,
-                    name: "并行计算的理解与应用",
-                    isChoosed: false
-                },
-                {
-                    id: 9999999,
-                    name: "门电路的使用",
-                    isChoosed: true
-                },
-                {
-                    id: 9999999,
-                    name: "超级计算机实验练习",
-                    isChoosed: true
-                }
+                // {
+                //     id: 999999,
+                //     name: "走进超级计算机",
+                //     isChoosed: true
+                // },
+                // {
+                //     id: 9999999,
+                //     name: "并行计算的理解与应用",
+                //     isChoosed: false
+                // },
+                // {
+                //     id: 9999999,
+                //     name: "门电路的使用",
+                //     isChoosed: true
+                // },
+                // {
+                //     id: 9999999,
+                //     name: "超级计算机实验练习",
+                //     isChoosed: true
+                // }
             ])
 
             function getCourses() {

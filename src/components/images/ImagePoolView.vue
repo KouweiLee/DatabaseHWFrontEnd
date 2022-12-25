@@ -26,7 +26,7 @@
     </el-upload>
 
     <el-dialog
-        v-model="dialogVisible"
+        :v-model="dialogVisible"
         :title=dialogImageUrl
         style="width: auto"
     >
