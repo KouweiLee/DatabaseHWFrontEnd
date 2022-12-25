@@ -56,6 +56,7 @@
             </template>
         </el-table-column>
     </el-table>
+    <el-divider />
     <el-row style="text-align: center">
         <!--        <el-upload-->
         <!--                class="upload-demo"-->
@@ -81,7 +82,7 @@
         <!--                <div class="el-upload__tip">文件大小不超过 500kb</div>-->
         <!--            </template>-->
         <!--        </el-upload>-->
-            <el-progress type="dashboard" :percentage="avg" style="margin-left: 42%; margin-top: 40px">
+            <el-progress type="dashboard" :percentage="avg" style="margin-left: 42%; margin-top: 50px">
                 <template #default="{ percentage }">
                     <span class="percentage-value">{{ percentage }}%</span>
                     <span class="percentage-label">平均分</span>

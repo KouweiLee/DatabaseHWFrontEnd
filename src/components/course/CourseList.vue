@@ -45,7 +45,7 @@
     <course-list-component v-for="courseInfo in filterTableData" :key="courseInfo.id" :courseInfo="courseInfo"
         @refresh="refresh"></course-list-component>
     <el-row v-if="isSuperUser()">
-        <el-input v-model="newCourseName" size="large" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"
+        <el-input v-model="newCourseName" style="width: 35%; margin-left: 15% ;height: 60px; margin-top: 40px; font-size: 25px"
                   placeholder="请输入新建课程名称">
             <template #prefix>
                 <el-icon>
@@ -53,7 +53,7 @@
                 </el-icon>
             </template>
         </el-input>
-        <el-button type="Plain" size="large" style=" margin-top: 20px; height: 30px; margin-left: 3%; width: 30%"
+        <el-button type="primary"  style=" margin-top: 40px; height: 60px; margin-left: 3%; width: 35%; font-size: 25px"
                    @click="submitNewCourse">
             点击添加课程
         </el-button>

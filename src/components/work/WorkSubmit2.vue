@@ -21,6 +21,8 @@
             </template>
         </el-table-column>
     </el-table>
+    <el-divider />
+
     <el-row style="text-align: center">
         <!--        <el-upload-->
         <!--                class="upload-demo"-->

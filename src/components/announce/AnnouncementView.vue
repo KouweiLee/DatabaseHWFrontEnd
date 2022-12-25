@@ -111,7 +111,7 @@
                 </div>
             </el-form>
         </el-dialog>
-        <el-button size="medium" type="primary" style="margin-left: 0%; margin-top: 40px" @click="createNewGroup()">
+        <el-button size="medium" type="primary" style="margin-left: 0%; margin-top: 20%; height: 60px; width: 40%; font-size: 25px" @click="createNewGroup()">
             <el-icon>
                 <CirclePlus/>
             </el-icon>
