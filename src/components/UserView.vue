@@ -20,6 +20,9 @@
                 </v-icon>
                 学号：{{ id }}
             </v-chip>
+            <v-chip class="mr-2" color="primary" outlined pill>
+                发帖数：{{num}}
+            </v-chip>
         </p>
 
         <div class="d-flex pa-4">
@@ -270,6 +273,7 @@ export default {
         // id: localStorage.getItem("user_id"),
         id: STORE.state.user,
         permission: STORE.state.isSuperUser ? "管理员" : "普通用户",
+        num: STORE.state.num,
         show1: false,
         show2: false,
         show3: false,

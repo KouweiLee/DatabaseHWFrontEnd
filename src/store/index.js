@@ -6,7 +6,8 @@ const STORE =  new Vuex.Store({
         user: 'liwk',
         userName: '李刚',
         isSuperUser:true,
-        token: "testToken"
+        token: "testToken",
+        num: 0
     },
     getters: {},
     mutations: {},

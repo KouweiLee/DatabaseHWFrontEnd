@@ -150,6 +150,7 @@
                         STORE.state.isSuperUser = response.data.data['isSuperUser']
                         STORE.state.userName = response.data.data['name']
                         STORE.state.token = response.data.data['token']
+                        STORE.state.num = response.data.data['num']
                         router.push('/home/')
                         ElMessage({
                             message: '登录成功',
