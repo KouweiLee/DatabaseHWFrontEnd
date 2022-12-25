@@ -54,10 +54,10 @@ export default {
         ]
         let work = reactive({
             id: 1,
-            name: "c1",
-            content: "做十道练习题",
-            begin_time: "2017-07-25 21:51:54",
-            end_time: "2017-07-25 21:51:54"
+            name: "第一次作业",
+            content: "课本16页1到8题",
+            begin_time: "2022-12-22 21:51:54",
+            end_time: "2022-12-24 21:51:54"
         })
         let route = useRoute();
         getWork()

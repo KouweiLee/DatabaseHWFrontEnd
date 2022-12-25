@@ -84,7 +84,7 @@
             <el-progress type="dashboard" :percentage="avg" style="margin-left: 42%; margin-top: 40px">
                 <template #default="{ percentage }">
                     <span class="percentage-value">{{ percentage }}%</span>
-                    <span class="percentage-label">平时占比</span>
+                    <span class="percentage-label">平均分</span>
                 </template>
             </el-progress>
     </el-row>

@@ -16,20 +16,20 @@
 <!--            </template>-->
 <!--        </el-table-column>-->
 <!--    </el-table>-->
-    <el-row v-if="isSuperUser()">
-        <el-input v-model="newWorkName" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"
-                  placeholder="请输入新建作业名称">
-            <template #prefix>
-                <el-icon>
-                    <CirclePlus/>
-                </el-icon>
-            </template>
-        </el-input>
-        <el-button type="Plain" style=" margin-top: 20px; height: 30px; margin-left: 3%; width: 30%"
-                   @click="submitNewWork">
-            点击添加作业
-        </el-button>
-    </el-row>
+<!--    <el-row v-if="isSuperUser()">-->
+<!--        <el-input v-model="newWorkName" size="large" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"-->
+<!--                  placeholder="请输入新建作业名称">-->
+<!--            <template #prefix>-->
+<!--                <el-icon>-->
+<!--                    <CirclePlus/>-->
+<!--                </el-icon>-->
+<!--            </template>-->
+<!--        </el-input>-->
+<!--        <el-button type="Plain" size="large" style=" margin-top: 20px; height: 30px; margin-left: 3%; width: 30%"-->
+<!--                   @click="submitNewWork">-->
+<!--            点击添加作业-->
+<!--        </el-button>-->
+<!--    </el-row>-->
 </template>
 
 <script>
@@ -50,8 +50,21 @@
             let data = reactive([
                 {
                     id:999,
-                    name:123
-                }
+                    name:'第一次作业',
+                },
+                {
+                    id:999,
+                    name:'第二次作业',
+                },
+                {
+                    id:999,
+                    name:'第三次作业',
+                },
+                {
+                    id:999,
+                    name:'第四次作业',
+                },
+
             ])
 
             function refresh(){

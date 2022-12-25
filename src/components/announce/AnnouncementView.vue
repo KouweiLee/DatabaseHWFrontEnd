@@ -4,6 +4,7 @@
             <v-timeline-item
                 v-for="(item, i) in items"
                 :key="i"
+                :dot-color="'info'"
                 fill-dot
                 style="width: 37%"
             >

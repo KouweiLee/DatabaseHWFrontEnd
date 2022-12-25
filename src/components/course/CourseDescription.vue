@@ -92,12 +92,12 @@ export default {
 
         let course = reactive({
             id: 1,
-            name: "",
-            time: "",
-            position: "",
-            description: "",
-            pingshi: 0,
-            exam: 0
+            name: "走进超级计算机",
+            time: "2022年秋季",
+            position: "主M401",
+            description: "主要进行超级计算机发展历史、涉及领域、作用意义等信息的介绍，激发同学们学习超级计算机的兴趣。",
+            pingshi: 35,
+            exam: 75
         })
         //获取当前课程信息
         let route = useRoute();

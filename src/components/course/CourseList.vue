@@ -45,7 +45,7 @@
     <course-list-component v-for="courseInfo in filterTableData" :key="courseInfo.id" :courseInfo="courseInfo"
         @refresh="refresh"></course-list-component>
     <el-row v-if="isSuperUser()">
-        <el-input v-model="newCourseName" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"
+        <el-input v-model="newCourseName" size="large" style="width: 30%; margin-left: 10% ;height: 30px; margin-top: 20px"
                   placeholder="请输入新建课程名称">
             <template #prefix>
                 <el-icon>
@@ -53,7 +53,7 @@
                 </el-icon>
             </template>
         </el-input>
-        <el-button type="Plain" style=" margin-top: 20px; height: 30px; margin-left: 3%; width: 30%"
+        <el-button type="Plain" size="large" style=" margin-top: 20px; height: 30px; margin-left: 3%; width: 30%"
                    @click="submitNewCourse">
             点击添加课程
         </el-button>
@@ -76,13 +76,23 @@
             let data = reactive([
                 {
                     id: 999999,
-                    name: "",
+                    name: "走进超级计算机",
                     isChoosed: true
                 },
                 {
                     id: 9999999,
-                    name: "",
+                    name: "并行计算的理解与应用",
                     isChoosed: false
+                },
+                {
+                    id: 9999999,
+                    name: "门电路的使用",
+                    isChoosed: true
+                },
+                {
+                    id: 9999999,
+                    name: "超级计算机实验练习",
+                    isChoosed: true
                 }
             ])
 

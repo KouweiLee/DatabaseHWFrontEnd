@@ -7,7 +7,7 @@
         </el-table-column>
         <el-table-column align="right">
             <template #header>
-                <el-input v-model="search" size="small" placeholder="Type to search"/>
+                <el-input v-model="search" size="small" placeholder="输入信息进行搜索"/>
             </template>
             <template #default="scope">
                 <el-button size="small" @click="download(scope.row.attachment_id)">

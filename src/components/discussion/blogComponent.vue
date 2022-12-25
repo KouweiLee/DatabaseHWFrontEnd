@@ -90,7 +90,7 @@ export default {
                         "asdjfalsfjaldfkjaldskfajldfkjaldfjalkdfjalkdfalsdkfjalkdfjaldkfjaldkfjaldkfja",
                     tags: ['P7', 'P8'],
                     name: "Zhang_kg",
-                    time: "2022-10-1",
+                    time: "2022-10-2",
                     isLike: false
                 }
             }
