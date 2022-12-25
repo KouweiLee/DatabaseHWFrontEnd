@@ -102,20 +102,20 @@
         setup() {
             let data =
                 reactive([
-                    {
-                        attachment_id: 1,
-                        username: "李佳禄",
-                        name: "submit1",
-                        time: "2017-07-25 21:51:54",
-                        score: 89
-                    },
-                    {
-                        attachment_id: 2,
-                        username: "李佳禄",
-                        name: "submit2",
-                        time: "2017-07-26 21:51:54",
-                        score: 99
-                    }
+                    // {
+                    //     attachment_id: 1,
+                    //     username: "李佳禄",
+                    //     name: "submit1",
+                    //     time: "2017-07-25 21:51:54",
+                    //     score: 89
+                    // },
+                    // {
+                    //     attachment_id: 2,
+                    //     username: "李佳禄",
+                    //     name: "submit2",
+                    //     time: "2017-07-26 21:51:54",
+                    //     score: 99
+                    // }
                 ])
             function refresh(){
                 getInfo();

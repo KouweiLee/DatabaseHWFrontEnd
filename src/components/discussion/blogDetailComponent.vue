@@ -135,7 +135,8 @@ export default {
             Edit: Edit
         })
         const dataRef = toRefs(data)
-        let blogInfo = reactive({
+        let blogInfo = reactive(
+            {
             title_id: 1,            // new
             title: "asd",
             content: "请问为什么",
@@ -152,7 +153,8 @@ export default {
                 beCommentator: "李国玮",
                 avatarSrc: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
                 // commentator_id: 1,
-            }]
+            }
+            ]
         })
 
         let addCommentForm = reactive({

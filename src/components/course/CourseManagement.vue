@@ -223,8 +223,10 @@ export default {
 
         function deleteCourse() {
             deleteCourseDialogShow = false
-            API.post(API.defaults.baseUrl + '/course/course/delete',
-                route.query.id
+            API.post(API.defaults.baseUrl + '/course/course/delete/',
+                {
+                 id: course.id 
+                }
             ).then(function (response) {
                 if (response.data.code === 200) {
                     ElMessage({
